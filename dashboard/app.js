@@ -268,7 +268,7 @@ function drawChart(samples, network, signals, cursor) {
   }
 
   // ---- lane 1: what the operator's network says
-  s += tx(PAD, NET_Y - 20, "Where the truck was, according to the operator's network", { size: 13, weight: 600, fill: C.net });
+  s += tx(PAD, NET_Y - 20, "Truck at the tank — from the operator's network", { size: 13, weight: 600, fill: C.net });
   s += `<line x1="${PAD}" y1="${NET_Y + NET_H}" x2="${W - PAD}" y2="${NET_Y + NET_H}" stroke="#C6C2B7"/>`;
   if (s1) {
     s += band(minutes(s1.entered), minutes(s1.left), NET_Y, NET_H, C.net, 0.16);
@@ -292,7 +292,7 @@ function drawChart(samples, network, signals, cursor) {
   }
 
   // ---- lane 2: what the buyer's tank says
-  s += tx(PAD, TANK_TOP - 16, "When the tank filled, according to its own level sensor", { size: 13, weight: 600, fill: C.tank });
+  s += tx(PAD, TANK_TOP - 16, "Tank filled — from the tank's own level sensor", { size: 13, weight: 600, fill: C.tank });
   s += `<line x1="${PAD}" y1="${TANK_BOT}" x2="${W - PAD}" y2="${TANK_BOT}" stroke="#C6C2B7"/>`;
   const rw = signals && signals.rise_window;
 
@@ -314,7 +314,7 @@ function drawChart(samples, network, signals, cursor) {
   } else if (samples) {
     s += tx(W / 2, (TANK_TOP + TANK_BOT) / 2, "no samples · the tank sensor was unreachable", { anchor: "middle", size: 13, fill: C.accent, weight: 500 });
   } else {
-    s += tx(PAD + 2, (TANK_TOP + TANK_BOT) / 2, "run the verification to draw the tank trace", { size: 12.5, fill: C.faint });
+    s += tx(PAD + 2, (TANK_TOP + TANK_BOT) / 2 + 4, "the tank's fill bar appears here after a run, to compare with the truck's bar above", { size: 12.5, fill: C.faint });
   }
   if (cursor != null) {
     s += `<line x1="${x(cursor)}" y1="${NET_Y - 12}" x2="${x(cursor)}" y2="${AXIS - 12}" stroke="${C.accent}" stroke-width="1.5"/>`;
