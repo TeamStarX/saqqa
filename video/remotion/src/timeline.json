@@ -1,0 +1,130 @@
+{
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "tail": 30,
+ "scenes": [
+  {
+   "id": "01_open",
+   "kind": "card",
+   "narration": "Across the Middle East, millions of people get their water by truck. And every one of those deliveries is paid for on the word of the person being paid.",
+   "on_screen": "A water delivery is paid for on the word of the person being paid.",
+   "vo": "vo/01_open.wav",
+   "start": 0,
+   "frames": 355
+  },
+  {
+   "id": "02_problem",
+   "kind": "card",
+   "narration": "A tanker arrives, someone signs a form, and the money moves. Nobody measured the water. In Jordan alone that is a hundred and seventy-six million dollars a year, settled on paper.",
+   "on_screen": "Nobody measured the water.",
+   "vo": "vo/02_problem.wav",
+   "layout": "stats",
+   "stats": [
+    {
+     "big": "$176M",
+     "cap": "a year in Jordan alone, settled on paper"
+    },
+    {
+     "big": "1",
+     "cap": "signature releases the money"
+    },
+    {
+     "big": "0",
+     "cap": "meters on the water"
+    }
+   ],
+   "start": 355,
+   "frames": 469
+  },
+  {
+   "id": "03_what",
+   "kind": "card",
+   "narration": "Saqqa puts a level sensor on the buyer's tank and uses the SIM already in the tanker's cab. Then it asks the mobile operator to be the witness, and pays only for the litres it can account for.",
+   "on_screen": "The operator is the witness.",
+   "vo": "vo/03_what.wav",
+   "layout": "steps",
+   "steps": [
+    "A level sensor on the buyer's tank",
+    "The SIM already in the tanker's cab",
+    "The mobile operator is the witness"
+   ],
+   "start": 824,
+   "frames": 413
+  },
+  {
+   "id": "04_honest",
+   "kind": "footage",
+   "narration": "Here is an honest delivery. One click, and the agent makes about ten live calls to the network: where the truck was, when it reached the tank, whether the SIM is the one we expect. The tank rose while the truck was there. Two clocks agree. Payment released.",
+   "on_screen": "Two clocks have to agree",
+   "clip": "honest",
+   "vo": "vo/04_honest.wav",
+   "start": 1237,
+   "frames": 623
+  },
+  {
+   "id": "05_doubt",
+   "kind": "footage",
+   "narration": "Now the one that matters. The tank rises at five past nine. The operator's timestamps put the truck at the tank at twenty-five to ten. The network contradicts our own sensor, and the agent refuses to believe its own sensor. Nothing is paid until a person looks.",
+   "on_screen": "The agent doubts its own sensor",
+   "clip": "doubt",
+   "vo": "vo/05_doubt.wav",
+   "start": 1860,
+   "frames": 674
+  },
+  {
+   "id": "06_block",
+   "kind": "footage",
+   "narration": "Switch to the core profile, the three APIs Saqqa needs at minimum. A perfect delivery, but the number the money would go to changed SIM nineteen hours ago. Blocked, before a dinar moves. And the agent names every check it could not run.",
+   "on_screen": "Blocked on three APIs, before a dinar moves",
+   "clip": "block",
+   "vo": "vo/06_block.wav",
+   "start": 2534,
+   "frames": 571
+  },
+  {
+   "id": "07_apis",
+   "kind": "footage",
+   "narration": "Seven CAMARA APIs across two categories, orchestrated by one LangGraph agent, live on Nokia Network as Code. A hundred and twenty-five live calls in testing. Zero errors.",
+   "on_screen": "7 CAMARA APIs \u00b7 1 agent \u00b7 125 live calls \u00b7 0 errors",
+   "clip": "apis",
+   "vo": "vo/07_apis.wav",
+   "start": 3105,
+   "frames": 485
+  },
+  {
+   "id": "08_money",
+   "kind": "card",
+   "narration": "A truckload is worth about thirty dollars. Verifying it costs thirteen cents. Nothing to install on the truck, one sensor on the tank, and the delivery form the buyer already uses, filled in from evidence instead of a signature.",
+   "on_screen": "Cheap to verify. Nothing to install.",
+   "vo": "vo/08_money.wav",
+   "layout": "stats",
+   "stats": [
+    {
+     "big": "$30",
+     "cap": "a truckload of water"
+    },
+    {
+     "big": "13.6\u00a2",
+     "cap": "of network calls to verify it"
+    },
+    {
+     "big": "0",
+     "cap": "things to install on the truck"
+    }
+   ],
+   "start": 3590,
+   "frames": 533
+  },
+  {
+   "id": "09_close",
+   "kind": "card",
+   "narration": "Saqqa. Pay only for the water that arrived. The mobile network is the witness. Team StarX, for the GSMA MENA Ignite hackathon.",
+   "on_screen": "Saqqa \u00b7 Team StarX \u00b7 GSMA MENA Ignite 2026",
+   "vo": "vo/09_close.wav",
+   "layout": "close",
+   "start": 4123,
+   "frames": 383
+  }
+ ]
+}

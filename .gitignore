@@ -1,0 +1,23 @@
+.env
+__pycache__/
+*.pyc
+*.sqlite3
+runs/*.json
+node_modules/
+.venv/
+dist/
+*.zip
+deck/png/
+deck/svg/
+docs/video/*.mp4
+docs/video/*.webm
+design/*.html
+docs/video/_raw/
+docs/video/*.webm
+
+# demo film build products (regenerate with video/capture.py, video/build.py)
+video/footage/
+video/vo/
+video/remotion/out/
+video/remotion/public/
+video/remotion/node_modules/

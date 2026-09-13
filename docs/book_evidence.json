@@ -1,0 +1,2560 @@
+{
+ "stats": {
+  "runs": 12,
+  "runs_as_expected": 12,
+  "calls_total": 125,
+  "calls_live": 125,
+  "errors": 0,
+  "latency_min": 210,
+  "latency_median": 291,
+  "latency_mean": 327,
+  "latency_max": 1083,
+  "per_api_median": {
+   "geofence_subscribe": 328,
+   "location_verify": 280,
+   "reachability_status": 285,
+   "device_swap_check": 285,
+   "sim_swap_check": 277,
+   "location_retrieve": 276,
+   "roaming_status": 247
+  },
+  "per_api_count": {
+   "geofence_subscribe": 48,
+   "location_verify": 24,
+   "reachability_status": 16,
+   "device_swap_check": 12,
+   "sim_swap_check": 12,
+   "location_retrieve": 5,
+   "roaming_status": 8
+  },
+  "generated": "2026-09-03T18:25:35Z",
+  "commit": "70f79b6",
+  "events_total": 959,
+  "events_entered": 246,
+  "events_left": 244,
+  "events_ends": 469,
+  "events_first": "2026-09-02T12:49:03Z",
+  "events_last": "2026-09-03T18:23:30Z"
+ },
+ "calls": {
+  "geofence_subscribe": {
+   "scenario": "ghost_trip",
+   "request": {
+    "protocol": "HTTP",
+    "sink": "https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara",
+    "types": [
+     "org.camaraproject.geofencing-subscriptions.v0.area-entered"
+    ],
+    "config": {
+     "subscription_detail": {
+      "device": {
+       "phone_number": "+99999991000"
+      },
+      "area": {
+       "area_type": "CIRCLE",
+       "center": {
+        "latitude": 30.462,
+        "longitude": 47.753
+       },
+       "radius": 2000
+      }
+     },
+     "initial_event": true,
+     "subscription_max_events": 1
+    }
+   },
+   "response": {
+    "protocol": "HTTP",
+    "sink": "https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara",
+    "types": [
+     "org.camaraproject.geofencing-subscriptions.v0.area-entered"
+    ],
+    "config": {
+     "subscription_detail": {
+      "device": {
+       "phone_number": "+99999991000"
+      },
+      "area": {
+       "area_type": "CIRCLE",
+       "center": {
+        "latitude": 30.462,
+        "longitude": 47.753
+       },
+       "radius": 2000
+      }
+     },
+     "subscription_max_events": 1,
+     "initial_event": true
+    },
+    "id": "88f87db8-4701-47ad-89d0-06adf903356f",
+    "starts_at": "2026-09-03T10:16:20.249495Z"
+   },
+   "latency_ms": 424,
+   "ts": "2026-09-03T10:16:20Z",
+   "camara": "Geofencing Subscriptions",
+   "category": "Device intelligence"
+  },
+  "location_verify": {
+   "scenario": "ghost_trip",
+   "request": {
+    "device": {
+     "phone_number": "+99999991000"
+    },
+    "area": {
+     "area_type": "CIRCLE",
+     "center": {
+      "latitude": 30.389,
+      "longitude": 47.708
+     },
+     "radius": 2000
+    },
+    "max_age": 3600
+   },
+   "response": {
+    "last_location_time": "2026-09-03T10:16:21.769455+04:00",
+    "verification_result": "FALSE"
+   },
+   "latency_ms": 493,
+   "ts": "2026-09-03T10:16:22Z",
+   "camara": "Location Verification",
+   "category": "Digital identity & anti-fraud"
+  },
+  "reachability_status": {
+   "scenario": "ghost_trip",
+   "request": {
+    "device": {
+     "phone_number": "+99999991001"
+    }
+   },
+   "response": {
+    "device": {
+     "phone_number": "+99999991001"
+    },
+    "last_status_time": "2026-09-03T10:16:22.076286Z",
+    "reachable": true,
+    "connectivity": [
+     "DATA"
+    ]
+   },
+   "latency_ms": 305,
+   "ts": "2026-09-03T10:16:22Z",
+   "camara": "Device Reachability Status",
+   "category": "Device intelligence"
+  },
+  "device_swap_check": {
+   "scenario": "ghost_trip",
+   "request": {
+    "phone_number": "+99999991001",
+    "max_age": 720
+   },
+   "response": {
+    "swapped": false
+   },
+   "latency_ms": 531,
+   "ts": "2026-09-03T10:16:23Z",
+   "camara": "Device Swap",
+   "category": "Digital identity & anti-fraud"
+  },
+  "sim_swap_check": {
+   "scenario": "ghost_trip",
+   "request": {
+    "phone_number": "+99999991001",
+    "max_age": 72
+   },
+   "response": {
+    "swapped": false
+   },
+   "latency_ms": 307,
+   "ts": "2026-09-03T10:16:23Z",
+   "camara": "SIM Swap",
+   "category": "Digital identity & anti-fraud"
+  },
+  "location_retrieve": {
+   "scenario": "manipulated_feed",
+   "request": {
+    "device": {
+     "phone_number": "+99999991001"
+    },
+    "max_age": 120
+   },
+   "response": {
+    "last_location_time": "2026-09-03T10:19:25.002124Z",
+    "area": {
+     "area_type": "CIRCLE",
+     "center": {
+      "latitude": 47.48627616952785,
+      "longitude": 19.07915612501993
+     },
+     "radius": 1000
+    }
+   },
+   "latency_ms": 276,
+   "ts": "2026-09-03T10:19:25Z",
+   "camara": "Location Retrieval",
+   "category": "Device intelligence"
+  },
+  "roaming_status": {
+   "scenario": "manipulated_feed",
+   "request": {
+    "device": {
+     "phone_number": "+99999991001"
+    }
+   },
+   "response": {
+    "device": {
+     "phone_number": "+99999991001"
+    },
+    "last_status_time": "2026-09-03T10:19:25.277202Z",
+    "roaming": false
+   },
+   "latency_ms": 272,
+   "ts": "2026-09-03T10:19:25Z",
+   "camara": "Device Roaming Status",
+   "category": "Device intelligence"
+  }
+ },
+ "runs": [
+  {
+   "id": "ghost_trip",
+   "title": "Ghost trip: truck never at the tank",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "fleet SIM never entered the tank zone: ghost trip",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 9,
+   "investigations": 0,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Given the contractor's clean history and standard camp site delivery, no optional network checks are necessary.",
+   "investigation_log": [],
+   "audit_note": "The trip is escalated because the fleet SIM never entered the tank zone, indicating a ghost trip. The measured volume is 0.0 m³ against a claim of 10.0 m³, and network location verification returned false for the truck inside the tank zone.",
+   "audit_note_ar": "تم تصعيد الرحلة لعدم دخول شريحة الأسطول إلى منطقة الخزان مطلقاً، مما يشير إلى رحلة وهمية. بلغ الحجم المقاس 0.0 متر مكعب مقابل مطالبة قدرها 10.0 متر مكعب، وأعاد التحقق من موقع الشبكة نتيجة خاطئة لوجود الشاحنة داخل منطقة الخزان.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991000",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": null
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 0.0,
+    "fill_ratio": 0.0,
+    "tank_room_m3": 16.2,
+    "dwell_min": 0,
+    "rise_window": null,
+    "dwell_window": null,
+    "rise_dwell_overlap_min": 0,
+    "min_minutes_to_pump_delta": 0.0,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 0.8,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "FALSE",
+    "truck_roaming": null,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": false
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Ghost trip: truck never at the tank · trip #4821 · T-14 +99999991000 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "9 checks planned (≈12.5¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991000, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991000\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991000, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991000\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991000, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991000\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991000, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991000\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991000, K1) → {\"verification_result\": \"FALSE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991000"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991000"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock: no area-entered for K1 on +99999991000 (the operator never saw this SIM in the zone)"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · flat · turbidity max 1.2 NTU · truck dwell no dwell"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 0.0, \"claimed_m3\": 10.0, \"fill_ratio\": 0.0, \"dwell_min\": 0, \"rise_window\": null, \"rise_dwell_overlap_min\": 0, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"FALSE\"}"
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — fleet SIM never entered the tank zone: ghost trip"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is escalated because the fleet SIM never entered the tank zone, indicating a ghost trip. The measured volume is 0.0 m³ against a claim of 10.0 m³, and network location verification returned false for the truck inside the tank zone."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 9 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "honest",
+   "title": "Honest delivery",
+   "expect": "RELEASE",
+   "decision": "RELEASE",
+   "reason": "pay 9.7 m³ verified (claim 10.0 m³): source visit, presence, dwell, sensor integrity and payee all clean",
+   "pay_m3": 9.7,
+   "amount_iqd": 31040,
+   "calls": 9,
+   "investigations": 0,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Given the contractor's clean history and low-risk site type, optional network checks are not required for this trip.",
+   "investigation_log": [],
+   "audit_note": "Decision is RELEASE: pay 9.7 m³ verified (claim 10.0 m³): source visit, presence, dwell, sensor integrity and payee all clean. The measured volume was 9.7 m³ against a claim of 10.0 m³, and the single strongest piece of network evidence is the positive location verification confirming the truck entered the tank zone.",
+   "audit_note_ar": "القرار هو الإفراج: دفع 9.7 متر مكعب متحقق منه (المطالبة 10.0 متر مكعب): زيارة المصدر، الوجود، المكوث، سلامة المستشعر والمستفيد كلها نظيفة. كان الحجم المقاس 9.7 متر مكعب مقابل مطالبة قدرها 10.0 متر مكعب، وأقوى دليل شبكي منفرد هو التحقق الإيجابي من الموقع الذي يؤكد دخول الشاحنة إلى منطقة الخزان.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 9.7,
+    "fill_ratio": 0.97,
+    "tank_room_m3": 16.2,
+    "dwell_min": 28,
+    "rise_window": [
+     "09:41",
+     "10:02"
+    ],
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 21,
+    "min_minutes_to_pump_delta": 20.2,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.8,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": null,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Honest delivery · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "9 checks planned (≈12.5¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 96.9 cm 09:41-10:02 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:41\", \"10:02\"], \"rise_dwell_overlap_min\": 21, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "decide",
+     "text": "RELEASE — pay 9.7 m³ verified (claim 10.0 m³): source visit, presence, dwell, sensor integrity and payee all clean"
+    },
+    {
+     "node": "explain",
+     "text": "Decision is RELEASE: pay 9.7 m³ verified (claim 10.0 m³): source visit, presence, dwell, sensor integrity and payee all clean. The measured volume was 9.7 m³ against a claim of 10.0 m³, and the single strongest piece of network evidence is the positive location verification confirming the truck entered the tank zone."
+    },
+    {
+     "node": "act",
+     "text": "payment webhook → payer ERP: release 9.7 m³ · 31,040 IQD · trip #4821 (stub endpoint, logged)"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 9 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "manipulated_feed",
+   "title": "Manipulated sensor feed",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "sensor feed implausible (98.2 cm in one minute): feed integrity case, no credit",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 12,
+   "investigations": 3,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Both optional checks are selected to investigate the highly anomalous identical SIM signatures for both the truck and the tank.",
+   "investigation_log": [
+    {
+     "round": 1,
+     "contradictions": [
+      "level jumped 98.2 cm in one minute; a pump cannot do that"
+     ],
+     "next": [
+      "tank_reachability"
+     ],
+     "why": "Re-checking the tank sensor can verify if the impossible 98.2 cm level jump was caused by a transient sensor glitch rather than fraud."
+    },
+    {
+     "round": 2,
+     "contradictions": [
+      "level jumped 98.2 cm in one minute; a pump cannot do that"
+     ],
+     "next": [],
+     "why": "The physical level jump of 98.2 cm in one minute is impossible for a pump, confirming a sensor anomaly or data manipulation that cannot be exonerated by payee checks."
+    }
+   ],
+   "audit_note": "The trip is escalated because sensor feed implausible (98.2 cm in one minute): feed integrity case, no credit. The measured volume was 9.8 m3 against a claim of 10.0 m3, supported by the location verification API confirming the truck's presence.",
+   "audit_note_ar": "تم تصعيد الرحلة بسبب تغذية المستشعر غير معقولة (98.2 سم في دقيقة واحدة): حالة سلامة التغذية، لا رصيد. كان الحجم المقاس 9.8 متر مكعب مقابل مطالبة قدرها 10.0 متر مكعب، مدعوماً واجهة برمجة تطبيقات التحقق من الموقع التي تؤكد وجود الشاحنة.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [
+    "level jumped 98.2 cm in one minute; a pump cannot do that"
+   ],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 9.8,
+    "fill_ratio": 0.98,
+    "tank_room_m3": 16.2,
+    "dwell_min": 28,
+    "rise_window": [
+     "09:38",
+     "09:42"
+    ],
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 4,
+    "min_minutes_to_pump_delta": 20.4,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 98.2,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Manipulated sensor feed · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "11 checks planned (≈14.5¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'location_retrieve', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "location_retrieve(+99999991001) → {\"area\": {\"area_type\": \"CIRCLE\", \"center\": {\"latitude\": 47.48627616952785, \"longitude\": 19.07915612501993}, \"radius\": 1000}}  (sandbox simulators report one fixed position; in production this is where the truck went)"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 97.7 cm 09:38-09:42 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.8, \"claimed_m3\": 10.0, \"fill_ratio\": 0.98, \"dwell_min\": 28, \"rise_window\": [\"09:38\", \"09:42\"], \"rise_dwell_overlap_min\": 4, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: level jumped 98.2 cm in one minute; a pump cannot do that"
+    },
+    {
+     "node": "investigate",
+     "text": "round 1: ['reachability_status'] · Re-checking the tank sensor can verify if the impossible 98.2 cm level jump was caused by a transient sensor glitch rather than fraud."
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 97.7 cm 09:38-09:42 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.8, \"claimed_m3\": 10.0, \"fill_ratio\": 0.98, \"dwell_min\": 28, \"rise_window\": [\"09:38\", \"09:42\"], \"rise_dwell_overlap_min\": 4, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: level jumped 98.2 cm in one minute; a pump cannot do that"
+    },
+    {
+     "node": "investigate",
+     "text": "round 2: nothing more the network can tell us; deciding on what we have · The physical level jump of 98.2 cm in one minute is impossible for a pump, confirming a sensor anomaly or data manipulation that cannot be exonerated by payee checks."
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — sensor feed implausible (98.2 cm in one minute): feed integrity case, no credit"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is escalated because sensor feed implausible (98.2 cm in one minute): feed integrity case, no credit. The measured volume was 9.8 m3 against a claim of 10.0 m3, supported by the location verification API confirming the truck's presence."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 12 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "payee_swapped",
+   "title": "Payee number SIM-swapped yesterday",
+   "expect": "BLOCK",
+   "decision": "BLOCK",
+   "reason": "payee number SIM-swapped inside the 72 h window: identity re-check before any payment",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 10,
+   "investigations": 0,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Since the contractor has a clean history and the site is a standard camp, only the low-cost roaming check is added for basic SIM integrity.",
+   "investigation_log": [],
+   "audit_note": "The decision is to BLOCK because the payee number SIM-swapped inside the 72 h window: identity re-check before any payment. The measured delivery of 9,700 litres is within normal metering variance of the claimed 10,000 litres, but network telemetry confirms a SIM swap on the payee's mobile number.",
+   "audit_note_ar": "القرار هو الحظر (BLOCK) لأن: payee number SIM-swapped inside the 72 h window: identity re-check before any payment. الكمية المقاسة البالغة 9,700 لتر تقع ضمن التباين الطبيعي للقياس مقارنة بالكمية المطالب بها البالغة 10,000 لتر، ولكن تظهر أدلة الشبكة حدوث عملية تغيير لشريحة الاتصال لرقم المستلم.",
+   "audit_note_source": "gemini (gemini-3.5-flash)",
+   "contradictions": [],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991000",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 9.7,
+    "fill_ratio": 0.97,
+    "tank_room_m3": 16.2,
+    "dwell_min": 28,
+    "rise_window": [
+     "09:41",
+     "10:02"
+    ],
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 21,
+    "min_minutes_to_pump_delta": 20.2,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.8,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": true,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Payee number SIM-swapped yesterday · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991000) → {\"swapped\": true}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 96.9 cm 09:41-10:02 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:41\", \"10:02\"], \"rise_dwell_overlap_min\": 21, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": true, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "decide",
+     "text": "BLOCK — payee number SIM-swapped inside the 72 h window: identity re-check before any payment"
+    },
+    {
+     "node": "explain",
+     "text": "The decision is to BLOCK because the payee number SIM-swapped inside the 72 h window: identity re-check before any payment. The measured delivery of 9,700 litres is within normal metering variance of the claimed 10,000 litres, but network telemetry confirms a SIM swap on the payee's mobile number."
+    },
+    {
+     "node": "act",
+     "text": "payment blocked; identity re-check ticket to the payer's finance desk; nothing sent to the payee's number"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 10 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "sensor_contradicts_network",
+   "title": "The agent doubts its own sensor",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "measurement not believed: tank rose 09:05-09:27 while the operator puts the truck in the zone 09:35-10:03; not credited to this truck; possible unregistered delivery or manipulated trace",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 10,
+   "investigations": 3,
+   "llm": "gemini (gemini-3.5-flash)",
+   "planner_note": "Contractor history is clean and site type is camp, so no optional checks are needed.",
+   "investigation_log": [
+    {
+     "round": 1,
+     "contradictions": [
+      "tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03"
+     ],
+     "next": [
+      "truck_location_retrieve"
+     ],
+     "why": "Retrieving the exact operator sighting or GPS trail could clarify if there was a clock drift or delayed arrival explaining the 8-minute gap."
+    },
+    {
+     "round": 2,
+     "contradictions": [
+      "tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03"
+     ],
+     "next": [],
+     "why": "The timing contradiction between the tank rise and truck arrival is irreconcilable by further network checks."
+    }
+   ],
+   "audit_note": "The trip is escalated because measurement is not believed: tank rose 09:05-09:27 while the operator puts the truck in the zone 09:35-10:03; not credited to this truck; possible unregistered delivery or manipulated trace. The measured volume is 9.7 m³ against a claimed 10.0 m³, supported by CAMARA geofencing event logs showing a complete mismatch between the tank rise window and the truck dwell window.",
+   "audit_note_ar": "تم تصعيد الرحلة لعدم الاعتقاد بالقياس: ارتفع الخزان من 09:05 إلى 09:27 بينما دخلت الشاحنة المنطقة في 09:35-10:03؛ لم يتم نسبها لهذه الشاحنة؛ احتمال وجود تسليم غير مسجل أو أثر تم التلاعب به. الحجم المقاس هو 9.7 متر مكعب مقابل 10.0 متر مكعب مطالب بها، مدعوماً بسجلات أحداث التطويق الجغرافي من كامارا التي تظهر عدم تطابق تام بين نافذة ارتفاع الخزان ونافذة تواجد الشاحنة.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [
+    "tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03"
+   ],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 9.7,
+    "fill_ratio": 0.97,
+    "tank_room_m3": 16.2,
+    "dwell_min": 28,
+    "rise_window": [
+     "09:05",
+     "09:27"
+    ],
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 0,
+    "min_minutes_to_pump_delta": 20.2,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.3,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": null,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "The agent doubts its own sensor · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "9 checks planned (≈12.5¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 97.4 cm 09:05-09:27 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:05\", \"09:27\"], \"rise_dwell_overlap_min\": 0, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03"
+    },
+    {
+     "node": "investigate",
+     "text": "round 1: ['location_retrieve'] · Retrieving the exact operator sighting or GPS trail could clarify if there was a clock drift or delayed arrival explaining the 8-minute gap."
+    },
+    {
+     "node": "verify",
+     "text": "location_retrieve(+99999991001) → {\"area\": {\"area_type\": \"CIRCLE\", \"center\": {\"latitude\": 47.48627616952785, \"longitude\": 19.07915612501993}, \"radius\": 1000}}  (sandbox simulators report one fixed position; in production this is where the truck went)"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 97.4 cm 09:05-09:27 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:05\", \"09:27\"], \"rise_dwell_overlap_min\": 0, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03"
+    },
+    {
+     "node": "investigate",
+     "text": "round 2: nothing more the network can tell us; deciding on what we have · The timing contradiction between the tank rise and truck arrival is irreconcilable by further network checks."
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — measurement not believed: tank rose 09:05-09:27 while the operator puts the truck in the zone 09:35-10:03; not credited to this truck; possible unregistered delivery or manipulated trace"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is escalated because measurement is not believed: tank rose 09:05-09:27 while the operator puts the truck in the zone 09:35-10:03; not credited to this truck; possible unregistered delivery or manipulated trace. The measured volume is 9.7 m³ against a claimed 10.0 m³, supported by CAMARA geofencing event logs showing a complete mismatch between the tank rise window and the truck dwell window."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 10 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "sensor_offline",
+   "title": "Sensor offline: unverified, not fraud",
+   "expect": "HOLD",
+   "decision": "HOLD",
+   "reason": "tank sensor unreachable: unverified, not fraud; maintenance ticket raised; this trip goes to the F-306 paper process; device-swap flag on the sensor SIM attached to the ticket for a security check",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 10,
+   "investigations": 0,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Since the contractor has a clean history and the site is a low-risk camp, only the low-cost roaming check is added for basic telemetry validation.",
+   "investigation_log": [],
+   "audit_note": "The trip is placed on hold because the tank sensor is unreachable, unverified, and not fraud; a maintenance ticket has been raised, routing this trip to the F-306 paper process with a device-swap flag attached to the sensor SIM for a security check. The measured volume is 0.0 m³ against a claimed 10.0 m³, and the single strongest piece of network evidence is the device swap check showing the tank sensor SIM was swapped.",
+   "audit_note_ar": "تم وضع الرحلة في حالة تعليق لأن مستشعر الخزان غيرreachable وغير محقق وليس احتيالاً؛ تم رفع تذكرة صيانة لتحويل هذه الرحلة إلى عملية الورق F-306 مع إرفاق علامة تبديل الجهاز بشريحة المستشعر لإجراء فحص أمني. الحجم المقاس هو 0.0 متر مكعب مقابل 10.0 متر مكعب مطالب بها، وأقوى دليل شبكي واحد هو فحص تبديل الجهاز الذي يوضح أن شريحة مستشعر الخزان قد تم تبديلها.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991003",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 0.0,
+    "fill_ratio": 0.0,
+    "tank_room_m3": null,
+    "dwell_min": 28,
+    "rise_window": null,
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 0,
+    "min_minutes_to_pump_delta": 0.0,
+    "turbidity_ntu": null,
+    "max_step_cm": 0.0,
+    "sensor_online": false,
+    "sensor_in_place": "PARTIAL",
+    "sensor_swapped": true,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Sensor offline: unverified, not fraud · trip #4821 · T-14 +99999991001 → tank K7 +99999991003 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991003) → {\"reachable\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991003, K1) → {\"verification_result\": \"PARTIAL\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991003) → {\"swapped\": true}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7: no samples received in the delivery window (sensor offline)"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 0.0, \"claimed_m3\": 10.0, \"fill_ratio\": 0.0, \"dwell_min\": 28, \"rise_window\": null, \"rise_dwell_overlap_min\": 0, \"turbidity_ntu\": null, \"sensor_online\": false, \"sensor_in_place\": \"PARTIAL\", \"sensor_swapped\": true, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "decide",
+     "text": "HOLD — tank sensor unreachable: unverified, not fraud; maintenance ticket raised; this trip goes to the F-306 paper process; device-swap flag on the sensor SIM attached to the ticket for a security check"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is placed on hold because the tank sensor is unreachable, unverified, and not fraud; a maintenance ticket has been raised, routing this trip to the F-306 paper process with a device-swap flag attached to the sensor SIM for a security check. The measured volume is 0.0 m³ against a claimed 10.0 m³, and the single strongest piece of network evidence is the device swap check showing the tank sensor SIM was swapped."
+    },
+    {
+     "node": "act",
+     "text": "hold 10.0 m³ claim; pay 0.0 m³ verified now; contractor notified with the trace (never a household)"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 10 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "sensor_tamper",
+   "title": "Sensor SIM moved into another device",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "tank sensor SIM moved into another device or no longer at its install point: tamper case",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 10,
+   "investigations": 0,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Added roaming check due to low cost and clean history on a camp delivery.",
+   "investigation_log": [],
+   "audit_note": "The trip is escalated because the tank sensor SIM moved into another device or no longer at its install point: tamper case. The measured volume was 9,700 litres against a claim of 10,000 litres, supported by the device swap check showing the tank sensor was swapped.",
+   "audit_note_ar": "تم تصعيد الرحلة لأن شريحة مستشعر الخزان انتقلت إلى جهاز آخر أو لم تعد في نقطة تثبيتها: حالة تلاعب. بلغ الحجم المقاس 9,700 لتراً مقابل مطالبة بـ 10,000 لتراً، مدعوماً بفحص تبديل الجهاز الذي أظهر أن مستشعر الخزان قد تم تبديله.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991000",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 9.7,
+    "fill_ratio": 0.97,
+    "tank_room_m3": 16.2,
+    "dwell_min": 28,
+    "rise_window": [
+     "09:41",
+     "10:02"
+    ],
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 21,
+    "min_minutes_to_pump_delta": 20.2,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.8,
+    "sensor_online": true,
+    "sensor_in_place": "FALSE",
+    "sensor_swapped": true,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Sensor SIM moved into another device · trip #4821 · T-14 +99999991001 → tank K7 +99999991000 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991000) → {\"reachable\": true, \"connectivity\": [\"SMS\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991000, K1) → {\"verification_result\": \"FALSE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991000) → {\"swapped\": true}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 96.9 cm 09:41-10:02 · turbidity max 1.2 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:41\", \"10:02\"], \"rise_dwell_overlap_min\": 21, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"FALSE\", \"sensor_swapped\": true, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — tank sensor SIM moved into another device or no longer at its install point: tamper case"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is escalated because the tank sensor SIM moved into another device or no longer at its install point: tamper case. The measured volume was 9,700 litres against a claim of 10,000 litres, supported by the device swap check showing the tank sensor was swapped."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 10 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "short_fill",
+   "title": "Short fill: 6 of 10",
+   "expect": "HOLD",
+   "decision": "HOLD",
+   "reason": "short fill: 6.0 of 10.0 m³; pay verified litres only, pending contractor response",
+   "pay_m3": 6.0,
+   "amount_iqd": 19200,
+   "calls": 12,
+   "investigations": 3,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Contractor history is clean and site type is camp, so only the low-cost roaming check is added for basic SIM validation.",
+   "investigation_log": [
+    {
+     "round": 1,
+     "contradictions": [
+      "claimed 10.0 m³, measured 6.0 m³"
+     ],
+     "next": [
+      "truck_location_retrieve"
+     ],
+     "why": "Checking the operator's last observed location for the truck can help verify if it delivered part of the load or was obstructed, potentially exonerating the contractor."
+    },
+    {
+     "round": 2,
+     "contradictions": [
+      "claimed 10.0 m³, measured 6.0 m³"
+     ],
+     "next": [
+      "tank_reachability"
+     ],
+     "why": "Re-checking the sensor health could verify if a measurement glitch caused the apparent 4.0 m3 deficit, potentially exonerating the contractor."
+    },
+    {
+     "round": 3,
+     "contradictions": [
+      "claimed 10.0 m³, measured 6.0 m³"
+     ],
+     "next": [],
+     "why": "The physical delivery measurement shows a significant discrepancy of 4.0 m³ that cannot be resolved by network or device checks."
+    }
+   ],
+   "audit_note": "Decision is HOLD due to short fill: 6.0 of 10.0 m³; pay verified litres only, pending contractor response. The measured delivery was 6000 litres against a claim of 10000 litres, supported by the CAMARA geofence subscription event confirming the truck entry and exit timestamps.",
+   "audit_note_ar": "القرار هو تعليق بسبب النقص في التعبئة: 6.0 من 10.0 متر مكعب؛ يتم دفع اللترات التي تم التحقق منها فقط، في انتظار رد المقاول. بلغ قياس التسليم 6000 لتراً مقابل مطالبة قدرها 10000 لتراً، مدعوماً بحدث اشتراك النطاق الجغرافي من CAMARA الذي يؤكد الطابع الزمني لدخول الشاحنة وخروجها.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [
+    "claimed 10.0 m³, measured 6.0 m³"
+   ],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "09:52"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 6.0,
+    "fill_ratio": 0.6,
+    "tank_room_m3": 16.2,
+    "dwell_min": 17,
+    "rise_window": [
+     "09:40",
+     "09:55"
+    ],
+    "dwell_window": [
+     "09:35",
+     "09:52"
+    ],
+    "rise_dwell_overlap_min": 12,
+    "min_minutes_to_pump_delta": 12.5,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.1,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Short fill: 6 of 10 · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:52 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 60.0 cm 09:40-09:55 · turbidity max 1.2 NTU · truck dwell 09:35-09:52"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 6.0, \"claimed_m3\": 10.0, \"fill_ratio\": 0.6, \"dwell_min\": 17, \"rise_window\": [\"09:40\", \"09:55\"], \"rise_dwell_overlap_min\": 12, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: claimed 10.0 m³, measured 6.0 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 1: ['location_retrieve'] · Checking the operator's last observed location for the truck can help verify if it delivered part of the load or was obstructed, potentially exonerating the contractor."
+    },
+    {
+     "node": "verify",
+     "text": "location_retrieve(+99999991001) → {\"area\": {\"area_type\": \"CIRCLE\", \"center\": {\"latitude\": 47.48627616952785, \"longitude\": 19.07915612501993}, \"radius\": 1000}}  (sandbox simulators report one fixed position; in production this is where the truck went)"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 60.0 cm 09:40-09:55 · turbidity max 1.2 NTU · truck dwell 09:35-09:52"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 6.0, \"claimed_m3\": 10.0, \"fill_ratio\": 0.6, \"dwell_min\": 17, \"rise_window\": [\"09:40\", \"09:55\"], \"rise_dwell_overlap_min\": 12, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: claimed 10.0 m³, measured 6.0 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 2: ['reachability_status'] · Re-checking the sensor health could verify if a measurement glitch caused the apparent 4.0 m3 deficit, potentially exonerating the contractor."
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 60.0 cm 09:40-09:55 · turbidity max 1.2 NTU · truck dwell 09:35-09:52"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 6.0, \"claimed_m3\": 10.0, \"fill_ratio\": 0.6, \"dwell_min\": 17, \"rise_window\": [\"09:40\", \"09:55\"], \"rise_dwell_overlap_min\": 12, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: claimed 10.0 m³, measured 6.0 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 3: nothing more the network can tell us; deciding on what we have · The physical delivery measurement shows a significant discrepancy of 4.0 m³ that cannot be resolved by network or device checks."
+    },
+    {
+     "node": "decide",
+     "text": "HOLD — short fill: 6.0 of 10.0 m³; pay verified litres only, pending contractor response"
+    },
+    {
+     "node": "explain",
+     "text": "Decision is HOLD due to short fill: 6.0 of 10.0 m³; pay verified litres only, pending contractor response. The measured delivery was 6000 litres against a claim of 10000 litres, supported by the CAMARA geofence subscription event confirming the truck entry and exit timestamps."
+    },
+    {
+     "node": "act",
+     "text": "hold 10.0 m³ claim; pay 6.0 m³ verified now; contractor notified with the trace (never a household)"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 12 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "substitution",
+   "title": "Substitution: clean load sold, dirty water dumped",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "turbidity 41.0 NTU > 5: untreated water delivered, contracted load diverted",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 11,
+   "investigations": 3,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Since the contractor history is clean and the site is a camp, only a low-cost roaming check is added to verify the SIM status.",
+   "investigation_log": [
+    {
+     "round": 1,
+     "contradictions": [
+      "turbidity 41.0 NTU during the fill; contracted source is treated water"
+     ],
+     "next": [
+      "tank_reachability"
+     ],
+     "why": "Re-checking the sensor can determine if the high turbidity reading is a faulty sensor artifact rather than actual contaminated water from an honest contractor."
+    },
+    {
+     "round": 2,
+     "contradictions": [
+      "turbidity 41.0 NTU during the fill; contracted source is treated water"
+     ],
+     "next": [],
+     "why": "High turbidity with a treated water source points to physical delivery issues rather than network or payee anomalies, so no further network checks can exonerate the contractor."
+    }
+   ],
+   "audit_note": "Trip escalated because turbidity 41.0 NTU > 5: untreated water delivered, contracted load diverted. Measured volume was 9700 litres against 10000 claimed, with CAMARA geofence subscriptions confirming the truck entered and left the designated area.",
+   "audit_note_ar": "تم تصعيد الرحلة لأن العكارة 41.0 NTU > 5: تم تسليم مياه غير معالجة وتحويل الحمولة المتعاقد عليها. بلغ الحجم المقاس 9700 لترا مقابل 10000 لترا المطالب بها، مع تأكيد اشتراكات السياج الجغرافي من CAMARA دخول الشاحنة وخروجها من المنطقة المحددة.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [
+    "turbidity 41.0 NTU during the fill; contracted source is treated water"
+   ],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "10:03"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 9.7,
+    "fill_ratio": 0.97,
+    "tank_room_m3": 16.2,
+    "dwell_min": 28,
+    "rise_window": [
+     "09:41",
+     "10:02"
+    ],
+    "dwell_window": [
+     "09:35",
+     "10:03"
+    ],
+    "rise_dwell_overlap_min": 21,
+    "min_minutes_to_pump_delta": 20.2,
+    "turbidity_ntu": 41.0,
+    "max_step_cm": 7.8,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Substitution: clean load sold, dirty water dumped · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 10:03 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 96.9 cm 09:41-10:02 · turbidity max 41.0 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:41\", \"10:02\"], \"rise_dwell_overlap_min\": 21, \"turbidity_ntu\": 41.0, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: turbidity 41.0 NTU during the fill; contracted source is treated water"
+    },
+    {
+     "node": "investigate",
+     "text": "round 1: ['reachability_status'] · Re-checking the sensor can determine if the high turbidity reading is a faulty sensor artifact rather than actual contaminated water from an honest contractor."
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 96.9 cm 09:41-10:02 · turbidity max 41.0 NTU · truck dwell 09:35-10:03"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 9.7, \"claimed_m3\": 10.0, \"fill_ratio\": 0.97, \"dwell_min\": 28, \"rise_window\": [\"09:41\", \"10:02\"], \"rise_dwell_overlap_min\": 21, \"turbidity_ntu\": 41.0, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: turbidity 41.0 NTU during the fill; contracted source is treated water"
+    },
+    {
+     "node": "investigate",
+     "text": "round 2: nothing more the network can tell us; deciding on what we have · High turbidity with a treated water source points to physical delivery issues rather than network or payee anomalies, so no further network checks can exonerate the contractor."
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — turbidity 41.0 NTU > 5: untreated water delivered, contracted load diverted"
+    },
+    {
+     "node": "explain",
+     "text": "Trip escalated because turbidity 41.0 NTU > 5: untreated water delivered, contracted load diverted. Measured volume was 9700 litres against 10000 claimed, with CAMARA geofence subscriptions confirming the truck entered and left the designated area."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 11 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "tank_full",
+   "title": "Tank was nearly full: 5.8 m³ was all it could take",
+   "expect": "RELEASE",
+   "decision": "RELEASE",
+   "reason": "tank could only take 6.0 m³: pay 5.8 m³ verified; flag dispatch over-scheduling, not the contractor",
+   "pay_m3": 5.8,
+   "amount_iqd": 18560,
+   "calls": 11,
+   "investigations": 3,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Purchasing truck location tracking to investigate the identical SIMs registered for both the truck and the tank.",
+   "investigation_log": [
+    {
+     "round": 1,
+     "contradictions": [
+      "claimed 10.0 m³, measured 5.8 m³"
+     ],
+     "next": [
+      "tank_reachability"
+     ],
+     "why": "Re-checking the tank sensor could verify if the physical capacity limit of 6.0 m3 caused the lower measured volume despite a 10.0 m3 delivery."
+    },
+    {
+     "round": 2,
+     "contradictions": [
+      "claimed 10.0 m³, measured 5.8 m³"
+     ],
+     "next": [],
+     "why": "The tank room capacity is only 6.0 m3, which physically limits the delivery and explains the measured 5.8 m3 without contractor fault."
+    }
+   ],
+   "audit_note": "Decision is RELEASE because the tank could only take 6.0 m³: pay 5.8 m³ verified; flag dispatch over-scheduling, not the contractor. The measured volume is 5,800 litres against a claimed 10,000 litres, supported by the CAMARA geofence subscription API confirming the truck entered and left the tank zone correctly.",
+   "audit_note_ar": "القرار هو الإصدار لأن الخزان يمكن أن يستوعب 6.0 متر مكعب فقط: دفع 5.8 متر مكعب متحقق منه؛ الإبلاغ عن الإفراط في جدولة الإرسال وليس المقاول. الحجم المقاس هو 5800 لتر مقابل 10000 لتر مطالب بها، مدعوماً بواجهة برمجة تطبيقات اشتراك السياق الجغرافي CAMARA التي تؤكد دخول الشاحنة وخروجها من منطقة الخزان بشكل صحيح.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [
+    "claimed 10.0 m³, measured 5.8 m³"
+   ],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "09:51"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 5.8,
+    "fill_ratio": 0.58,
+    "tank_room_m3": 6.0,
+    "dwell_min": 16,
+    "rise_window": [
+     "09:40",
+     "09:54"
+    ],
+    "dwell_window": [
+     "09:35",
+     "09:51"
+    ],
+    "rise_dwell_overlap_min": 11,
+    "min_minutes_to_pump_delta": 12.1,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.2,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": null,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Tank was nearly full: 5.8 m³ was all it could take · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈14.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'location_retrieve']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "location_retrieve(+99999991001) → {\"area\": {\"area_type\": \"CIRCLE\", \"center\": {\"latitude\": 47.48627616952785, \"longitude\": 19.07915612501993}, \"radius\": 1000}}  (sandbox simulators report one fixed position; in production this is where the truck went)"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:51 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 140.3 cm at 08:30 · rose 57.8 cm 09:40-09:54 · turbidity max 1.2 NTU · truck dwell 09:35-09:51"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 5.8, \"claimed_m3\": 10.0, \"fill_ratio\": 0.58, \"dwell_min\": 16, \"rise_window\": [\"09:40\", \"09:54\"], \"rise_dwell_overlap_min\": 11, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: claimed 10.0 m³, measured 5.8 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 1: ['reachability_status'] · Re-checking the tank sensor could verify if the physical capacity limit of 6.0 m3 caused the lower measured volume despite a 10.0 m3 delivery."
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 140.3 cm at 08:30 · rose 57.8 cm 09:40-09:54 · turbidity max 1.2 NTU · truck dwell 09:35-09:51"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 5.8, \"claimed_m3\": 10.0, \"fill_ratio\": 0.58, \"dwell_min\": 16, \"rise_window\": [\"09:40\", \"09:54\"], \"rise_dwell_overlap_min\": 11, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: claimed 10.0 m³, measured 5.8 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 2: nothing more the network can tell us; deciding on what we have · The tank room capacity is only 6.0 m3, which physically limits the delivery and explains the measured 5.8 m3 without contractor fault."
+    },
+    {
+     "node": "decide",
+     "text": "RELEASE — tank could only take 6.0 m³: pay 5.8 m³ verified; flag dispatch over-scheduling, not the contractor"
+    },
+    {
+     "node": "explain",
+     "text": "Decision is RELEASE because the tank could only take 6.0 m³: pay 5.8 m³ verified; flag dispatch over-scheduling, not the contractor. The measured volume is 5,800 litres against a claimed 10,000 litres, supported by the CAMARA geofence subscription API confirming the truck entered and left the tank zone correctly."
+    },
+    {
+     "node": "act",
+     "text": "payment webhook → payer ERP: release 5.8 m³ · 18,560 IQD · trip #4821 (stub endpoint, logged)"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 11 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "trip_inflation",
+   "title": "Trip inflation: 4th delivery off one 10 m³ load",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "9.8 + 8.0 m³ credited since the last source visit exceeds the 10.0 m³ truck: trip inflation",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 11,
+   "investigations": 3,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Added roaming check for fleet SIM verification, skipping location tracking due to clean contractor history and low risk camp site.",
+   "investigation_log": [
+    {
+     "round": 1,
+     "contradictions": [
+      "9.8 m³ already credited since last source visit; capacity 10.0 m³"
+     ],
+     "next": [
+      "truck_location_retrieve"
+     ],
+     "why": "Retrieving the truck's last seen location may help verify if a source visit actually occurred but was not registered, potentially exonerating the contractor."
+    },
+    {
+     "round": 2,
+     "contradictions": [
+      "9.8 m³ already credited since last source visit; capacity 10.0 m³"
+     ],
+     "next": [],
+     "why": "The tank capacity is already exceeded by previously credited volume plus the current claim, leaving no physical room for the delivery."
+    }
+   ],
+   "audit_note": "The trip is escalated because 9.8 + 8.0 m³ credited since the last source visit exceeds the 10.0 m³ truck: trip inflation. The measured delivery is 8,000 litres against a claim of 8,000 litres, and network evidence confirms the truck location verification returned true.",
+   "audit_note_ar": "تم تصعيد الرحلة لأن حجم 9.8 + 8.0 متر مكعب المعتمد منذ آخر زيارة للمصدر يتجاوز سعة الشاحنة البالغة 10.0 متر مكعب: تضخم الرحلة. الكمية المقاسة هي 8,000 لتر مقابل المطالبة بـ 8,000 لتر، وتؤكد أدلة الشبكة أن التحقق من موقع الشاحنة كان صحيحاً.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [
+    "9.8 m³ already credited since last source visit; capacity 10.0 m³"
+   ],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 8.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 9.8
+   },
+   "network": {
+    "S1": null,
+    "K1": {
+     "entered": "09:35",
+     "left": "09:55"
+    }
+   },
+   "signals": {
+    "claimed_m3": 8.0,
+    "delta_m3": 8.0,
+    "fill_ratio": 1.0,
+    "tank_room_m3": 16.2,
+    "dwell_min": 20,
+    "rise_window": [
+     "09:40",
+     "09:59"
+    ],
+    "dwell_window": [
+     "09:35",
+     "09:55"
+    ],
+    "rise_dwell_overlap_min": 15,
+    "min_minutes_to_pump_delta": 16.7,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 7.1,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": false,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": false,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Trip inflation: 4th delivery off one 10 m³ load · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 8.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock: no area-entered for S1 on +99999991001 (the operator never saw this SIM in the zone)"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:55 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 80.0 cm 09:40-09:59 · turbidity max 1.2 NTU · truck dwell 09:35-09:55"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 8.0, \"claimed_m3\": 8.0, \"fill_ratio\": 1.0, \"dwell_min\": 20, \"rise_window\": [\"09:40\", \"09:59\"], \"rise_dwell_overlap_min\": 15, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": false, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: 9.8 m³ already credited since last source visit; capacity 10.0 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 1: ['location_retrieve'] · Retrieving the truck's last seen location may help verify if a source visit actually occurred but was not registered, potentially exonerating the contractor."
+    },
+    {
+     "node": "verify",
+     "text": "location_retrieve(+99999991001) → {\"area\": {\"area_type\": \"CIRCLE\", \"center\": {\"latitude\": 47.48627616952785, \"longitude\": 19.07915612501993}, \"radius\": 1000}}  (sandbox simulators report one fixed position; in production this is where the truck went)"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · rose 80.0 cm 09:40-09:59 · turbidity max 1.2 NTU · truck dwell 09:35-09:55"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 8.0, \"claimed_m3\": 8.0, \"fill_ratio\": 1.0, \"dwell_min\": 20, \"rise_window\": [\"09:40\", \"09:59\"], \"rise_dwell_overlap_min\": 15, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": false, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "score",
+     "text": "does not fit: 9.8 m³ already credited since last source visit; capacity 10.0 m³"
+    },
+    {
+     "node": "investigate",
+     "text": "round 2: nothing more the network can tell us; deciding on what we have · The tank capacity is already exceeded by previously credited volume plus the current claim, leaving no physical room for the delivery."
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — 9.8 + 8.0 m³ credited since the last source visit exceeds the 10.0 m³ truck: trip inflation"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is escalated because 9.8 + 8.0 m³ credited since the last source visit exceeds the 10.0 m³ truck: trip inflation. The measured delivery is 8,000 litres against a claim of 8,000 litres, and network evidence confirms the truck location verification returned true."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 11 operator calls cited"
+    }
+   ]
+  },
+  {
+   "id": "valve_closed",
+   "title": "Showed up, never opened the valve",
+   "expect": "ESCALATE",
+   "decision": "ESCALATE",
+   "reason": "truck dwelt 22 min in the tank zone and the level did not move: no water delivered",
+   "pay_m3": 0.0,
+   "amount_iqd": 0,
+   "calls": 10,
+   "investigations": 0,
+   "llm": "gemini (gemini-3.5-flash-lite)",
+   "planner_note": "Since the contractor has a clean history and the site is a standard camp, only the low-cost roaming check is added for basic anomaly screening.",
+   "investigation_log": [],
+   "audit_note": "The trip is escalated because the truck dwelt 22 min in the tank zone and the level did not move: no water delivered. The measured volume is 0.0 m³ against a claim of 10.0 m³, supported by CAMARA geofencing subscriptions confirming zero rise during the dwell window.",
+   "audit_note_ar": "تم تصعيد الرحلة لأن الشاحنة مكثت لمدة 22 دقيقة في منطقة الخزان ولم يتحرك مستوى الماء: لم يتم تسليم أي مياه. الحجم المقاس هو 0.0 متر مكعب مقابل مطالبة بـ 10.0 متر مكعب، مدعوماً باشتراكات التحديد الجغرافي من كامارا التي تؤكد عدم وجود أي ارتفاع خلال فترة المكوث.",
+   "audit_note_source": "gemini (gemini-3.5-flash-lite)",
+   "contradictions": [],
+   "trip": {
+    "trip_id": "4821",
+    "contractor": "Al-Furat Water Transport",
+    "contractor_history": "clean",
+    "site_type": "camp",
+    "truck_id": "T-14",
+    "truck_sim": "+99999991001",
+    "truck_capacity_m3": 10.0,
+    "source_id": "S1",
+    "tank_id": "K7",
+    "tank_sim": "+99999991001",
+    "payee_msisdn": "+99999991001",
+    "claimed_m3": 10.0,
+    "scheduled": "08:40",
+    "credited_since_source_m3": 0.0
+   },
+   "network": {
+    "S1": {
+     "entered": "08:41",
+     "left": "08:58"
+    },
+    "K1": {
+     "entered": "09:35",
+     "left": "09:57"
+    }
+   },
+   "signals": {
+    "claimed_m3": 10.0,
+    "delta_m3": 0.0,
+    "fill_ratio": 0.0,
+    "tank_room_m3": 16.2,
+    "dwell_min": 22,
+    "rise_window": null,
+    "dwell_window": [
+     "09:35",
+     "09:57"
+    ],
+    "rise_dwell_overlap_min": 0,
+    "min_minutes_to_pump_delta": 0.0,
+    "turbidity_ntu": 1.2,
+    "max_step_cm": 0.9,
+    "sensor_online": true,
+    "sensor_in_place": "TRUE",
+    "sensor_swapped": false,
+    "payee_swapped": false,
+    "capacity_ok": true,
+    "truck_location_verify": "TRUE",
+    "truck_roaming": false,
+    "truck_roaming_country": null,
+    "source_visited": true,
+    "truck_entered_tank_zone": true
+   },
+   "steps": [
+    {
+     "node": "intake",
+     "text": "Showed up, never opened the valve · trip #4821 · T-14 +99999991001 → tank K7 +99999991001 · claim 10.0 m³ · scheduled 08:40 · site camp · contractor Al-Furat Water Transport (clean history)"
+    },
+    {
+     "node": "intake",
+     "text": "order of evidence: the operator's network first (external, timestamped), then our sensor (corroborated or rejected against the network), then the payee's number before any money moves"
+    },
+    {
+     "node": "plan",
+     "text": "10 checks planned (≈13.0¢): ['geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'geofence_subscribe', 'location_verify', 'reachability_status', 'location_verify', 'device_swap_check', 'sim_swap_check', 'roaming_status']"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, S1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-entered\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\":"
+    },
+    {
+     "node": "verify",
+     "text": "geofence_subscribe(+99999991001, K1) → {\"types\": [\"org.camaraproject.geofencing-subscriptions.v0.area-left\"], \"config\": {\"subscription_detail\": {\"device\": {\"phone_number\": \"+99999991001\"}, \"area\": {\""
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "reachability_status(+99999991001) → {\"reachable\": true, \"connectivity\": [\"DATA\"]}"
+    },
+    {
+     "node": "verify",
+     "text": "location_verify(+99999991001, K1) → {\"verification_result\": \"TRUE\"}"
+    },
+    {
+     "node": "verify",
+     "text": "device_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "sim_swap_check(+99999991001) → {\"swapped\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "roaming_status(+99999991001) → {\"roaming\": false}"
+    },
+    {
+     "node": "verify",
+     "text": "4 subscriptions registered with sink https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara; this process has no receiver (CLI run), so events are not awaited; the dashboard server shows them arriving"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:41 area-entered · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 08:58 area-left · S1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:35 area-entered · K1 · +99999991001"
+    },
+    {
+     "node": "verify",
+     "text": "⇐ trip clock 09:57 area-left · K1 · +99999991001"
+    },
+    {
+     "node": "sense",
+     "text": "tank K7 level 38.4 cm at 08:30 · flat · turbidity max 1.2 NTU · truck dwell 09:35-09:57"
+    },
+    {
+     "node": "score",
+     "text": "{\"delta_m3\": 0.0, \"claimed_m3\": 10.0, \"fill_ratio\": 0.0, \"dwell_min\": 22, \"rise_window\": null, \"rise_dwell_overlap_min\": 0, \"turbidity_ntu\": 1.2, \"sensor_online\": true, \"sensor_in_place\": \"TRUE\", \"sensor_swapped\": false, \"payee_swapped\": false, \"capacity_ok\": true, \"truck_location_verify\": \"TRUE\"}"
+    },
+    {
+     "node": "decide",
+     "text": "ESCALATE — truck dwelt 22 min in the tank zone and the level did not move: no water delivered"
+    },
+    {
+     "node": "explain",
+     "text": "The trip is escalated because the truck dwelt 22 min in the tank zone and the level did not move: no water delivered. The measured volume is 0.0 m³ against a claim of 10.0 m³, supported by CAMARA geofencing subscriptions confirming zero rise during the dwell window."
+    },
+    {
+     "node": "act",
+     "text": "case opened for the payer's supervisor with the full trace; contractor notified; no payment"
+    },
+    {
+     "node": "act",
+     "text": "ledger written · F-306-compatible export ready · 10 operator calls cited"
+    }
+   ]
+  }
+ ]
+}

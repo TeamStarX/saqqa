@@ -1,0 +1,19 @@
+# One-click deployment on Render (free web service). Set the secrets in the dashboard after the first deploy:
+#   NAC_API_KEY, GOOGLE_API_KEY (or GROQ_API_KEY), PUBLIC_BASE_URL=https://<service>.onrender.com
+services:
+  - type: web
+    name: saqqa
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/status
+    envVars:
+      - key: NAC_MODE
+        value: auto
+      - key: NAC_API_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false

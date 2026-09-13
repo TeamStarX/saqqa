@@ -1,0 +1,40 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1200,
+      "h": 800,
+      "title": "A · Paper (matches the deck)"
+    },
+    {
+      "file": "DirectionB.dc.html",
+      "x": 1300,
+      "y": 0,
+      "w": 1200,
+      "h": 800,
+      "title": "B · Instrument (monochrome readout)"
+    },
+    {
+      "file": "DirectionC.dc.html",
+      "x": 2600,
+      "y": 0,
+      "w": 1200,
+      "h": 800,
+      "title": "C · Ledger (table first)"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "brief",
+      "x": 0,
+      "y": -340,
+      "w": 620,
+      "text": "Saqqa dashboard restyle · three minimal directions, sketch fidelity.\nA Paper: the deck's own system (paper, ink, one blue, hairlines, no cards). Coherent across deck, video and demo; quietest.\nB Instrument: dark monochrome readout, one colour reserved for the decision. Closest to today's layout, all badges and pills removed; best on video.\nC Ledger: the twelve trips as a financial ledger first, evidence beneath. Strongest for an auditor; least visual for a demo.\nReferences: Linear, Stripe, Vercel, Notion — typography-led, whitespace as the design, one accent."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

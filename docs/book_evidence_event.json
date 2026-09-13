@@ -1,0 +1,30 @@
+{
+ "received": "2026-09-03T18:18:30Z",
+ "type": "org.camaraproject.geofencing-subscriptions.v0.area-entered",
+ "device": "+99999991001",
+ "headers": {
+  "content-type": "application/json"
+ },
+ "body": {
+  "id": "bf14a421-c993-4492-af9f-af791f18549c",
+  "source": "/geofencing-subscriptions/v0.3/subscriptions/61506e59-0906-478c-99f5-41d3615cbc1f",
+  "type": "org.camaraproject.geofencing-subscriptions.v0.area-entered",
+  "specversion": "1.0",
+  "datacontenttype": "application/json",
+  "time": "2026-09-03T18:18:29.826055Z",
+  "data": {
+   "subscriptionId": "61506e59-0906-478c-99f5-41d3615cbc1f",
+   "device": {
+    "phoneNumber": "+99999991001"
+   },
+   "area": {
+    "areaType": "CIRCLE",
+    "center": {
+     "latitude": 30.389,
+     "longitude": 47.708
+    },
+    "radius": 2000
+   }
+  }
+ }
+}

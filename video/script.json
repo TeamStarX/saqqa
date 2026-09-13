@@ -1,0 +1,76 @@
+{
+  "title": "Saqqa: network-attested delivery and payment for trucked water",
+  "voice_direction": "A calm, confident documentary narrator. British or neutral international English. Conversational pace, natural pauses at full stops, no sales energy, no upward inflection at the end of sentences. Numbers spoken as words.",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "scenes": [
+    {
+      "id": "01_open",
+      "kind": "card",
+      "narration": "Across the Middle East, millions of people get their water by truck. And every one of those deliveries is paid for on the word of the person being paid.",
+      "on_screen": "A water delivery is paid for on the word of the person being paid.",
+      "target_seconds": 9
+    },
+    {
+      "id": "02_problem",
+      "kind": "card",
+      "narration": "A tanker arrives, someone signs a form, and the money moves. Nobody measured the water. In Jordan alone that is a hundred and seventy-six million dollars a year, settled on paper.",
+      "on_screen": "Nobody measured the water.",
+      "target_seconds": 12
+    },
+    {
+      "id": "03_what",
+      "kind": "card",
+      "narration": "Saqqa puts a level sensor on the buyer's tank and uses the SIM already in the tanker's cab. Then it asks the mobile operator to be the witness, and pays only for the litres it can account for.",
+      "on_screen": "The operator is the witness.",
+      "target_seconds": 12
+    },
+    {
+      "id": "04_honest",
+      "kind": "footage",
+      "clip": "honest",
+      "narration": "Here is an honest delivery, on the core profile: the three APIs Saqqa needs at minimum. One click, and the agent makes about eight live calls to the network: where the truck was, when it reached the tank, whether the SIM is the one we expect. The tank rose while the truck was there. Two clocks agree. Payment released.",
+      "on_screen": "Two clocks have to agree",
+      "target_seconds": 17
+    },
+    {
+      "id": "05_doubt",
+      "kind": "footage",
+      "clip": "doubt",
+      "narration": "Now the one that matters, on the full build, where the operator's geofence stamps the exact minute. The tank rises at five past nine. The network puts the truck at the tank at twenty-five to ten. The agent refuses to believe its own sensor. Nothing is paid until a person looks.",
+      "on_screen": "The agent doubts its own sensor",
+      "target_seconds": 17
+    },
+    {
+      "id": "06_block",
+      "kind": "footage",
+      "clip": "block",
+      "narration": "A perfect delivery, except that the number the money would go to changed SIM nineteen hours ago. Blocked, before a dinar moves. SIM Swap is the most deployed of these APIs in the region, and this verdict is the same on three APIs or seven.",
+      "on_screen": "Blocked before a dinar moves",
+      "target_seconds": 16
+    },
+    {
+      "id": "07_apis",
+      "kind": "footage",
+      "clip": "apis",
+      "narration": "Three APIs are enough to reach every verdict; four more make each answer sharper. Seven CAMARA APIs across two categories, one LangGraph agent, live on Nokia Network as Code. A hundred and twenty-five live calls in testing. Zero errors.",
+      "on_screen": "3 APIs to decide · 7 to sharpen · 125 live calls, 0 errors",
+      "target_seconds": 12
+    },
+    {
+      "id": "08_money",
+      "kind": "card",
+      "narration": "A truckload is worth about thirty dollars. Verifying it costs thirteen cents. Nothing to install on the truck, one sensor on the tank, and the delivery form the buyer already uses, filled in from evidence instead of a signature.",
+      "on_screen": "Cheap to verify. Nothing to install.",
+      "target_seconds": 15
+    },
+    {
+      "id": "09_close",
+      "kind": "card",
+      "narration": "Saqqa. Pay only for the water that arrived. The mobile network is the witness. Team StarX, for the GSMA MENA Ignite hackathon.",
+      "on_screen": "Saqqa · Team StarX · GSMA MENA Ignite 2026",
+      "target_seconds": 9
+    }
+  ]
+}

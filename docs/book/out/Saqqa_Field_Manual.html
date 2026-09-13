@@ -1,0 +1,1207 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Paid on a Signature · Saqqa field manual</title><link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap'><style>
+@page { size: A4; margin: 22mm 20mm 24mm 20mm; }
+:root { --ink:#14171C; --mute:#5E656E; --rule:#D8D4CC; --blue:#0E6BA8; --alert:#B4462A; --green:#2F6B4F; --paper:#FFFFFF; }
+html { font-size: 11.2pt; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Source Serif 4", Georgia, "Times New Roman", serif; line-height: 1.5; }
+.page { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+h1, h2, h3, h4 { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 500; line-height: 1.2; letter-spacing: -.01em; }
+h1 { font-size: 30pt; margin: 0 0 6px; font-weight: 300; }
+h2 { font-size: 19pt; margin: 42px 0 12px; padding-top: 10px; border-top: 1px solid var(--ink); page-break-before: always; }
+h2:first-of-type { page-break-before: auto; }
+h3 { font-size: 13.5pt; margin: 26px 0 8px; }
+h4 { font-size: 11pt; margin: 18px 0 6px; color: var(--mute); text-transform: uppercase; letter-spacing: .08em; }
+p { margin: 0 0 11px; text-wrap: pretty; }
+ul, ol { margin: 0 0 12px 22px; padding: 0; }
+li { margin-bottom: 4px; }
+code, pre { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 9pt; }
+code { background: #F3F1EC; padding: 1px 4px; border-radius: 3px; }
+pre { background: #F3F1EC; padding: 12px 14px; overflow-x: auto; border-left: 3px solid var(--rule); white-space: pre-wrap; word-break: break-word; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: 10px 0 16px; page-break-inside: auto; }
+th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--rule); }
+th { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 500; font-size: 8.5pt; text-transform: uppercase; letter-spacing: .08em; color: var(--mute); }
+tr { page-break-inside: avoid; }
+blockquote { margin: 14px 0; padding: 8px 16px; border-left: 3px solid var(--blue); color: var(--ink); background: #F7F6F2; }
+blockquote p { margin: 0; }
+.kicker { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 9pt; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.subtitle { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 13pt; color: var(--mute); margin: 0 0 30px; font-weight: 300; }
+.callout { border: 1px solid var(--rule); padding: 12px 16px; margin: 14px 0; background: #FBFAF7; }
+.callout.warn { border-color: var(--alert); }
+.callout.ok { border-color: var(--green); }
+.callout > :first-child { margin-top: 0; } .callout > :last-child { margin-bottom: 0; }
+.toc { columns: 2; column-gap: 32px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10pt; }
+.toc a { color: var(--ink); text-decoration: none; }
+a { color: var(--blue); }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 24px 0; }
+strong { font-weight: 600; }
+.small { font-size: 9pt; color: var(--mute); }
+@media print { .page { padding: 0; max-width: none; } a { color: inherit; } }
+</style></head><body><div class='page'><p class='kicker'>Saqqa · field manual · built 2026-09-03T18:25:35Z from commit 70f79b6</p><h1>Paid on a Signature</h1><p class='subtitle'>The Saqqa field manual: what we built, what it proves, where it breaks, and how to defend it in a room.</p><div class='toc'><ol><li>0 · What we have right now</li><li>1 · The claim</li><li>2 · The witness</li><li>3 · The water</li><li>4 · The agent</li><li>5 · The gate</li><li>6 · Against ourselves</li><li>7 · Defending it</li><li>Appendix · The evidence, verbatim</li></ol></div><h2 id="0-what-we-have-right-now">0 · What we have right now</h2>
+<p>This chapter is the inventory. Everything in it exists on disk, in the team repository, or in a logged run, and each line says where. If a claim in a later chapter is not traceable to something here, treat it as an opinion.</p>
+<h3 id="the-one-paragraph-version">The one-paragraph version</h3>
+<p>Saqqa is a working prototype that verifies a trucked-water delivery through the operator's mobile network and a sensor on the buyer's tank, decides what should be paid for, and writes down why. It runs live against Nokia Network as Code: in the most recent full run, twelve seeded trips made <strong>125</strong> real CAMARA calls with <strong>0</strong> errors (median <strong>291 ms</strong>), every geofence subscription produced a real CloudEvent at our webhook, and every trip decided the way the scenario expected. The model in the loop is Gemini 3.5 Flash-Lite; it plans, investigates and explains. It never decides money.</p>
+<h3 id="where-it-lives">Where it lives</h3>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code</td>
+<td><code>TeamStarX/starx</code>, branch <code>master</code>, folder <code>prototype/saqqa/</code></td>
+<td>Private repository. Commits under James's name. The standalone development copy is on James's machine.</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td><code>saqqa/agent/graph.py</code>, <code>gate.py</code>, <code>llm.py</code></td>
+<td>LangGraph graph, deterministic gate, model wrapper with a per-call fallback chain.</td>
+</tr>
+<tr>
+<td>Network layer</td>
+<td><code>saqqa/nac/client.py</code>, <code>fixtures.py</code></td>
+<td>Seven CAMARA APIs through the official <code>network_as_code</code> 10.0.0 SDK; fixtures mirror the sandbox's scripted personas for keyless runs.</td>
+</tr>
+<tr>
+<td>Sensor model</td>
+<td><code>saqqa/sensor/simulator.py</code></td>
+<td>Pump-discharge model, 1-minute samples, deterministic noise. Simulated in Phase 1 and labelled as such on screen.</td>
+</tr>
+<tr>
+<td>Scenarios</td>
+<td><code>saqqa/scenarios.py</code></td>
+<td>Twelve seeded trips (chapter 5).</td>
+</tr>
+<tr>
+<td>Deployment profiles</td>
+<td><code>saqqa/config.py</code> <code>PROFILES</code></td>
+<td><code>core</code> (3 widely-deployed APIs, polled dwell) and <code>full</code> (7). Switchable live on the dashboard; see <code>docs/DEPLOYMENT_REALISM.md</code>.</td>
+</tr>
+<tr>
+<td>Server and dashboard</td>
+<td><code>saqqa/server.py</code>, <code>dashboard/</code></td>
+<td>FastAPI, Server-Sent Events for the live trace, CloudEvents webhook receiver, the payer dashboard.</td>
+</tr>
+<tr>
+<td>Run logs</td>
+<td><code>runs/*.json</code> (regenerated by <code>scripts/run_scenarios.py --json</code>)</td>
+<td>One file per trip: every call's request, response, latency, mode; every reasoning step. This book's numbers come from them.</td>
+</tr>
+<tr>
+<td>Evidence pack</td>
+<td><code>docs/book_evidence.json</code>, <code>docs/book_evidence_event.json</code></td>
+<td>Extracted from the run logs and the events table; substituted into this book at build time.</td>
+</tr>
+<tr>
+<td>Deck</td>
+<td><code>deck/out/Saqqa_Prototype_Deck.pdf</code> (23 slides)</td>
+<td>Round-1 design system, live screenshots from the current dashboard.</td>
+</tr>
+<tr>
+<td>Video</td>
+<td><code>docs/video/saqqa_demo.mp4</code> (under three minutes)</td>
+<td>Recorded from the live dashboard, captions timed to the agent's steps. The recorder keeps a wall-clock budget, because live model latency varies. Not in git (size).</td>
+</tr>
+<tr>
+<td>Form text</td>
+<td><code>docs/HACKEREARTH_PROTOTYPE_FORM.md</code></td>
+<td>Title, description, API usage synopsis, business impact, run instructions.</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td><code>Dockerfile</code>, <code>render.yaml</code></td>
+<td>One-click container deploy; needs a hosting account.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="numbers-you-may-quote-and-where-each-comes-from">Numbers you may quote, and where each comes from</h3>
+<table>
+<thead>
+<tr>
+<th>Number</th>
+<th>Value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real CAMARA calls in the last full run</td>
+<td>125</td>
+<td><code>runs/*.json</code>, all <code>mode: live</code></td>
+</tr>
+<tr>
+<td>Errors in those calls</td>
+<td>0</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Latency, min / median / mean / max</td>
+<td>210 / 291 / 327 / 1083 ms</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Trips, and trips deciding as expected</td>
+<td>12 of 12</td>
+<td><code>scripts/run_scenarios.py</code> exit code 0</td>
+</tr>
+<tr>
+<td>Geofence webhook delivery</td>
+<td>every subscription; first event 8 s after creation</td>
+<td>events table, 2 Sep 2026 12:49 UTC onward</td>
+</tr>
+<tr>
+<td>Real CloudEvents stored</td>
+<td>959 (246 area-entered, 244 area-left, 469 subscription-ends), first 2026-09-02T12:49:03Z, last 2026-09-03T18:23:30Z</td>
+<td><code>saqqa.sqlite3</code>, table <code>events</code></td>
+</tr>
+<tr>
+<td>Sandbox probe</td>
+<td>28 calls, 0 errors, ~550 ms mean, 2 Sep 2026</td>
+<td><code>scripts/probe_live.py</code></td>
+</tr>
+<tr>
+<td>APIs used</td>
+<td>7 (Geofencing Subscriptions, Location Verification, Location Retrieval, Device Reachability, Device Roaming, Device Swap, SIM Swap)</td>
+<td><code>saqqa/config.py</code> API_CATALOGUE</td>
+</tr>
+<tr>
+<td>Organisers' categories covered</td>
+<td>2 of 4 (Device intelligence; Digital identity &amp; anti-fraud)</td>
+<td>hackathon "Nokia NaC" tab</td>
+</tr>
+<tr>
+<td>APIs needed to deploy today</td>
+<td>3 (<code>core</code> profile), reproducing the 7-API verdict on 12/12 trips</td>
+<td><code>scripts/compare_profiles.py</code></td>
+</tr>
+<tr>
+<td>Cost per trip at indicative prices</td>
+<td>about 13 cents for 10–12 calls</td>
+<td><code>config.API_COST_CENTS</code> (indicative, not an operator price list)</td>
+</tr>
+<tr>
+<td>Jordan tanker market</td>
+<td>US$176 million a year; 91% of tanker water from illegal sources; 4.8× the piped price; 52% of urban water revenue</td>
+<td>Klassert et al., <em>Nature Sustainability</em> 6:1406 (2023), open access, verified 22 Aug</td>
+</tr>
+<tr>
+<td>UNHCR F-306</td>
+<td>"used as part of the payment justification process to the contractor"</td>
+<td>printed on the form itself</td>
+</tr>
+<tr>
+<td>Basra</td>
+<td>4.5 million people on daily deliveries; Iraq's driest year since 1933</td>
+<td>UNICEF; Al Jazeera 19 Aug 2025</td>
+</tr>
+<tr>
+<td>Yemen</td>
+<td>215,000 IDPs across 97 sites depend on trucked water; WASH funded $37.4M of $176.9M in 2025</td>
+<td>Bond, 11 Aug 2026</td>
+</tr>
+</tbody>
+</table>
+<p>Do not quote a number that is not in this table or traceable to a logged call. If someone asks for one you do not have, say so.</p>
+<h3 id="what-is-real-simulated-or-stubbed">What is real, simulated, or stubbed</h3>
+<div class="callout">
+<p><strong>Real:</strong> every CAMARA call, its request and its response; the CloudEvents the operator platform posts to our webhook; the model's planning, investigation and audit notes; the deterministic decisions.</p>
+<p><strong>Scripted:</strong> the trip timeline (when the truck entered and left each zone). Sandbox simulators have fixed positions and fire the subscribed event type on creation, so they cannot drive a truck through two zones. The timeline is the scenario's; the calls that attest to it are real, and the dashboard says which is which on every run.</p>
+<p><strong>Simulated:</strong> the tank level and turbidity trace, from a pump model whose parameters are on screen. Hardware is Phase 3.</p>
+<p><strong>Stubbed:</strong> the payment webhook to the payer's ERP (logged, not sent) and supervisor alerts.</p>
+</div>
+
+<h3 id="what-is-still-open-on-3-september">What is still open on 3 September</h3>
+<ul>
+<li><strong>Repository URL.</strong> The code is in a private repository. James has decided nothing goes public yet; the form field is filled last.</li>
+<li><strong>Demo Link.</strong> The dashboard runs on James's machine behind a temporary tunnel. A permanent address needs a hosting account (the Render blueprint is ready).</li>
+<li><strong>Video voice.</strong> The video carries the narration as captions; a human voice can be laid over it in ten minutes.</li>
+<li><strong>Evan's branch.</strong> A separate, unpushed prototype (synthetic answers, no keys) exists on Evan's <code>phase2/prototype</code>. Master's build is canonical; anything the branch has that master lacks gets merged when it is pushed.</li>
+<li><strong>Mentor review, 3 Sep.</strong> Turk Telekom mentor: too many APIs for a realistic deployment; location APIs are
+  regulated; the operator revenue model was missing. Answered in <code>docs/DEPLOYMENT_REALISM.md</code> (profiles, shipped)
+  and <code>docs/BUSINESS_MODEL.md</code> (revenue, shipped). His SIM Swap doubt came from us explaining it wrong in the
+  call — it is payee fraud, not truck tracking. Say it that way.</li>
+<li><strong>Deadline.</strong> 13 September 2026, 22:29 Dubai. Resubmission is unlimited; the last save counts. Only the top three of the eighty shortlisted teams win.</li>
+</ul><h2 id="1-the-claim">1 · The claim</h2>
+<h3 id="the-sentence">The sentence</h3>
+<blockquote>
+<p>A water delivery is paid for on the word of the person being paid.</p>
+</blockquote>
+<p>Everything Saqqa does follows from that sentence, so be able to defend it before anything else.</p>
+<p>A tanker arrives at a camp, a clinic, a hotel, a construction site. Someone signs a form saying ten cubic metres were delivered. The signature releases the money. Nobody measured the water: there is no meter on the truck and none on the tank. The number on the form is the number the driver said.</p>
+<p>This is not a hypothetical. UNHCR's water-trucking log book, form F-306, records hand-written GPS coordinates and a pen signature from a delivery-point representative, and says on its face that it "will be used as part of the payment justification process to the contractor." Copies are posted weekly. We have the form; it is on slide 3 of the deck.</p>
+<h3 id="why-it-matters-now">Why it matters now</h3>
+<p>Drought has made the water truck the actual utility for millions of people across the region, and nobody meters it.</p>
+<ul>
+<li><strong>Jordan.</strong> Tanker markets generate US$176 million a year, 8% more than all of Jordan's public water suppliers combined; about 91% of tanker water is obtained from illegal sources; tanker water costs about 4.8 times piped water; unregulated sales exceed licences 10.7-fold. Household reliance is projected to grow 2.6-fold by 2050. (Klassert et al., <em>Nature Sustainability</em> 6:1406, 2023, open access. We read the paper, not a summary of it.)</li>
+<li><strong>Iraq.</strong> The driest year since 1933. Basra's 4.5 million people are on daily deliveries (UNICEF). This is why the demo site is Camp Al-Zubair, Basra.</li>
+<li><strong>Yemen.</strong> 215,000 displaced people across 97 sites depend on trucked water as "the only reliable source of safe drinking water"; the WASH sector received $37.4 million of the $176.9 million it needed in 2025 (Bond, 11 August 2026). Austerity is the argument for verification, not against it: a funder at a fifth of need cannot afford to pay for water that did not arrive.</li>
+</ul>
+<h3 id="the-one-cause-and-the-four-frauds-it-permits">The one cause, and the four frauds it permits</h3>
+<p>The only record of a delivery is created by the party being paid for it. Four frauds follow, and they are not the obvious ones. A truck that never turns up is reported within the hour by a thirsty household. These survive because nobody who could report them has a reason to.</p>
+<table>
+<thead>
+<tr>
+<th>Fraud</th>
+<th>What happens</th>
+<th>Why nobody catches it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short-filling</td>
+<td>The tanker arrives two-thirds full and is paid for a full load.</td>
+<td>Nobody at the tank has a meter, so there is nothing to disagree with.</td>
+</tr>
+<tr>
+<td>Diversion</td>
+<td>The load is sold somewhere that pays better; the delivery is logged anyway.</td>
+<td>Nobody records where the truck actually went.</td>
+</tr>
+<tr>
+<td>Ghost trips</td>
+<td>Trips are billed that never happened.</td>
+<td>The log book is the only record the trip existed.</td>
+</tr>
+<tr>
+<td>A bought signature</td>
+<td>The delivery-point representative signs for a few dinars.</td>
+<td>The signature is the payment trigger, so buying it is the whole attack.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-saqqa-does-about-it">What Saqqa does about it</h3>
+<p>Measure the water at the tank. Verify the trip with the mobile network. Let an agent decide what it is willing to believe, and pay for the litres it can account for, with the reasoning written down.</p>
+<p>The payer (an aid agency, a municipality, a hotel) puts two SIMs into the contract as a condition of it. One sits in the tanker's cab. The other is in a level-and-turbidity sensor bolted to the payer's own tank. Nothing goes on the contractor's vehicle body except the cab SIM, and nothing is asked of any household. Every SIM Saqqa queries belongs to an organisation, so no person is located, messaged or asked to consent.</p>
+<p>The line that a telecom person recognises, and the one to lead with in the room:</p>
+<blockquote>
+<p>The tank sensor is the meter. The network is the meter-reader nobody can bribe. The agent is the billing engine.</p>
+</blockquote>
+<h3 id="the-honest-division-of-labour">The honest division of labour</h3>
+<p>Say this before anyone asks, because the sharp question in the room is "isn't the network just garnish on an IoT project?"</p>
+<p>The network does not measure water, and we never say it does. The tank level alone proves water arrived. What only the network can add:</p>
+<ul>
+<li><strong>Attribution.</strong> Which contractor's truck was in the zone when the level rose (Geofencing on the cab SIM).</li>
+<li><strong>Source.</strong> The truck visited the contracted well, not an unlicensed one (the sequence of zones).</li>
+<li><strong>Sensor integrity.</strong> The sensor SIM is still at its install point (Location Verification), reachable (Device Reachability), and not moved into another device (Device Swap). The network is the witness to the witness, and it is the one witness the contractor cannot tamper with.</li>
+<li><strong>Payee protection.</strong> SIM Swap on the payee's number before money moves.</li>
+</ul>
+<p>Any claim that the network measures water would be false, and the first engineer in the room would know it.</p>
+<h3 id="why-the-network-and-not-a-gps-tracker">Why the network and not a GPS tracker</h3>
+<p>Because resolution is the wrong axis. A tracker reports its own position, and anything that reports its own position can be made to lie; a tamper-evident seal stops a screwdriver, not a spoofed signal. Cell-level location is coarse, about two kilometres, and it is computed by infrastructure the contractor does not own and cannot reach. Two thousand metres you cannot forge beats five metres you report yourself, when you are the party being audited. And the hardware sits on the payer's tank, so the truck carries nothing to disable, swap or drive around with.</p>
+<p>That is the whole design in one word: forgeability, not resolution. Chapter 6 says what this argument does not cover.</p>
+<h3 id="what-we-are-not-claiming">What we are not claiming</h3>
+<ul>
+<li>Not that the network locates anything to a house. Zone scale, about two kilometres, never a single tank inside a district.</li>
+<li>Not that fraud is impossible. The best attack we found (substituting dirty water inside the zone) is caught by a ten-dollar turbidity probe, not by the network; chapter 6.</li>
+<li>Not that an operator in the region sells these APIs commercially today. The location family is not yet live with a MENA operator; Phase 1 runs on Nokia's sandbox and says so on every screen.</li>
+<li>Not that the sensor is built. It is a model in Phase 1, hardware in Phase 3.</li>
+</ul><h2 id="2-the-witness">2 · The witness</h2>
+<p>The operator's network is the one party to a trucked-water contract that is neither paying nor being paid. This chapter is what it can tell us, what it cannot, and the proof that it answered us.</p>
+<h3 id="the-seven-apis-and-the-question-each-one-answers">The seven APIs, and the question each one answers</h3>
+<p>All seven are CAMARA APIs exposed on Nokia Network as Code, called through the official Python SDK (<code>network_as_code</code> 10.0.0). Two of the organisers' four categories: Device intelligence, and Digital identity &amp; anti-fraud. Median latency per API in the last full run is from <code>runs/*.json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Whose SIM</th>
+<th>The question</th>
+<th>Load-bearing?</th>
+<th>Median ms</th>
+<th>Calls in run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Geofencing Subscriptions</td>
+<td>cab</td>
+<td>Did the truck enter and leave the well zone and the tank zone, and when. Entry-to-exit is dwell. Four subscriptions per trip.</td>
+<td>yes</td>
+<td>328</td>
+<td>48</td>
+</tr>
+<tr>
+<td>Location Verification</td>
+<td>cab, sensor</td>
+<td>Is the truck in the tank zone now (the polling fallback). Is the sensor still at its install point.</td>
+<td>yes</td>
+<td>280</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Device Reachability Status</td>
+<td>sensor</td>
+<td>Can the sensor be believed at all. Unreachable makes a trip unverified, never a penalty, and is re-asked before a trace is rejected.</td>
+<td>yes</td>
+<td>285</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Device Swap</td>
+<td>sensor</td>
+<td>Is the sensor's SIM still inside the sensor, or in someone's handset.</td>
+<td>yes</td>
+<td>285</td>
+<td>12</td>
+</tr>
+<tr>
+<td>SIM Swap</td>
+<td>payee</td>
+<td>Has the payee's number been taken over since the contract was signed. Retrieve-date puts the change on the ticket.</td>
+<td>yes</td>
+<td>277</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Location Retrieval</td>
+<td>cab</td>
+<td>Where was the truck when the tank rose without it; where did it go after a short fill. Chosen by the investigation, not run on every trip.</td>
+<td>supporting</td>
+<td>276</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Device Roaming Status</td>
+<td>cab</td>
+<td>Has the fleet SIM left the country. Cross-border diversion.</td>
+<td>supporting</td>
+<td>247</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Two are bought by the planner only when the trip calls for it, which is why their counts are lower: the agent does not run every check on every load, because every call costs money (chapter 4).</p>
+<h3 id="what-a-call-looks-like">What a call looks like</h3>
+<p>This is the Location Verification call the agent made on the cab SIM in the "ghost_trip" trip, exactly as logged: the request we sent, the response the sandbox returned, 493 ms.</p>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991000&quot;
+ },
+ &quot;area&quot;: {
+  &quot;area_type&quot;: &quot;CIRCLE&quot;,
+  &quot;center&quot;: {
+   &quot;latitude&quot;: 30.389,
+   &quot;longitude&quot;: 47.708
+  },
+  &quot;radius&quot;: 2000
+ },
+ &quot;max_age&quot;: 3600
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;last_location_time&quot;: &quot;2026-09-03T10:16:21.769455+04:00&quot;,
+ &quot;verification_result&quot;: &quot;FALSE&quot;
+}
+</code></pre>
+<p><code>verification_result</code> is one of TRUE, FALSE, PARTIAL (with a match rate) or UNKNOWN. It never returns coordinates. The area is a circle of at least 2,000 m, because that is the minimum Nokia's geofencing accepts; we design for that coarseness rather than apologising for it (chapter 1, "forgeability, not resolution").</p>
+<h3 id="the-proof-that-the-operator-answers-us-a-real-cloudevent">The proof that the operator answers us: a real CloudEvent</h3>
+<p>The question nobody in the team could answer in Round 1 was whether the sandbox delivers webhook events at all. It does. Every Geofencing subscription the agent creates names our server as the sink; within seconds the operator platform POSTs a CloudEvent to it. This one arrived on 2026-09-03T18:18:30Z from source <code>/geofencing-subscriptions/v0.3/subscriptions/61506e59-0906-478c-99f5-41d3615cbc1f</code>:</p>
+<pre><code class="language-json">{
+ &quot;id&quot;: &quot;bf14a421-c993-4492-af9f-af791f18549c&quot;,
+ &quot;source&quot;: &quot;/geofencing-subscriptions/v0.3/subscriptions/61506e59-0906-478c-99f5-41d3615cbc1f&quot;,
+ &quot;type&quot;: &quot;org.camaraproject.geofencing-subscriptions.v0.area-entered&quot;,
+ &quot;specversion&quot;: &quot;1.0&quot;,
+ &quot;datacontenttype&quot;: &quot;application/json&quot;,
+ &quot;time&quot;: &quot;2026-09-03T18:18:29.826055Z&quot;,
+ &quot;data&quot;: {
+  &quot;subscriptionId&quot;: &quot;61506e59-0906-478c-99f5-41d3615cbc1f&quot;,
+  &quot;device&quot;: {
+   &quot;phoneNumber&quot;: &quot;+99999991001&quot;
+  },
+  &quot;area&quot;: {
+   &quot;areaType&quot;: &quot;CIRCLE&quot;,
+   &quot;center&quot;: {
+    &quot;latitude&quot;: 30.389,
+    &quot;longitude&quot;: 47.708
+   },
+   &quot;radius&quot;: 2000
+  }
+ }
+}
+</code></pre>
+<p>The <code>subscriptionId</code> in <code>data</code> matches the subscription the agent created, so the dashboard can list each event against the call that caused it. Across all runs so far the events table holds 959 real events (246 area-entered, 244 area-left, 469 subscription-ends), the first at 2026-09-02T12:49:03Z.</p>
+<p>What the events do and do not prove:</p>
+<ul>
+<li><strong>They prove the plumbing.</strong> Subscription creation, sink registration, CloudEvents delivery and our receiver all work end to end against a third-party platform we do not control.</li>
+<li><strong>They do not prove the truck moved.</strong> The sandbox simulators have fixed positions and fire the subscribed event type once, on creation, for every persona. So the agent treats live events as delivery receipts, lists them by subscription id, and keeps the scenario's timeline as the trip clock. The trace says so on every run. In production the events <em>are</em> the trip clock.</li>
+</ul>
+<h3 id="the-sandboxs-personas-verified">The sandbox's personas, verified</h3>
+<p>The sandbox routes any <code>+9999…</code> number to simulators whose answers depend on the suffix. We verified the table below by calling every API on every persona (<code>scripts/probe_live.py</code>, 2 September, 28 calls, no errors), rather than reading it from documentation, because the documentation was wrong in two places.</p>
+<table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>Location Verification</th>
+<th>SIM / Device Swap</th>
+<th>Roaming</th>
+<th>Reachability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>…1001</code> (the clean subscriber)</td>
+<td>TRUE</td>
+<td>not swapped</td>
+<td>not roaming</td>
+<td>reachable, DATA</td>
+</tr>
+<tr>
+<td><code>…1000</code> (the compromised one)</td>
+<td>FALSE</td>
+<td>swapped</td>
+<td>roaming, HU</td>
+<td>reachable, SMS only</td>
+</tr>
+<tr>
+<td><code>…1002</code></td>
+<td>UNKNOWN</td>
+<td>swapped</td>
+<td>roaming</td>
+<td>reachable, SMS and DATA</td>
+</tr>
+<tr>
+<td><code>…1003</code></td>
+<td>PARTIAL</td>
+<td>swapped</td>
+<td>roaming</td>
+<td>unreachable</td>
+</tr>
+</tbody>
+</table>
+<p>Two things follow. Location Retrieval returns the same 1 km circle near Budapest for every number, so "where the truck was" is a real call with a meaningless answer in the sandbox, and the agent labels it. And SIM Swap's retrieve-date returns a timestamp about ten minutes old for every number, including the clean one, so the date is inert here and only the boolean is used in the gate.</p>
+<p>The scenarios are built on these personas: an honest truck is <code>…1001</code>, a ghost truck is <code>…1000</code>, an unreachable sensor is <code>…1003</code>. That is why the same trip behaves identically in fixture mode and live mode, and why the fixtures in <code>saqqa/nac/fixtures.py</code> are a copy of this table, not an invention.</p>
+<h3 id="what-the-network-cannot-do-said-plainly">What the network cannot do, said plainly</h3>
+<ul>
+<li>It cannot measure water. The sensor does.</li>
+<li>It cannot tell which of two trucks inside one 2 km zone filled a tank. Attribution inside a zone rests on assigned routes, dwell, and capacity accounting (litres credited to a truck since its last verified source visit cannot exceed the truck).</li>
+<li>It cannot see an illegal well within 2 km of the licensed one.</li>
+<li>It cannot, in the sandbox, move a device. Every location answer is scripted per persona.</li>
+<li>It is not commercially live in the region for the location family. GSMA's own deployment database (dataset of 22 August 2026) lists 36 commercial CAMARA deployments in MENA: SIM Swap is certified with Asiacell in Iraq (October 2025) and live with several Gulf operators; Device Roaming is live with e&amp; in Egypt; Geofencing, Location Verification and Location Retrieval are not yet live with any MENA operator. Phase 1 therefore runs on the sandbox and says so.</li>
+</ul>
+<h3 id="how-consent-works-in-one-paragraph">How consent works, in one paragraph</h3>
+<p>Every SIM Saqqa queries belongs to an organisation: the payer issues the cab SIM and the sensor SIM as a condition of the contract, so it is the subscriber of every device it queries, and the payee check runs on the contractor's business number, agreed at onboarding. Two-legged authorisation for fraud-prevention use of SIM Swap and Device Status is the commercial norm operators already sell to banks. No household is located, messaged or asked to consent, which is what lets the same code run in a camp, a hotel and a municipality.</p><h2 id="3-the-water">3 · The water</h2>
+<p>The network says whose truck, from where, and whether the sensor can be believed. The sensor says how much. This chapter is the sensor: what it measures, how litres are derived, which checks run on the trace, and what is simulated in Phase 1.</p>
+<h3 id="what-the-sensor-is">What the sensor is</h3>
+<p>A level-and-turbidity probe on the payer's own tank, with its own SIM. In Phase 3 that is an LTE-M device costing roughly $15–30 plus a ~$10 turbidity probe, installed once per tank on the payer's site. One sensor covers every contractor who ever delivers to that tank, which is what makes the unit economics improve with volume (chapter 7).</p>
+<p>In Phase 1 there is no hardware. The trace is generated by <code>saqqa/sensor/simulator.py</code> and the dashboard says "simulated sensor" in the panel title. Do not let anyone leave the room thinking otherwise.</p>
+<h3 id="how-litres-are-derived">How litres are derived</h3>
+<p>The demo tank (K7) is a 20 m³ tank, 200 cm tall, so one centimetre of level is 100 litres (<code>config.TANKS</code>). The delivered volume is the level rise during the rising window, times litres per centimetre:</p>
+<ul>
+<li>level at 08:30: 38 cm</li>
+<li>rising window: found as the span where the 3-minute slope exceeds 2 cm (the noise floor is ±0.35 cm per sample)</li>
+<li>rise in the honest trip: about 97 cm, so about 9.7 m³ against a claim of 10</li>
+</ul>
+<p>The agent pays for measured litres, never claimed ones. A gap under 10% between measured and claimed is treated as normal metering variance, not a shortfall; that rule is written into the audit-note prompt as well as the gate, because the model once described a 3% gap as "falling short".</p>
+<h3 id="why-the-trace-is-a-curve-and-not-a-line">Why the trace is a curve and not a line</h3>
+<p>Water leaving a tanker through a hose does not arrive at a constant rate. The model ramps discharge from zero to about 8 litres per second over roughly two minutes, holds, and tapers, which draws an S-curve in level over about 22 minutes for a 10 m³ load. The shape matters because two of the plausibility checks look at shape, not just at the total:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>What it looks for</th>
+<th>What it catches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Step artefact</td>
+<td>more than 25 cm arriving in a single one-minute sample</td>
+<td>a spoofed or replayed feed; a pump cannot do that</td>
+</tr>
+<tr>
+<td>Pump-time plausibility</td>
+<td>dwell shorter than 60% of the minutes needed to move the measured litres at 8 L/s</td>
+<td>a trace that claims more water than the truck could have discharged in the time it was there</td>
+</tr>
+<tr>
+<td>Rise-versus-dwell overlap</td>
+<td>the minutes the level rose must sit inside the operator's dwell window</td>
+<td>a tank that rose before the truck arrived (the run to watch, chapter 5)</td>
+</tr>
+<tr>
+<td>Flat trace during dwell</td>
+<td>dwell of 15 minutes or more with a rise under 0.5 m³</td>
+<td>showed up, never opened the valve</td>
+</tr>
+<tr>
+<td>Turbidity during the fill</td>
+<td>above 5 NTU while the level rises</td>
+<td>untreated water in a treated-water contract; the substitution attack</td>
+</tr>
+<tr>
+<td>Tank room</td>
+<td>measured rise close to the space that was left in the tank</td>
+<td>a "short fill" that was the tank being full, so dispatch is flagged, not the contractor</td>
+</tr>
+<tr>
+<td>Capacity accounting</td>
+<td>litres credited to a truck since its last verified source visit, plus this delivery, must not exceed the truck</td>
+<td>trip inflation: a fourth delivery off one load</td>
+</tr>
+</tbody>
+</table>
+<p>The values (25 cm, 60%, 8 L/s, 15 min, 0.5 m³, 5 NTU) are in <code>saqqa/agent/gate.py</code> and <code>saqqa/config.py</code>. They are engineering defaults chosen to be defensible, not tuned on data; say so if asked.</p>
+<h3 id="turbidity-and-why-a-10-probe-is-on-the-tank-at-all">Turbidity, and why a $10 probe is on the tank at all</h3>
+<p>The best attack anyone found against Saqqa in the red-team round is substitution inside the zone: the real truck sells its clean load at a farm 1.5 km away while an accomplice dumps dirty well water into the tank. The level rises, the truck is "in zone", the network is satisfied. The answer is not a network answer. It is the turbidity probe: dirty water reads tens of NTU against a treated-water floor of 5, the fill is flagged, payment held. UNHCR's own form already logs turbidity and chlorine per trip, because substitution is a known fraud. After the probe, the attack costs a second vehicle, a second load and a second driver to pocket the clean/dirty price spread, which is about what honest delivery costs.</p>
+<p>We never claim the network stops substitution. We claim the network still attests that 10 m³ of contracted water left the well and did not reach a clean tank, which turns a quality alarm into a diversion case.</p>
+<h3 id="the-order-of-evidence">The order of evidence</h3>
+<p>The trace is ours. That is the sensor's weakness as a witness: it is the payer's hardware, on the payer's site, and a payer's employee or a contractor's accomplice could in principle manipulate it. So the agent reads evidence in a fixed order:</p>
+<ol>
+<li>the operator's network first, because its timestamps are external and belong to nobody in the transaction;</li>
+<li>our sensor second, corroborated or rejected against those timestamps;</li>
+<li>the payee's number last, before any money moves.</li>
+</ol>
+<p>When the two disagree, the network wins. In the trip called "the agent doubts its own sensor", the tank rises 9.8 m³ between 09:05 and 09:27 and the operator's stamps put the truck in the zone from 09:35; the measurement is not believed and nothing is credited. A meter that can be overruled by a witness the meter's owner does not control is the design.</p>
+<h3 id="what-unverified-means-and-why-it-is-never-fraud">What "unverified" means, and why it is never fraud</h3>
+<p>An unreachable sensor makes the trip unverified. The gate returns HOLD, raises a maintenance ticket, and sends the trip back to the paper process it came from. Nobody is accused, nothing is deducted. This is deliberate and it is a commercial position, not only an ethical one: a system that penalised contractors for the payer's own hardware failing would not survive its first month in the field. The honest hauler's experience of Saqqa is same-day settlement and a record the operator stands behind; the only people it bites are the ones who were stealing.</p>
+<h3 id="phase-3-briefly">Phase 3, briefly</h3>
+<p>The interface between the simulator and the agent is one function that returns 1-minute samples of level and turbidity for a window. A real probe replaces that function and nothing else changes. What changes in the field is everything around it: installation, calibration against the tank's geometry, power, a reachability baseline per site, and the operating rule that a sensor offline for more than a day is a maintenance visit, not a data problem.</p><h2 id="4-the-agent">4 · The agent</h2>
+<p>The hackathon's mandatory requirement is an AI agent layer that treats CAMARA APIs as trusted real-time data sources rather than user-triggered actions. This chapter is where the agent actually decides, where it deliberately does not, and how to show the difference in a room.</p>
+<h3 id="the-graph">The graph</h3>
+<p>One LangGraph graph per trip (<code>saqqa/agent/graph.py</code>):</p>
+<pre><code>intake → plan → verify → sense → score ─┬─► investigate → verify (loop, at most 3 rounds)
+                                        └─► decide → explain → act → END
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>What happens</th>
+<th>Who decides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>intake</td>
+<td>Loads the trip as the payer's dispatch sent it; loads the sensor trace for the window; states the order of evidence (network, then sensor, then payee).</td>
+<td>code</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>Fixes the mandatory checks and asks the model which optional ones to buy for this trip.</td>
+<td><strong>model</strong>, constrained</td>
+</tr>
+<tr>
+<td>verify</td>
+<td>Executes each check as one CAMARA call through the Nokia SDK. Request, response, latency and mode are recorded. Waits up to 12 s for the operator's webhooks against this run's own subscription ids.</td>
+<td>code</td>
+</tr>
+<tr>
+<td>sense</td>
+<td>Summarises the trace: level at 08:30, the minutes it rose, litres, turbidity, step artefacts.</td>
+<td>code</td>
+</tr>
+<tr>
+<td>score</td>
+<td>Derives the signals (chapter 3's checks) and lists the contradictions between them.</td>
+<td>code</td>
+</tr>
+<tr>
+<td>investigate</td>
+<td>Given the contradictions, asks the model which network question to ask next, or whether to stop.</td>
+<td><strong>model</strong>, constrained</td>
+</tr>
+<tr>
+<td>decide</td>
+<td>Applies the gate (chapter 5).</td>
+<td>deterministic</td>
+</tr>
+<tr>
+<td>explain</td>
+<td>Asks the model for a two-sentence audit note in English and Arabic, with the decision and reason given to it verbatim.</td>
+<td><strong>model</strong>, template fallback</td>
+</tr>
+<tr>
+<td>act</td>
+<td>Payment webhook (stub), ledger row, F-306-compatible export, supervisor case or contractor notice. Never a household.</td>
+<td>code</td>
+</tr>
+</tbody>
+</table>
+<p>Tools are the CAMARA calls (<code>saqqa/nac/client.py</code>) and the sensor store. A failed call comes back as evidence (<code>{"error": …}</code>) and the agent reasons about it; nothing raises into the graph.</p>
+<h3 id="where-the-model-decides">Where the model decides</h3>
+<p><strong>Planning.</strong> The mandatory set is fixed: four geofence subscriptions on the cab SIM (well in and out, tank in and out), the presence poll, reachability, location and device-swap on the sensor SIM, and SIM Swap on the payee. The optional set is Location Retrieval (where the truck went) and Device Roaming (is the fleet SIM abroad). The model sees the trip (site type, contractor history, claimed volume) and the cost per call, and returns which optional checks to add and one sentence of reasoning. In the last run the planner said, for the honest camp delivery:</p>
+<blockquote>
+<p>Given the contractor's clean history and low-risk site type, optional network checks are not required for this trip.</p>
+</blockquote>
+<p>and for the ghost trip:</p>
+<blockquote>
+<p>Given the contractor's clean history and standard camp site delivery, no optional network checks are necessary.</p>
+</blockquote>
+<p>Every network call costs money and no payer runs every check on every load. The plan is where that judgement lives.</p>
+<p><strong>Investigation.</strong> When <code>score</code> finds contradictions, the model is shown them, the signals, what has already been called, and a menu: re-ask reachability, re-verify the sensor's location, check device swap, retrieve the truck's location, check roaming, retrieve the SIM-swap date. It picks up to three, or none, and says why. It may ask Location Verification and Reachability twice, before rejecting a sensor, and everything else once. Three rounds at most. This is the run to watch, as the model reasoned it in the last live run:</p>
+<pre><code class="language-json">[
+ {
+  &quot;round&quot;: 1,
+  &quot;contradictions&quot;: [
+   &quot;tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03&quot;
+  ],
+  &quot;next&quot;: [
+   &quot;truck_location_retrieve&quot;
+  ],
+  &quot;why&quot;: &quot;Retrieving the exact operator sighting or GPS trail could clarify if there was a clock drift or delayed arrival explaining the 8-minute gap.&quot;
+ },
+ {
+  &quot;round&quot;: 2,
+  &quot;contradictions&quot;: [
+   &quot;tank rose 09:05-09:27 but the truck was in the zone 09:35-10:03&quot;
+  ],
+  &quot;next&quot;: [],
+  &quot;why&quot;: &quot;The timing contradiction between the tank rise and truck arrival is irreconcilable by further network checks.&quot;
+ }
+]
+</code></pre>
+<p>Note the instruction the investigator carries: prefer checks that could exonerate an honest contractor over checks that only confirm suspicion. That is a design choice, not a courtesy; a system that only ever looked for guilt would be gamed by whoever controlled the accusations.</p>
+<p><strong>Explanation.</strong> The audit note is written for a supervisor who has thirty seconds. The model is given the decision and its reason as written and is told not to invent another. In the last run:</p>
+<blockquote>
+<p>The trip is escalated because measurement is not believed: tank rose 09:05-09:27 while the operator puts the truck in the zone 09:35-10:03; not credited to this truck; possible unregistered delivery or manipulated trace. The measured volume is 9.7 m³ against a claimed 10.0 m³, supported by CAMARA geofencing event logs showing a complete mismatch between the tank rise window and the truck dwell window.</p>
+<p>تم تصعيد الرحلة لعدم الاعتقاد بالقياس: ارتفع الخزان من 09:05 إلى 09:27 بينما دخلت الشاحنة المنطقة في 09:35-10:03؛ لم يتم نسبها لهذه الشاحنة؛ احتمال وجود تسليم غير مسجل أو أثر تم التلاعب به. الحجم المقاس هو 9.7 متر مكعب مقابل 10.0 متر مكعب مطالب بها، مدعوماً بسجلات أحداث التطويق الجغرافي من كامارا التي تظهر عدم تطابق تام بين نافذة ارتفاع الخزان ونافذة تواجد الشاحنة.</p>
+</blockquote>
+<h3 id="where-the-model-does-not-decide">Where the model does not decide</h3>
+<p>Money. RELEASE, HOLD, ESCALATE and BLOCK, and the litres to pay, come from the gate in <code>saqqa/agent/gate.py</code>: ordered rules over the signals, pure functions of state, re-runnable by an auditor without a model. Two reasons, both worth saying aloud:</p>
+<ol>
+<li>A payer's finance desk must be able to reproduce every decision from the ledger. "The model thought so" is not an audit trail.</li>
+<li>A model can be talked into things. A contractor who learned that the audit note influenced payment would start writing for the model. The note describes the decision; it never makes it.</li>
+</ol>
+<p>This is also the answer to the judge's Round-1 objection that "the LLM is a narrator, not a decision-maker". It is both, in the places where each is right: it decides what to ask, it never decides what to pay.</p>
+<h3 id="the-model-and-what-happens-when-it-fails">The model, and what happens when it fails</h3>
+<p>Gemini 3.5 Flash-Lite is primary (about 1.5 s per call on these small JSON prompts), Gemini 3.5 Flash is the in-family fallback (about 8 s), Groq Llama 3.3 70B the cross-vendor fallback, and a deterministic stub last. Gemini 2.5 Flash, which the Round-1 plan named, is no longer offered to new accounts. All three are on the hackathon's Resource and Tooling Guide, as is LangGraph.</p>
+<p>The chain is per call. Early on, one Gemini timeout demoted the shared model to the stub for every later run, silently; the dashboard's "audit note by template" label is what caught it. Now a failed call falls down the chain for that call only, the primary is tried again on the next call, and every run records which provider wrote each note. In the last full run every audit note was written by a Gemini model; the runs show which.</p>
+<p>Prompts are JSON-constrained and short. The model's reasoning tokens are turned down (they added latency and nothing else on prompts this size). Responses are parsed tolerantly (fenced or bare JSON, list-shaped content), because the first live run failed on exactly that and looked like a model failure when it was a parsing one.</p>
+<h3 id="a-second-design-on-evans-branch">A second design, on Evan's branch</h3>
+<p>Evan's own prototype (<code>phase2/prototype</code>, pushed 3 September) answers the same question with a different mechanism: the agent holds eight competing explanations of a trip as beliefs, knows roughly how each paid question would move them, and buys evidence while the money it expects to protect beats what the answer costs, about five credits' worth on an average trip against eight for a checklist. It has 31 tests and a written fallback policy that gets twelve of twelve without a model. It ran against synthetic answers because no key was on that machine; the mechanism is sound and the arithmetic is real. The canonical build (this book's) uses a constrained model for the planning and investigation choices and ran live. The two are complementary, not rivals: the value-of-information framing is the better answer to "is the AI doing anything", and folding its cost-benefit accounting into the live planner is the first merge on the list.</p>
+<h3 id="what-to-show-in-the-room">What to show in the room</h3>
+<p>If there is one screen to show, it is the trace of "the agent doubts its own sensor": the contradiction found by code, the two questions chosen by the model with its reasons, the decision made by the gate, the note written by the model. The sequence is the argument: judgement where judgement helps, rules where money moves.</p><h2 id="5-the-gate">5 · The gate</h2>
+<p>The gate is the part of Saqqa a finance desk can re-run by hand. It reads the signals from chapter 3 and the network facts from chapter 2 and returns one of four decisions with the litres to pay. The rules are ordered by the severity of what would go wrong if we paid; the first rule that fires wins.</p>
+<h3 id="the-four-decisions">The four decisions</h3>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Meaning</th>
+<th>Money</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RELEASE</td>
+<td>Pay the measured litres now.</td>
+<td>measured litres, capped at the claim</td>
+</tr>
+<tr>
+<td>HOLD</td>
+<td>Pay only what is verified; hold the rest pending the contractor, or send the trip to the paper process. Never an accusation.</td>
+<td>verified litres, or none</td>
+</tr>
+<tr>
+<td>ESCALATE</td>
+<td>Open a case for the payer's supervisor with the full trace; notify the contractor; pay nothing.</td>
+<td>none</td>
+</tr>
+<tr>
+<td>BLOCK</td>
+<td>Stop the payment itself: the payee's number is not safely the payee's.</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-rules-in-the-order-they-are-applied">The rules, in the order they are applied</h3>
+<ol>
+<li><strong>Payee SIM-swapped</strong> within the 72-hour window → BLOCK. The delivery may be perfect; the money still does not move to a hijacked number.</li>
+<li><strong>Ghost trip</strong>: the fleet SIM never entered the tank zone, Location Verification is FALSE or absent, and the tank did not rise → ESCALATE. If the fleet SIM is roaming, the reason names the country: cross-border diversion.</li>
+<li><strong>Sensor unreachable</strong> → HOLD. Unverified, never fraud. Maintenance ticket; the trip goes to the F-306 paper process. If the sensor SIM also shows a device swap, that flag is attached to the ticket for a security check rather than turned into an accusation.</li>
+<li><strong>Sensor tamper</strong>: the sensor SIM moved into another device, or no longer verifies at its install point → ESCALATE.</li>
+<li><strong>Capacity exceeded</strong>: litres credited since the last verified source visit plus this delivery exceed the truck → ESCALATE (trip inflation).</li>
+<li><strong>No source visit</strong> before a first delivery off a load → ESCALATE (nothing verifiable was loaded).</li>
+<li><strong>Implausible feed</strong>: more than 25 cm in one minute → ESCALATE (feed integrity, no credit).</li>
+<li><strong>Trace contradicts the network</strong>: the level rose entirely outside the operator's dwell window → ESCALATE, "measurement not believed", not credited to this truck.</li>
+<li><strong>Unregistered delivery</strong>: the tank rose with no contracted truck in the zone → ESCALATE.</li>
+<li><strong>Turbidity</strong> above 5 NTU during the fill → ESCALATE (untreated water; the contracted load was diverted).</li>
+<li><strong>Impossible fill time</strong>: dwell shorter than 60% of the minutes needed to pump the measured litres → ESCALATE.</li>
+<li><strong>Closed valve</strong>: 15 minutes or more of dwell and the level did not move → ESCALATE.</li>
+<li><strong>Short fill</strong> (measured under 90% of claimed): if the tank could not have taken more, RELEASE the measured litres and flag dispatch; otherwise HOLD, pay verified litres only, ask the contractor.</li>
+<li>Otherwise <strong>RELEASE</strong> the measured litres.</li>
+</ol>
+<p>Thresholds (72 h, 25 cm, 60%, 5 NTU, 15 min, 90%) are in <code>gate.py</code> and <code>config.py</code>; they are defensible engineering defaults, not tuned on field data.</p>
+<h3 id="the-twelve-trips-as-they-ran-live">The twelve trips, as they ran live</h3>
+<p>Every row below is from the last full live run (<code>runs/*.json</code>, 125 real calls, 0 errors). "Calls" is the number of CAMARA calls the agent made for that trip; "rounds" is how many investigation rounds it took.</p>
+<table>
+<thead>
+<tr>
+<th>Trip</th>
+<th>Decision</th>
+<th>Paid</th>
+<th>Calls</th>
+<th>Rounds</th>
+<th>Why, in the gate's words</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Honest delivery</td>
+<td>RELEASE</td>
+<td>9.7 m³ · 31040 IQD</td>
+<td>9</td>
+<td>0</td>
+<td>pay 9.7 m³ verified (claim 10.0 m³): source visit, presence, dwell, sensor integrity and payee all clean</td>
+</tr>
+<tr>
+<td>Short fill: 6 of 10</td>
+<td>HOLD</td>
+<td>6.0 m³</td>
+<td>12</td>
+<td>3</td>
+<td>short fill: 6.0 of 10.0 m³; pay verified litres only, pending contractor response</td>
+</tr>
+<tr>
+<td>Tank was nearly full: 5.8 m³ was all it could take</td>
+<td>RELEASE</td>
+<td>5.8 m³</td>
+<td>11</td>
+<td>3</td>
+<td>tank could only take 6.0 m³: pay 5.8 m³ verified; flag dispatch over-scheduling, not the contractor</td>
+</tr>
+<tr>
+<td>Showed up, never opened the valve</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>10</td>
+<td>0</td>
+<td>truck dwelt 22 min in the tank zone and the level did not move: no water delivered</td>
+</tr>
+<tr>
+<td>Ghost trip: truck never at the tank</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>fleet SIM never entered the tank zone: ghost trip</td>
+</tr>
+<tr>
+<td>Substitution: clean load sold, dirty water dumped</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>11</td>
+<td>3</td>
+<td>turbidity 41.0 NTU &gt; 5: untreated water delivered, contracted load diverted</td>
+</tr>
+<tr>
+<td>Sensor offline: unverified, not fraud</td>
+<td>HOLD</td>
+<td>0</td>
+<td>10</td>
+<td>0</td>
+<td>tank sensor unreachable: unverified, not fraud; maintenance ticket raised; this trip goes to the F-306 paper process; device-swap flag on the sensor SIM attached to the ticket for a security check</td>
+</tr>
+<tr>
+<td>Sensor SIM moved into another device</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>10</td>
+<td>0</td>
+<td>tank sensor SIM moved into another device or no longer at its install point: tamper case</td>
+</tr>
+<tr>
+<td>Trip inflation: 4th delivery off one 10 m³ load</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>11</td>
+<td>3</td>
+<td>9.8 + 8.0 m³ credited since the last source visit exceeds the 10.0 m³ truck: trip inflation</td>
+</tr>
+<tr>
+<td>Payee number SIM-swapped yesterday</td>
+<td>BLOCK</td>
+<td>0</td>
+<td>10</td>
+<td>0</td>
+<td>payee number SIM-swapped inside the 72 h window: identity re-check before any payment</td>
+</tr>
+<tr>
+<td>The agent doubts its own sensor</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>10</td>
+<td>3</td>
+<td>measurement not believed: tank rose 09:05-09:27 while the operator puts the truck in the zone 09:35-10:03; not credited to this truck; possible unregistered delivery or manipulated trace</td>
+</tr>
+<tr>
+<td>Manipulated sensor feed</td>
+<td>ESCALATE</td>
+<td>0</td>
+<td>12</td>
+<td>3</td>
+<td>sensor feed implausible (98.2 cm in one minute): feed integrity case, no credit</td>
+</tr>
+</tbody>
+</table>
+<p>Two RELEASE, two HOLD, seven ESCALATE, one BLOCK. The two RELEASE rows are the point of the system as much as the seven ESCALATE rows: an honest hauler is paid the same day, and a short fill caused by dispatch over-scheduling the tank is paid for what fit and flagged against dispatch, not the contractor.</p>
+<h3 id="how-the-scenarios-map-to-the-sandbox">How the scenarios map to the sandbox</h3>
+<p>Each trip is built from the four sandbox personas (chapter 2): the honest truck and sensor are <code>…1001</code>; a ghost truck or a moved sensor SIM is <code>…1000</code> (Location Verification FALSE, swapped, roaming); an unreachable sensor is <code>…1003</code>. The trip timeline (when the truck entered and left each zone) and the sensor trace are the scenario's. So the network evidence in every row is real, and the story it is asked about is scripted; the dashboard says which is which on every run.</p>
+<h3 id="the-run-to-watch-step-by-step">The run to watch, step by step</h3>
+<p>"The agent doubts its own sensor." Tank 7 rises 9.8 m³ between 09:05 and 09:27. The operator's stamps put the truck in the zone from 09:35 to 10:03.</p>
+<ol>
+<li><code>score</code> finds the contradiction: the rise and the dwell do not overlap at all.</li>
+<li><code>investigate</code>, round 1: the model re-asks the sensor's reachability (could the timestamps be a reporting lag?) and retrieves the truck's location.</li>
+<li><code>investigate</code>, round 2: nothing more the network can tell us; the model says so and stops.</li>
+<li><code>decide</code>: rule 8 fires. Measurement not believed. Not credited to this truck. Case opened.</li>
+<li><code>explain</code>: the note says exactly that, in English and Arabic, and names the strongest network evidence.</li>
+</ol>
+<p>Our own sensor loses to the operator's timestamps, because the sensor is ours and the timestamps are nobody's. Nobody is accused; the case names a possible unregistered delivery or a manipulated trace and leaves it to a person.</p><h2 id="6-against-ourselves">6 · Against ourselves</h2>
+<p>The case against Saqqa, made as well as we can make it, because a team that has not attacked its own system will be doing it for the first time in front of a judge. Much of this chapter was first written by Evan on 31 August against the synthetic-era build; it is kept where it still holds and changed where the live evidence changed it. Nothing here is softened.</p>
+<h3 id="the-best-attacks">The best attacks</h3>
+<p><strong>Substitution inside the zone.</strong> The strongest attack anyone has found. Load clean water, drive to the tank zone, discharge dirty water: right truck, right zone, right dwell, right volume. Every network check passes, because every network check is about the truck, not the water. <em>Answer:</em> a ten-dollar turbidity probe on the same sensor, which is why the sensor was specified with one from the start; UNHCR's form already asks a human to log turbidity by hand for exactly this reason, so we automate a control the sector already believes in. In the live run the substitution trip escalated on 41 NTU. <em>Residual:</em> turbidity is not potability. Clear contaminated water passes. Say so.</p>
+<p><strong>Leave the cab SIM at the depot.</strong> The truck SIM is in the cab, not welded to the tank. Move it to a car that drives the correct route while the tanker goes elsewhere. <em>Answer:</em> partial. The tank is the thing that has to rise, and the decoy car cannot make it rise; the attack converts a diversion into "truck attested present, tank did not move", which is the closed-valve rule and a human looks. <em>Residual:</em> combined with a tampered sensor it is a genuine hole, which is why the tamper checks are cheap and run on every trip.</p>
+<p><strong>Collusion with the site.</strong> The site representative and the contractor agree to under-deliver and split the difference. <em>Answer:</em> this is the attack Saqqa is most effective against, and worth leading with, because it is the one the paper system is worst at. The representative's cooperation is worthless when the measurement comes off an instrument they do not control and the payment comes from a rule they cannot argue with. Removing the signature from the payment path removes the thing being bought.</p>
+<p><strong>Attack the sensor's power.</strong> Do not tamper with the sensor; make it unreachable, so every delivery falls back to paper and the old fraud resumes with a clean conscience. <em>Answer:</em> real, and mostly unsolved. The mitigation is that the unverified rate is a monitored metric per site and per contractor, so a site whose sensor is mysteriously offline for a third of deliveries becomes visible as a pattern even though no single trip is ever called fraud. That is a detection story, not a prevention story, and it should be described as such.</p>
+<p><strong>Two trucks, one zone.</strong> Two contracted trucks inside the same 2 km zone; one tank rises. <em>Answer:</em> the network cannot say which, and we do not claim it can. Assigned routes, dwell, and capacity accounting decide it. A truck-to-tank handshake is a later, non-CAMARA upgrade we do not pitch. The judge's ceiling analysis in Round 1 scored this as structural, and it is.</p>
+<p><strong>The thresholds are made up.</strong> 25 cm in a minute, 60% of pump time, 5 NTU, 90% fill ratio. <em>Answer:</em> yes. They are engineering defaults in one readable file (<code>gate.py</code>, <code>config.py</code>), not inside a prompt or a trained weight, precisely so they can be argued with and tuned against real outcomes once a pilot produces some. The alternative on offer, a model trained on data nobody has, would hide the assumption instead of printing it.</p>
+<h3 id="the-counterfactual-that-caps-us">The counterfactual that caps us</h3>
+<p>The Round-1 judge's hardest finding, and it stands: Saqqa is buildable at higher precision with a payer-issued tamper-evident GPS tracker, the same tank sensor and an LTE modem, and no CAMARA at all. Once the payer issues both SIMs as a contract condition, "the audited party owns the hardware" no longer applies to the truck unit either. Our answer is forgeability, not resolution: a tracker reports its own position and can be made to lie; the operator's timestamps belong to nobody in the transaction. That answer is true. It is also an argument about trust rather than about capability, and a judge who scores capability will cap us for it. Know which argument you are making.</p>
+<p>The second structural finding follows from the first: the load-bearing proof is a level sensor, which is neither novel nor CAMARA. We concede it in chapter 1. Conceding it does not un-cap it.</p>
+<h3 id="what-would-make-us-wrong">What would make us wrong</h3>
+<p>Four things could sink this that are not engineering problems.</p>
+<ol>
+<li><strong>The location APIs do not go commercially live in MENA.</strong> Today SIM Swap is certified with Asiacell (Iraq) and live with several Gulf operators, Number Verification is live in several markets, Device Roaming is live with e&amp; Egypt; Location Verification, Location Retrieval and Geofencing are live with nobody in the region. Without them the payment-integrity half of Saqqa ships and the delivery-verification half does not. This is the largest external dependency and belongs on a slide, not in a footnote. It is also the reason the mentor call matters (chapter 7).</li>
+<li><strong>Sensors break or get stolen faster than assumed.</strong> A high unverified rate turns Saqqa into an expensive way to keep filing the same paper form. Hardware reliability at a camp in Basra is a genuine unknown and we have tested none of it.</li>
+<li><strong>The buyer does not want the answer.</strong> The least technical and the most common killer of systems like this. A procurement officer whose department signed the contract may have no appetite for a measured shortfall entering the record. It is why the first customer should be a commercial buyer who keeps the money they save, rather than an institution where the saving accrues to somebody else's line and the embarrassment to theirs.</li>
+<li><strong>The unit economics turn on a price we do not know.</strong> Nokia does not publish sandbox pricing and no MENA operator publishes a rate card. Our cost table is indicative. At a few cents a call the margin works; at ten cents per call, at our fee, it does not. This is question one for the operator.</li>
+</ol>
+<h3 id="what-the-sandbox-can-and-cannot-prove">What the sandbox can and cannot prove</h3>
+<p>Say this before anyone asks; it is the cheapest credibility available.</p>
+<ul>
+<li><strong>Proven:</strong> every request and response shape; 125 real calls with no errors in the last full run; median latency under 300 ms; webhook delivery of CloudEvents for every subscription, with subscription ids that match; the agent asks the right questions and parses the real answers, including PARTIAL and UNKNOWN, which it does not round into a decision.</li>
+<li><strong>Not proven:</strong> that an operator would say those things about a real truck. The simulators have fixed positions and answer per persona; the trip timeline is ours. Location Retrieval returns Budapest for every device. The demo is honest about which is which on every run.</li>
+<li><strong>Changed since Evan's 31 August version:</strong> "geofence event delivery is unverified" is no longer true; it is verified, hundreds of times. "Every network answer is synthetic" is no longer true; there are no synthetic answers in the canonical build. "The agent ran a written fallback policy" is no longer true; a Gemini model plans, investigates and explains in every logged run, and the run says which provider wrote each note. The remaining honest weakness is smaller and sharper: the sandbox proves plumbing and parsing, not movement.</li>
+</ul>
+<h3 id="things-we-explicitly-do-not-claim">Things we explicitly do not claim</h3>
+<ul>
+<li>Zone scale, roughly two kilometres, never a single house.</li>
+<li>No pilot has run. There is no impact number in any of our material and there should not be one.</li>
+<li>The tank trace is our model. Hardware is Phase 3.</li>
+<li>The location APIs are not commercially live in the region; Phase 1 runs on the sandbox and says so.</li>
+<li>The model decides what to ask and how to explain. It never decides money.</li>
+</ul>
+<p>Disclosing these is not modesty. A team that volunteers its limits is a team whose other claims get believed.</p>
+<h3 id="two-behaviours-worth-more-than-any-answer">Two behaviours worth more than any answer</h3>
+<p>Concede fast and precisely. "Two kilometres is useless in a camp" is correct; agree in four words, then explain that at a camp the tank level carries the weight and the zone check does its work on the intercity leg. Judges are testing whether you know where your own edges are.</p>
+<p>Never claim the sandbox was an operator. If it comes out later, and it will, because someone in that room has built on CAMARA, every other claim gets re-examined. The disclosure is cheap; the recovery is not.</p><h2 id="7-defending-it">7 · Defending it</h2>
+<p>What to say when it is your turn to talk: to a judge, and to the operator engineer in the mentor call. The mentor-specific analysis (what to ask, what to show, what not to do) is also a standalone document, <code>docs/MEETING_BRIEF.md</code>, so it can be read in five minutes without the book.</p>
+<h3 id="the-questions-coming-and-where-the-answer-lives">The questions coming, and where the answer lives</h3>
+<p>Do not memorise wording; memorise which chapter the answer comes from, so it is reconstructed rather than recited.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>The answer, in one line</th>
+<th>Ch.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Why not a GPS tracker?</td>
+<td>A tracker reports its own position; anything that reports its own position can be made to lie. A trust problem, not a resolution problem.</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Two kilometres is useless in a camp.</td>
+<td>Agreed. At a camp the tank level is load-bearing; the zone check does its work on the source and the intercity leg.</td>
+<td>2, 6</td>
+</tr>
+<tr>
+<td>Is the AI actually doing anything?</td>
+<td>It decides which paid checks to buy for this trip, what to ask next when the evidence contradicts itself, and when to stop; then it writes the note. A checklist buys everything every time.</td>
+<td>4</td>
+</tr>
+<tr>
+<td>What if the model hallucinates?</td>
+<td>It cannot move money. Ordered rules do that, and an auditor can re-run them from the ledger without a model.</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Did you run this against the real network?</td>
+<td>Against Nokia's sandbox: 125 real calls, no errors, real CloudEvents. It proves plumbing and parsing, not that an operator said those things about a real truck.</td>
+<td>0, 2</td>
+</tr>
+<tr>
+<td>What about consent and privacy?</td>
+<td>Every SIM belongs to an organisation the payer contracts with. No household is queried, and Location Verification never returns coordinates.</td>
+<td>2</td>
+</tr>
+<tr>
+<td>What stops someone tampering with the sensor?</td>
+<td>Nothing stops it; the network detects it. A sensor cannot clear itself: its own trace never counts in its favour against the operator's timestamps.</td>
+<td>3, 5</td>
+</tr>
+<tr>
+<td>What if the sensor is just broken?</td>
+<td>HOLD, back to paper, nobody penalised. Unverified is never fraud.</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Two trucks in one zone?</td>
+<td>The network cannot say which; assigned routes, dwell and capacity accounting decide it.</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Who pays for it?</td>
+<td>The party already paying against paper, out of the first month of recoveries. Per verified delivery, per instrumented tank, and a share for the operator.</td>
+<td>1, 7</td>
+</tr>
+<tr>
+<td>Why would a contractor accept this?</td>
+<td>Same-day settlement instead of a weekly paper cycle, and a record the operator stands behind when a tank comes up short. It only bites the ones who were stealing.</td>
+<td>3</td>
+</tr>
+<tr>
+<td>What is your impact number?</td>
+<td>We have not run a pilot, so we do not have one. Here is what a pilot would measure.</td>
+<td>6</td>
+</tr>
+<tr>
+<td>What is the biggest risk?</td>
+<td>That the location APIs are not commercially live in MENA on a useful timescale.</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Which of the seven is dispensable?</td>
+<td>Any single one is nearly useless on its own; the value is in the sequence: source visited, truck present, sensor honest, litres measured, payee intact.</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="for-the-judges-the-three-minutes">For the judges: the three minutes</h3>
+<p>Prior GSMA, Nokia and CAMARA hackathons have a documented pattern, and it is not the one an engineering team's instincts point at.</p>
+<ul>
+<li><strong>They opened on one person, not a statistic.</strong> Ontime (first, MWC Barcelona 2025 Talent Arena) opened with a teammate's own problem; market size appeared at the end. Team Malaai (second, India Mobile Congress 2025) opened on a phone call from a mother. Nokia's own judge, on tape, on why a runner-up placed: "something that I personally face quite frequently." Impact is recognised, not measured.</li>
+<li><strong>Winners solve trust problems for the informal or underserved.</strong> Africa Ignite went TrustScore (informal lending), SafeRide, GridGuard; TIM Brazil went Carteiro Amigo (address validation in favelas). Every one is the network vouching for something a formal system cannot see. Saqqa is in that lineage; say so.</li>
+<li><strong>Multiple APIs are rewarded here, unusually.</strong> This contest's own Good-to-Have section says "utilise multiple CAMARA APIs" and "demonstrate intelligent orchestration across multiple network APIs". Seven is fine, provided we can say, as we can, that any one of them is nearly useless alone.</li>
+</ul>
+<p>So: open on the form, not on Jordan's $176 million. The scan of F-306 and the sentence about a field officer who signed for water she did not see. Then the honest delivery released in one screen. Then the agent doubting its own sensor. Then the trip we deliberately do not call fraud. Close on why a coarse answer you cannot forge beats a precise one you wrote yourself. The number goes at the end, if at all. The video script in <code>docs/DEMO_SCRIPT.md</code> is built on exactly this order.</p>
+<h3 id="for-the-operator-the-mentor-call">For the operator: the mentor call</h3>
+<p>Furkan Acık of Türk Telekom; the window closes 10 September. He is an operator engineer and will look for the sentence where we misunderstand what a network can attest. Win the meeting by sounding like people who know exactly what is real, scripted and simulated before he asks.</p>
+<p><strong>Do not ask him to validate the idea.</strong> It is shortlisted. Ask the things only somebody inside a telco knows.</p>
+<p><strong>Three questions to lead with:</strong></p>
+<ol>
+<li><strong>Price.</strong> What does a CAMARA call cost at volume, and is a standing subscription priced per creation, per event or per day? Our margin turns on it and it is the one number we are guessing. Four geofence events per trip are the backbone of the design; if subscriptions are priced per event, the architecture changes.</li>
+<li><strong>Availability.</strong> Which of the seven are commercially live with a MENA operator today, and which are 12–24 months out? Our reading of GSMA's deployment database: SIM Swap and Number Verification live in several markets, Device Roaming live in Egypt, the location family live with nobody. If that holds, the payment-integrity half ships first and the delivery-verification half is sequenced on operator readiness. What is Türk Telekom's own Open Gateway position, and through which channel?</li>
+<li><strong>M2M and consent.</strong> Every SIM we query is in a cab or a sensor. Do Device Swap and Reachability behave the way we think for M2M SIMs? Is two-legged authorisation agreed at onboarding the right consent model for organisation-owned lines, the way operators already sell SIM Swap to banks? Tell us if we are wrong before a judge does.</li>
+</ol>
+<p><strong>State, do not ask:</strong> webhook delivery works; every subscription produced a CloudEvent at our sink within eight seconds. Then ask the production questions: latency from a real boundary crossing to the webhook, behaviour when the sink is down, replay or dead-letter, and what <code>subscription-ends</code> with <code>NETWORK_TERMINATED</code> means in practice.</p>
+<p><strong>If there is time:</strong> who inside an operator buys this and whether a UN agency is a customer the enterprise team wants; what kills submissions at this stage; whether 2,000 m is the network's floor or the sandbox's; how tight Location Retrieval's returned radius gets in a district like Al-Zubair.</p>
+<p><strong>What to show:</strong> the live dashboard on the trip that doubts its own sensor, one calls-table row expanded to the raw request and response, the webhook list against the subscription ids, and chapter 0's table of what is real and what is not, offered before he asks.</p>
+<p><strong>Afterwards:</strong> write his answers down the same day and put them in chapter 6 as "what the operator said". There are three days between the end of the mentorship window and the deadline to act on anything that changes the build.</p>
+<h3 id="the-sentence-to-return-to">The sentence to return to</h3>
+<p>If you are ever lost in a question, go back to it: the only record of a delivery is created by the party being paid for it. Every design decision downstream follows from taking that seriously. Organisation SIMs only. A sensor on the buyer's tank, not the seller's truck. The network read before the sensor. A deterministic gate. A fallback to paper rather than a penalty.</p><h2 id="appendix-the-evidence-verbatim">Appendix · The evidence, verbatim</h2>
+<p>One real request and response per API, exactly as logged in the last full live run (2026-09-03T18:25:35Z, commit 70f79b6). Keys are normalised to snake_case by the client; the SDK returns camelCase. Timestamps in responses are the sandbox's.</p>
+<h3 id="geofencing-subscriptions-424-ms-trip-ghost_trip">Geofencing Subscriptions (424 ms, trip "ghost_trip")</h3>
+<pre><code class="language-json">{
+ &quot;protocol&quot;: &quot;HTTP&quot;,
+ &quot;sink&quot;: &quot;https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara&quot;,
+ &quot;types&quot;: [
+  &quot;org.camaraproject.geofencing-subscriptions.v0.area-entered&quot;
+ ],
+ &quot;config&quot;: {
+  &quot;subscription_detail&quot;: {
+   &quot;device&quot;: {
+    &quot;phone_number&quot;: &quot;+99999991000&quot;
+   },
+   &quot;area&quot;: {
+    &quot;area_type&quot;: &quot;CIRCLE&quot;,
+    &quot;center&quot;: {
+     &quot;latitude&quot;: 30.462,
+     &quot;longitude&quot;: 47.753
+    },
+    &quot;radius&quot;: 2000
+   }
+  },
+  &quot;initial_event&quot;: true,
+  &quot;subscription_max_events&quot;: 1
+ }
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;protocol&quot;: &quot;HTTP&quot;,
+ &quot;sink&quot;: &quot;https://gap-completed-specialized-means.trycloudflare.com/webhooks/camara&quot;,
+ &quot;types&quot;: [
+  &quot;org.camaraproject.geofencing-subscriptions.v0.area-entered&quot;
+ ],
+ &quot;config&quot;: {
+  &quot;subscription_detail&quot;: {
+   &quot;device&quot;: {
+    &quot;phone_number&quot;: &quot;+99999991000&quot;
+   },
+   &quot;area&quot;: {
+    &quot;area_type&quot;: &quot;CIRCLE&quot;,
+    &quot;center&quot;: {
+     &quot;latitude&quot;: 30.462,
+     &quot;longitude&quot;: 47.753
+    },
+    &quot;radius&quot;: 2000
+   }
+  },
+  &quot;subscription_max_events&quot;: 1,
+  &quot;initial_event&quot;: true
+ },
+ &quot;id&quot;: &quot;88f87db8-4701-47ad-89d0-06adf903356f&quot;,
+ &quot;starts_at&quot;: &quot;2026-09-03T10:16:20.249495Z&quot;
+}
+</code></pre>
+<h3 id="location-verification-493-ms-trip-ghost_trip">Location Verification (493 ms, trip "ghost_trip")</h3>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991000&quot;
+ },
+ &quot;area&quot;: {
+  &quot;area_type&quot;: &quot;CIRCLE&quot;,
+  &quot;center&quot;: {
+   &quot;latitude&quot;: 30.389,
+   &quot;longitude&quot;: 47.708
+  },
+  &quot;radius&quot;: 2000
+ },
+ &quot;max_age&quot;: 3600
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;last_location_time&quot;: &quot;2026-09-03T10:16:21.769455+04:00&quot;,
+ &quot;verification_result&quot;: &quot;FALSE&quot;
+}
+</code></pre>
+<h3 id="device-reachability-status-305-ms-trip-ghost_trip">Device Reachability Status (305 ms, trip "ghost_trip")</h3>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991001&quot;
+ }
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991001&quot;
+ },
+ &quot;last_status_time&quot;: &quot;2026-09-03T10:16:22.076286Z&quot;,
+ &quot;reachable&quot;: true,
+ &quot;connectivity&quot;: [
+  &quot;DATA&quot;
+ ]
+}
+</code></pre>
+<h3 id="device-swap-531-ms-trip-ghost_trip">Device Swap (531 ms, trip "ghost_trip")</h3>
+<pre><code class="language-json">{
+ &quot;phone_number&quot;: &quot;+99999991001&quot;,
+ &quot;max_age&quot;: 720
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;swapped&quot;: false
+}
+</code></pre>
+<h3 id="sim-swap-307-ms-trip-ghost_trip">SIM Swap (307 ms, trip "ghost_trip")</h3>
+<pre><code class="language-json">{
+ &quot;phone_number&quot;: &quot;+99999991001&quot;,
+ &quot;max_age&quot;: 72
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;swapped&quot;: false
+}
+</code></pre>
+<h3 id="location-retrieval-276-ms-trip-manipulated_feed">Location Retrieval (276 ms, trip "manipulated_feed")</h3>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991001&quot;
+ },
+ &quot;max_age&quot;: 120
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;last_location_time&quot;: &quot;2026-09-03T10:19:25.002124Z&quot;,
+ &quot;area&quot;: {
+  &quot;area_type&quot;: &quot;CIRCLE&quot;,
+  &quot;center&quot;: {
+   &quot;latitude&quot;: 47.48627616952785,
+   &quot;longitude&quot;: 19.07915612501993
+  },
+  &quot;radius&quot;: 1000
+ }
+}
+</code></pre>
+<p>The circle is near Budapest for every simulator; see chapter 2.</p>
+<h3 id="device-roaming-status-272-ms-trip-manipulated_feed">Device Roaming Status (272 ms, trip "manipulated_feed")</h3>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991001&quot;
+ }
+}
+</code></pre>
+<pre><code class="language-json">{
+ &quot;device&quot;: {
+  &quot;phone_number&quot;: &quot;+99999991001&quot;
+ },
+ &quot;last_status_time&quot;: &quot;2026-09-03T10:19:25.277202Z&quot;,
+ &quot;roaming&quot;: false
+}
+</code></pre>
+<h3 id="reproduce-it">Reproduce it</h3>
+<pre><code>pip install -r requirements.txt
+cp .env.example .env                      # NAC_API_KEY, GOOGLE_API_KEY, PUBLIC_BASE_URL
+python scripts/probe_live.py              # the persona table, from your own account
+python scripts/run_scenarios.py --json    # twelve trips, live; writes runs/*.json
+python docs/book/extract_evidence.py      # rebuilds the evidence pack from the logs
+python docs/book/build_book.py            # rebuilds this book with the new numbers
+uvicorn saqqa.server:app --port 8000      # the dashboard; set PUBLIC_BASE_URL to receive webhooks
+</code></pre>
+<p>Every number in this book is substituted from the evidence pack at build time. If the runs change, the book changes.</p>
+<h3 id="glossary">Glossary</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAMARA</td>
+<td>The open API standard for network capabilities, governed under the Linux Foundation with GSMA Open Gateway; the seven APIs Saqqa uses are CAMARA APIs.</td>
+</tr>
+<tr>
+<td>Nokia Network as Code (NaC)</td>
+<td>Nokia's platform exposing CAMARA APIs, with a sandbox of scripted simulator numbers; the hackathon's mandated platform.</td>
+</tr>
+<tr>
+<td>Persona</td>
+<td>One of the sandbox's simulator numbers (<code>…1000</code>, <code>…1001</code>, <code>…1002</code>, <code>…1003</code>), each with fixed answers to every API.</td>
+</tr>
+<tr>
+<td>CloudEvent</td>
+<td>The JSON envelope in which the operator platform delivers a subscription event to our webhook (<code>type</code>, <code>source</code>, <code>time</code>, <code>data</code>).</td>
+</tr>
+<tr>
+<td>Dwell</td>
+<td>Minutes between the operator's area-entered and area-left stamps for a zone.</td>
+</tr>
+<tr>
+<td>Rise window</td>
+<td>The minutes in which the tank level rose faster than sensor noise.</td>
+</tr>
+<tr>
+<td>Gate</td>
+<td>The ordered, deterministic rules that turn signals into RELEASE / HOLD / ESCALATE / BLOCK and litres to pay.</td>
+</tr>
+<tr>
+<td>F-306</td>
+<td>UNHCR's water-trucking log book: the paper form Saqqa replaces in the payment path and exports to for continuity.</td>
+</tr>
+<tr>
+<td>Unverified</td>
+<td>A trip the system cannot attest (usually a sensor offline). It goes back to paper. It is never fraud.</td>
+</tr>
+<tr>
+<td>Zone</td>
+<td>A circle of at least 2,000 m radius, the smallest geofence Nokia's platform accepts.</td>
+</tr>
+</tbody>
+</table></div></body></html>

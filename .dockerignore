@@ -1,0 +1,6 @@
+.env
+.git
+__pycache__
+*.sqlite3
+runs/
+docs/screenshots/

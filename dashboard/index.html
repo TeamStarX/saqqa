@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saqqa · network-attested water delivery</title>
+<meta name="description" content="Saqqa verifies a trucked-water delivery through the operator's mobile network and a sensor on the buyer's tank, then decides what should be paid for.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FBFAF8'/%3E%3Cpath d='M16 5 L25 20 A9 9 0 1 1 7 20 Z' fill='none' stroke='%23B4472A' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  /* ============================================================ SYSTEM
+     Not a dashboard. A case file: the document that replaces the delivery note
+     someone used to sign without being there. Sections run down the page in the
+     order of the argument, full width, the way a report reads - not tiled into a
+     grid of equal-weight panels, which is what made the previous version generic.
+     One idea leads: two clocks that have to agree. */
+  :root{
+    --paper:#FBFAF8;          /* warm paper, never pure white */
+    --paper2:#F4F2ED;
+    --ink:#15150F;            /* warm near-black */
+    --ink2:#3C3C34;
+    --muted:#67675D;
+    --faint:#6E6E66;         /* 4.9:1 - carries labels, so it is text, not a rule */
+    --rule:#DEDBD3;
+    --rule2:#C6C2B7;         /* rules only, never text */
+
+    --accent:#A8401F;         /* oxblood: the one structural accent */
+    --release:#2C6A4E;
+    --hold:#8A5E14;
+    --escalate:#A8401F;
+    --block:#524481;
+    --network:#2A5580;        /* the operator's evidence, wherever it appears */
+    --tank:#8A6A1E;           /* our own evidence, wherever it appears */
+
+    --serif:"Libre Franklin",-apple-system,"Segoe UI",system-ui,sans-serif;
+    --sans:"Libre Franklin",-apple-system,"Segoe UI",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    --arabic:"IBM Plex Sans Arabic",var(--sans);
+    --ease:cubic-bezier(.23,1,.32,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font:400 15px/1.6 var(--sans);letter-spacing:-.006em;-webkit-font-smoothing:antialiased;
+    font-variant-numeric:tabular-nums;
+  }
+  ::selection{background:#F3DBCE}
+  a{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  h2{margin:0}
+
+  /* ------------------------------------------------------------ masthead */
+  .masthead{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:18px 32px;flex-wrap:wrap;
+    padding:22px 40px 14px;border-bottom:1.5px solid var(--ink);
+  }
+  .mark{display:flex;align-items:baseline;gap:13px;margin:0;font-size:21px}
+  .mark b{font:700 21px/1 var(--sans);letter-spacing:-.025em}
+  .mark .arname{font:500 15px/1 var(--arabic);color:var(--muted)}
+  .mark .tag{
+    font:400 13px/1.35 var(--sans);color:var(--muted);border-left:1px solid var(--rule2);
+    padding-left:14px;
+  }
+
+  /* ------------------------------------------------------------ hero */
+  .hero{
+    position:relative;text-align:center;padding:76px 40px 60px;border-bottom:1px solid var(--rule);
+    background:
+      radial-gradient(60% 55% at 50% 0%, rgba(168,64,31,.07), transparent 70%),
+      var(--paper);
+    transition:opacity .35s var(--ease);
+  }
+  .hero.done{display:none}
+  .hero .eyebrow{margin:0 0 18px;font:500 13px/1 var(--sans);color:var(--muted)}
+  .hero h2{
+    margin:0 auto;max-width:17ch;font:600 clamp(34px,4.6vw,60px)/1.05 var(--sans);
+    letter-spacing:-.038em;color:var(--ink);text-wrap:balance;
+  }
+  .hero .sub{
+    margin:22px auto 0;max-width:58ch;font:400 clamp(16px,1.3vw,18px)/1.55 var(--sans);
+    letter-spacing:-.01em;color:var(--muted);text-wrap:pretty;
+  }
+  .hero .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+  .btn.primary{height:46px;padding:0 24px;font-size:15px;border-radius:8px}
+  .btn.ghost{
+    height:46px;padding:0 22px;font-size:15px;border-radius:8px;background:transparent;color:var(--ink);
+    border:1px solid var(--rule2);
+  }
+  .btn.ghost:hover{background:var(--paper2);border-color:var(--ink)}
+  .hero .proof{
+    list-style:none;display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin:40px auto 0;padding:0;
+    font:400 13.5px/1.4 var(--sans);color:var(--muted);
+  }
+  .hero .proof li{padding:0 22px;border-left:1px solid var(--rule)}
+  .hero .proof li:first-child{border-left:0}
+  .hero .proof b{color:var(--ink);font-weight:600}
+  @media (max-width:640px){.hero{padding:52px 20px 40px}.hero .proof li{border-left:0;padding:4px 0;width:100%}}
+
+  /* the graph: nine nodes, lit as the run passes through them; a loop between score and investigate */
+  .graph{display:flex;flex-wrap:wrap;align-items:center;gap:8px 0;margin:0 0 16px}
+  .graph span{
+    font:500 12.5px/1 var(--sans);color:var(--faint);border:1px solid var(--rule2);border-radius:999px;padding:7px 11px;
+    transition:color .18s var(--ease),background .18s var(--ease),border-color .18s var(--ease);
+  }
+  .graph span b{font:500 11px/1 var(--sans);color:var(--faint);margin-left:6px}
+  .graph span.done{color:var(--ink);border-color:var(--ink2)}
+  .graph span.done b{color:var(--muted)}
+  .graph span.active{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+  .graph span.active b{color:var(--paper);opacity:.7}
+  .graph span.active[data-node="investigate"]{background:var(--accent);border-color:var(--accent)}
+  .graph i{width:14px;height:0;border-top:1px solid var(--rule2);flex:none}
+  .graph i.loop{border-top-style:dashed}
+
+  /* ------------------------------------------------------------ what it takes */
+  .takes h2{font:600 15px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);margin-bottom:18px}
+  .takes dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:22px 28px;margin:0}
+  .takes dt{font:600 13px/1.4 var(--sans);color:var(--ink);margin-bottom:4px}
+  .takes dd{margin:0;font:400 14px/1.5 var(--sans);color:var(--muted);text-wrap:pretty}
+
+  .hero section.takes:first-of-type{border-top:1px solid var(--rule);margin:40px auto 0;padding-top:26px;max-width:1240px;text-align:left}
+  .hero .takes h2{font:600 13px/1.3 var(--sans);color:var(--muted);margin-bottom:14px}
+  .hero .takes dl{grid-template-columns:repeat(5,1fr);gap:14px 26px}
+  .hero .takes dt{font-size:13px}
+  .hero .takes dd{font-size:13.5px;line-height:1.45}
+  @media (max-width:900px){.hero .takes dl{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.hero .takes dl{grid-template-columns:1fr}}
+
+  /* the case file: story (claim, verdict, clocks) then evidence; side by side when the screen allows */
+  .evidence>section:not(.hero):first-of-type{margin-top:26px;border-top:1px solid var(--rule);padding-top:12px}
+  @media (min-width:1600px){
+    article{display:grid;grid-template-columns:minmax(0,1fr) 600px;column-gap:48px;align-items:start}
+    .story{min-width:0}
+    .evidence{position:sticky;top:18px;min-width:0}
+    .evidence>section:not(.hero):first-of-type{margin-top:0;border-top:0;padding-top:0}
+    .evidence .tabpanel{max-height:calc(100vh - 150px)}
+    .colophon{grid-column:1/-1}
+  }
+
+  /* ------------------------------------------------------------ shell */
+  .shell{display:grid;grid-template-columns:250px minmax(0,1fr);align-items:start}
+  .index{
+    position:sticky;top:0;border-right:1px solid var(--rule);padding:26px 0 40px;
+    max-height:100vh;overflow:auto;
+  }
+  .index h2{
+    font:600 13px/1 var(--sans);letter-spacing:-.006em;
+    color:var(--ink);padding:0 22px;margin-bottom:10px;
+  }
+  .filed{margin-top:34px}
+  article{padding:24px 40px 60px;min-width:0}
+
+  /* ------------------------------------------------------------ index of trips */
+  #scenarios{display:flex;flex-direction:column;counter-reset:trip}
+  .scen{
+    position:relative;display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;
+    align-items:baseline;width:100%;padding:7px 22px;border:0;background:none;
+    font:inherit;color:inherit;text-align:left;cursor:pointer;counter-increment:trip;
+    transition:background .15s var(--ease);
+  }
+  .scen::before{
+    content:counter(trip,decimal-leading-zero);
+    font:500 12px/1.6 var(--sans);color:var(--faint);transition:color .15s var(--ease);
+  }
+  .scen .t{
+    font-size:14.5px;line-height:1.35;letter-spacing:-.006em;color:var(--ink2);
+    transition:color .15s var(--ease);
+  }
+  .scen .tag{
+    grid-column:2;display:inline-block;font:600 12px/1 var(--sans);text-transform:lowercase;
+    margin-top:4px;
+  }
+  .scen:hover{background:var(--paper2)}
+  .scen:hover .t{color:var(--ink)}
+  .scen[aria-current="true"]{background:var(--paper2)}
+  .scen[aria-current="true"] .t{color:var(--ink);font-weight:600}
+  .scen[aria-current="true"]::before{color:var(--accent)}
+  .tag{display:inline-block;text-transform:lowercase}
+  .tag::first-letter{text-transform:uppercase}
+  .RELEASE{color:var(--release)}.HOLD{color:var(--hold)}
+  .ESCALATE{color:var(--escalate)}.BLOCK{color:var(--block)}
+  #runs{font:400 12.5px/1.5 var(--sans);color:var(--muted)}
+  #runs>div{padding:6px 22px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+  #runs .tag{font-size:11.5px}
+
+  /* ------------------------------------------------------------ section rhythm */
+  section:not(.hero){border-top:1px solid var(--rule);padding-top:12px;margin-top:26px}
+  section:not(.hero):first-of-type{border-top:0;padding-top:0;margin-top:0}
+  .lede{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:20px;
+    font:600 13px/1 var(--sans);letter-spacing:-.006em;color:var(--muted);
+  }
+  .lede b{display:none}
+
+  /* first-visit guidance */
+  .hint{font:400 12.5px/1.5 var(--sans);color:var(--muted);margin:-6px 22px 14px;max-width:26ch}
+  .guide{
+    display:flex;flex-wrap:wrap;gap:10px 28px;padding:14px 18px;margin-bottom:26px;
+    border:1px solid var(--rule);border-radius:8px;background:var(--paper2);
+  }
+  .guide .step{font:400 14px/1.4 var(--sans);color:var(--ink2);display:flex;align-items:baseline;gap:9px}
+  .guide .step b{font:700 11px/1 var(--sans);color:var(--paper);background:var(--accent);padding:4px 7px;border-radius:5px}
+  .guide .step em{font-style:normal;font-weight:600;color:var(--ink)}
+  .guide.done{display:none}
+  .scen .tour{
+    grid-column:2;font:500 12px/1 var(--sans);color:var(--accent);margin-top:5px;
+  }
+  .scen .tour::before{content:"→ "}
+  .nextstep{margin-top:22px;padding-top:16px;border-top:1px solid var(--rule);font:400 15px/1.5 var(--sans);color:var(--ink2);max-width:62ch}
+  .nextstep a{color:var(--accent);font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--accent);cursor:pointer}
+  .nextstep a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  /* ------------------------------------------------------------ 01 the claim */
+  /* the hauler's claim, stated plainly: a title, one sentence, the trip's numbers */
+  #storytext{
+    font:400 15px/1.55 var(--sans);letter-spacing:-.005em;
+    max-width:62ch;color:var(--muted);text-wrap:pretty;animation:rise .3s var(--ease) both;
+  }
+  #storytext b{display:block;font:600 20px/1.25 var(--sans);letter-spacing:-.02em;color:var(--ink);margin-bottom:6px}
+  #storytext .meta{
+    display:block;font:400 12.5px/1.6 var(--sans);color:var(--faint);margin-top:8px;
+    letter-spacing:0;max-width:none;
+  }
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:14px}
+  .btn{
+    height:40px;padding:0 22px;background:var(--ink);color:var(--paper);border:0;border-radius:6px;
+    font:600 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;
+    transition:background .16s var(--ease),transform .12s var(--ease);
+  }
+  .btn:hover{background:var(--accent)}
+  .btn:active{transform:scale(.975)}
+  .btn:disabled{opacity:.28;cursor:default;transform:none;background:var(--ink)}
+  .btn.running{background:var(--accent)}
+  .btn.secondary{
+    background:transparent;color:var(--ink);border:1px solid var(--rule2);height:36px;
+    font-weight:500;font-size:12.5px;
+  }
+  .btn.secondary:hover{background:transparent;border-color:var(--ink)}
+  .btn.secondary:disabled{background:transparent;color:var(--muted)}
+  .seg{display:flex;height:40px;border:1px solid var(--rule2);border-radius:6px;overflow:hidden;flex:none}
+  .seg button{
+    background:none;border:0;color:var(--muted);font:500 13px/1 var(--sans);letter-spacing:-.006em;
+    height:100%;padding:0 14px;cursor:pointer;transition:background .15s var(--ease),color .15s;
+  }
+  .seg button+button{border-left:1px solid var(--rule2)}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  @media (hover:hover){.seg button[aria-pressed="false"]:hover{color:var(--ink)}}
+  .cost{font:400 13px/1.6 var(--sans);color:var(--muted);max-width:60ch;margin-top:8px}
+  /* one sentence on what this run will really do: live calls or fixtures, which model, how events arrive */
+  .status{display:flex;align-items:center;gap:8px;margin:10px 0 0;font:400 12.5px/1.5 var(--sans);color:var(--faint)}
+  .status i{width:6px;height:6px;border-radius:50%;background:var(--faint);flex:none}
+  .status.live i{background:var(--release)}
+  .status.fixture i{background:var(--hold)}
+  /* the seven CAMARA APIs, with the ones this profile cannot buy struck through */
+  .apistrip{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px}
+  .apistrip span{font:400 13px/1.5 var(--sans);color:var(--ink2);transition:color .18s var(--ease)}
+  .apistrip span.off{color:var(--faint);text-decoration:line-through;text-decoration-color:var(--rule2)}
+  .apistrip span.on::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--network);margin-right:7px;vertical-align:1px}
+  .apistrip span.off::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--rule2);margin-right:7px;vertical-align:1px}
+  .apistrip i{font-style:normal;font:600 11.5px/1 var(--sans);color:var(--release);margin-left:7px;vertical-align:1px}
+  .apistrip span.off i{color:var(--faint)}
+  /* what the verdict could not check on this profile */
+  .unchecked{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule);max-width:62ch}
+  .unchecked li{margin:0}
+  .unchecked span{display:block;font:600 12.5px/1 var(--sans);color:var(--muted);margin-bottom:8px}
+  .unchecked li{font-size:13.5px;line-height:1.5;color:var(--muted)}
+  .unchecked ul{margin:0;padding-left:18px}
+  #clock,#mode{font:500 13px/1 var(--sans);color:var(--accent)}
+  #clock:empty,#mode:empty{display:none}
+
+  /* ------------------------------------------------------------ 02 the verdict */
+  #decision{padding-top:16px}
+  /* the verdict block is a small grid, not a column: word, then reason + next step beside the unchecked list */
+  #decision.card{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr);column-gap:44px;align-items:start}
+  #decision.card>h2{grid-column:1/-1}
+  #decision.card .big{grid-column:1/-1}
+  #decision.card .reason{grid-area:3/1}
+  #decision.card .next{grid-area:4/1;margin-top:12px;padding-top:10px}
+  #decision.card .unchecked{grid-area:3/2/5/3;margin-top:0;padding-top:0;border-top:0}
+  #decision.card .amount{grid-area:5/1/6/3;margin-top:14px}
+  #decision.card .nextstep{grid-area:6/1/7/3;margin-top:12px;padding-top:10px;max-width:none}
+  @media (max-width:760px){#decision.card{display:block}}
+  #decision>h2{
+    font:600 13px/1 var(--sans);letter-spacing:-.006em;
+    color:var(--muted);margin-bottom:18px;
+  }
+  #decision>h2::before{content:""}
+  .big{
+    font:800 clamp(46px,5.4vw,74px)/.95 var(--sans);letter-spacing:-.045em;
+    animation:settle .4s var(--ease) both;
+  }
+  .big.RELEASE{color:var(--release)}.big.HOLD{color:var(--hold)}
+  .big.ESCALATE{color:var(--escalate)}.big.BLOCK{color:var(--block)}
+  @keyframes settle{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+  .waiting{
+    font:700 clamp(34px,4.2vw,54px)/1 var(--sans);letter-spacing:-.035em;color:var(--faint);
+  }
+  .reason{
+    margin-top:18px;font:400 clamp(17px,1.5vw,20px)/1.45 var(--sans);letter-spacing:-.012em;
+    color:var(--ink2);max-width:58ch;text-wrap:pretty;
+  }
+  .next{
+    margin-top:22px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:15px;line-height:1.55;color:var(--ink2);max-width:62ch;
+  }
+  .next span{
+    display:block;font:600 12.5px/1 var(--sans);
+    color:var(--muted);margin-bottom:6px;
+  }
+  .next br{display:none}
+  .amount{margin-top:20px;font:400 13px/1.8 var(--sans);color:var(--muted)}
+  .amount b{color:var(--ink);font-weight:600}
+  .muted{color:var(--muted)}
+
+  /* ------------------------------------------------------------ 03 the two clocks */
+  svg.chart{width:100%;height:auto;aspect-ratio:1000/252;display:block}
+  .clockkey{
+    display:flex;gap:26px;flex-wrap:wrap;margin-top:10px;padding-top:10px;
+    border-top:1px solid var(--rule);
+  }
+  .clockkey span{display:flex;align-items:center;gap:9px;font:400 13px/1.4 var(--sans);color:var(--muted)}
+  .clockkey i{display:inline-block;width:15px;height:3px;flex:none}
+
+  /* measured quantities weighted by how much they matter, not tiled equally */
+  .kpis{display:flex;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-top:12px}
+  .kpi .l{font:500 13px/1 var(--sans);color:var(--muted)}
+  .kpi .v{font:600 26px/1 var(--sans);margin-top:9px;letter-spacing:-.03em;color:var(--ink2)}
+  #kpi_meas .v{font-size:40px;font-weight:700;color:var(--ink)}
+  .kpi.rejected .v{
+    text-decoration:line-through;text-decoration-color:var(--escalate);
+    text-decoration-thickness:2px;color:var(--faint);
+  }
+  .kpi .flag{
+    display:block;font:600 12px/1 var(--sans);
+    color:var(--escalate);margin-top:9px;
+  }
+
+  /* ------------------------------------------------------------ 04 where */
+  .whererow{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(230px,1fr);gap:34px;align-items:start}
+  #map{height:330px;background:var(--paper2);border:1px solid var(--rule)}
+  .light-tiles{filter:grayscale(.88) contrast(.9) brightness(1.07)}
+  .leaflet-container{background:var(--paper2);font-family:var(--mono)}
+  .truck{
+    width:11px;height:11px;border-radius:50%;background:var(--ink);position:relative;
+    box-shadow:0 0 0 3px var(--paper);
+  }
+  .truck.moving::after{
+    content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--ink);
+    animation:ping 1.7s var(--ease) infinite;
+  }
+  @keyframes ping{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2.3);opacity:0}}
+  .legend{display:flex;flex-direction:column;gap:10px}
+  .legend span{display:flex;align-items:center;gap:9px;font:400 13px/1.3 var(--sans);color:var(--muted)}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
+  #webhooks{
+    font:400 12.5px/1.9 var(--mono);color:var(--muted);margin-top:18px;
+    padding-top:14px;border-top:1px solid var(--rule);
+  }
+  #webhooks b{color:var(--release);font-weight:600}
+  #webhooks div{animation:rise .3s var(--ease) both}
+
+  /* ------------------------------------------------------------ evidence tabs */
+  .tabs{display:flex;gap:30px;flex-wrap:wrap;border-bottom:1px solid var(--rule);margin-bottom:16px}
+  .tabpanel{max-height:380px;overflow:auto;overscroll-behavior:contain}
+  .tabs button{
+    background:none;border:0;padding:0 0 12px;margin-bottom:-1px;cursor:pointer;color:var(--muted);
+    font:500 14px/1 var(--sans);letter-spacing:-.008em;border-bottom:2px solid transparent;
+    transition:color .15s var(--ease),border-color .15s var(--ease);
+  }
+  @media (hover:hover){.tabs button:hover{color:var(--ink)}}
+  .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+  .tabs .pill{margin-left:7px;color:var(--faint)}
+  .tabpanel{animation:rise .22s var(--ease) both}
+
+  /* ------------------------------------------------------------ 05 the agent */
+  #trace{
+    max-height:520px;overflow:auto;font:400 13px/1.7 var(--mono);
+    background:var(--paper2);border:1px solid var(--rule);padding:20px 24px;
+  }
+  .ln{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;padding:5px 0;animation:slot .22s var(--ease) both}
+  .ln .n{font:600 11px/1.7 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .ln .x{white-space:pre-wrap;word-break:break-word;color:var(--ink2)}
+  .ln .x.facts{display:flex;flex-wrap:wrap;gap:7px 22px;white-space:normal}
+  .fact{display:flex;gap:8px;align-items:baseline}
+  .fact b{color:var(--faint);font-weight:400}
+  .fact i{color:var(--ink);font-style:normal;font-weight:600}
+  .fact i.no{color:var(--faint);font-weight:400}
+  .n.plan{color:var(--network)}.n.score{color:var(--ink)}
+  .n.investigate{color:var(--hold)}.n.decide{color:var(--accent)}.n.explain{color:var(--release)}
+  .ln.contra{background:#FAEFD8;margin:0 -12px;padding:5px 12px}
+  .ln.contra .x{color:#6E4A0B;font-weight:500}
+  .ln.decide{border-top:1px solid var(--rule2);border-bottom:1px solid var(--rule2);padding:12px 0;margin:8px 0}
+  .ln.decide .x{color:var(--ink);font-weight:600}
+  @keyframes slot{from{opacity:0;transform:translateX(-5px)}to{opacity:1;transform:none}}
+  .cursor{
+    display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:-1px;
+    animation:blink .9s steps(2) infinite;margin-left:3px;
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  /* ------------------------------------------------------------ 06 the record */
+  .recordrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.7fr);gap:38px;align-items:start}
+  #ledger{font:400 13px/1.9 var(--sans);color:var(--muted)}
+  #ledger b{color:var(--ink);font-weight:600}
+  .note{font-size:16px;line-height:1.6;color:var(--ink2);text-wrap:pretty;max-width:60ch}
+  .ar{
+    direction:rtl;font-family:var(--arabic);font-size:16px;line-height:1.95;
+    margin-top:16px;padding-top:16px;border-top:1px solid var(--rule);color:var(--ink2);
+  }
+  .src{margin-top:18px;font:400 12.5px/1.6 var(--sans);color:var(--faint)}
+
+  /* ------------------------------------------------------------ 07 the calls */
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
+  th,td{text-align:left;padding:10px 14px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{
+    font:600 12.5px/1 var(--sans);color:var(--muted);
+    padding-top:0;padding-bottom:12px;border-bottom:1px solid var(--rule2);
+  }
+  td{font-family:var(--sans);color:var(--ink2);font-size:13px}
+  td b{color:var(--ink);font-weight:600;font-family:var(--sans);font-size:13.5px}
+  td .muted{color:var(--faint)}
+  tr.call{cursor:pointer;animation:slot .22s var(--ease) both;transition:background .14s var(--ease)}
+  tr.call:hover{background:var(--paper2)}
+  tr.call:focus-visible{background:var(--paper2);outline:2px solid var(--accent);outline-offset:-2px}
+  tr.call td:first-child{color:var(--faint)}
+  tr.raw td{background:var(--paper2);font:400 12px/1.7 var(--mono);white-space:pre-wrap;color:var(--muted);padding:16px}
+  .pill{font:600 12px/1 var(--sans);color:var(--muted)}
+  .pill.live{color:var(--release)}.pill.fixture{color:var(--hold)}
+
+  .colophon{
+    margin-top:58px;padding-top:20px;border-top:1.5px solid var(--ink);
+    font:400 13px/1.8 var(--sans);color:var(--muted);max-width:76ch;
+  }
+  .colophon b{color:var(--ink2);font-weight:600}
+
+  #caption{
+    position:fixed;left:50%;bottom:34px;transform:translateX(-50%);max-width:1080px;
+    padding:16px 30px;background:var(--ink);color:var(--paper);
+    font:600 22px/1.35 var(--sans);letter-spacing:-.02em;border-radius:8px;
+    opacity:0;transition:opacity .22s;z-index:50;text-align:center;
+    box-shadow:0 10px 40px rgba(21,21,15,.24);
+  }
+  body.record .filed,body.record .colophon{display:none}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.1s!important}
+    .truck.moving::after{display:none}
+  }
+  @media (max-width:1080px){
+    .shell{grid-template-columns:1fr}
+    .index{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}
+    .whererow,.recordrow{grid-template-columns:1fr}
+    article{padding:28px 24px 70px}
+    .masthead{padding:18px 24px 12px}
+  }
+  @media (max-width:640px){
+    .mark .tag{display:none}
+    .kpis{gap:26px}
+    #kpi_meas .v{font-size:38px}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1 class="mark">
+    <b>Saqqa</b><span class="arname">السقّا</span>
+    <span class="tag">network-attested delivery and payment for trucked water</span>
+  </h1>
+</header>
+
+<section class="hero" id="hero" aria-label="What Saqqa is">
+  <p class="eyebrow">Built on CAMARA Open Gateway APIs</p>
+  <h2>A water delivery is paid for on the word of the person being paid.</h2>
+  <p class="sub">Saqqa puts a sensor on the buyer's tank and a SIM in the tanker's cab, makes the mobile operator the witness, and pays only for the litres it can account for.</p>
+  <div class="cta">
+    <button type="button" class="btn primary" id="cta_run">Run an honest delivery</button>
+    <button type="button" class="btn ghost" id="cta_hero">Watch the agent doubt its own sensor</button>
+  </div>
+  <ul class="proof">
+    <li><b>12 of 12</b> seeded trips decide correctly</li>
+    <li><b>125</b> live CAMARA calls, <b>0</b> errors</li>
+    <li><b>3</b> APIs are enough to reach every verdict</li>
+  </ul>
+  <section class="takes" aria-label="What it takes to deploy">
+    <h2>What it takes to deploy</h2>
+    <dl>
+      <div><dt>On the truck</dt><dd>Nothing. The SIM already in the cab is the tracker.</dd></div>
+      <div><dt>On the tank</dt><dd>One fixed level sensor with its own SIM, bought once by the buyer.</dd></div>
+      <div><dt>In software</dt><dd>One agent and three CAMARA APIs, running on Nokia Network as Code today.</dd></div>
+      <div><dt>In paperwork</dt><dd>The F-306 form stays; Saqqa fills it from the evidence.</dd></div>
+      <div><dt>In money</dt><dd>13.6¢ of network calls against a $30 trip.</dd></div>
+    </dl>
+  </section>
+</section>
+
+<div class="shell">
+  <nav class="index" aria-label="Seeded trips">
+    <h2>Pick a delivery</h2>
+    <p class="hint">Twelve real-shaped trips, each with a known outcome. Choose one; it runs when you click it.</p>
+    <div id="scenarios"></div>
+    <div class="filed">
+      <h2>Previously run</h2>
+      <div id="runs" class="muted" style="padding:0 22px">nothing filed yet</div>
+    </div>
+  </nav>
+
+  <article>
+  <div class="story">
+    <section>
+      <div class="lede"><b>01</b> What the hauler claims</div>
+      <div id="storytext" class="muted">Choose a trip from the index. Every run re-executes the agent — the network calls are made when you press the button.</div>
+      <div class="row">
+        <button id="run" class="btn" disabled>Run verification</button>
+        <div class="seg" id="profile" role="group" aria-label="Deployment profile"></div>
+        <span id="clock"></span><span id="mode"></span>
+      </div>
+      <div class="cost" id="cost"></div>
+      <div class="apistrip" id="apistrip" aria-label="CAMARA APIs on this profile"></div>
+      <p class="status" id="status"><i></i>connecting</p>
+    </section>
+
+    <section id="decision" aria-live="assertive">
+      <h2>Verdict</h2>
+      <div class="waiting">Awaiting verification</div>
+      <div class="amount">press Run verification: about ten network calls, then a decision on what to pay</div>
+    </section>
+
+    <section>
+      <div class="lede"><b>03</b> Two clocks that have to agree</div>
+      <svg class="chart" id="chart" viewBox="0 0 1000 252" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The operator's dwell window against the tank's level rise."></svg>
+      <div class="clockkey">
+        <span><i style="background:#2A5580"></i>what the operator's network says</span>
+        <span><i style="background:#8A6A1E"></i>what the buyer's tank says</span>
+        <span><i style="background:#A8401F"></i>where they disagree</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi" id="kpi_meas"><div class="l">Measured</div><div class="v" id="k_meas">—</div></div>
+        <div class="kpi" id="kpi_claim"><div class="l">Claimed</div><div class="v" id="k_claim">—</div></div>
+        <div class="kpi"><div class="l">Dwell</div><div class="v" id="k_dwell">—</div></div>
+        <div class="kpi"><div class="l">Turbidity</div><div class="v" id="k_turb">—</div></div>
+      </div>
+    </section>
+
+  </div>
+  <div class="evidence">
+    <section>
+      <div class="lede"><b>04</b> The evidence behind it</div>
+      <div class="tabs" role="tablist" aria-label="Evidence">
+        <button type="button" role="tab" data-tab="network" aria-selected="true">Where the truck was</button>
+        <button type="button" role="tab" data-tab="agent" aria-selected="false">What the agent did</button>
+        <button type="button" role="tab" data-tab="record" aria-selected="false">The record</button>
+        <button type="button" role="tab" data-tab="calls" aria-selected="false">Network calls <span id="callcount" class="pill"></span></button>
+      </div>
+
+      <div class="tabpanel" data-panel="agent" role="tabpanel" hidden>
+        <div class="graph" id="graph" aria-label="LangGraph nodes, lit as the run passes through them">
+          <span data-node="intake">intake</span><i></i><span data-node="plan">plan<b>model</b></span><i></i><span data-node="verify">verify</span><i></i><span data-node="sense">sense</span><i></i><span data-node="score">score</span><i class="loop"></i><span data-node="investigate">investigate<b>model</b></span><i></i><span data-node="decide">decide</span><i></i><span data-node="explain">explain<b>model</b></span><i></i><span data-node="act">act</span>
+        </div>
+        <div id="trace" role="log" aria-live="polite" aria-relevant="additions" aria-label="Agent reasoning trace"></div>
+      </div>
+
+      <div class="tabpanel" data-panel="network" role="tabpanel">
+        <div class="whererow">
+          <div id="map" role="img" aria-label="Map of the two-kilometre operator geofences: licensed well S1, tank zone K1, unregistered farm F1, and the fleet SIM's position."></div>
+          <div>
+            <div class="legend">
+              <span><i style="background:#2A5580"></i>S1 · licensed well</span>
+              <span><i style="background:#2C6A4E"></i>K1 · tank zone</span>
+              <span><i style="background:#A8401F"></i>F1 · unregistered farm</span>
+              <span><i style="background:#15150F"></i>T-14 · fleet SIM</span>
+            </div>
+            <div id="webhooks"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="record" role="tabpanel" hidden>
+        <div class="recordrow">
+          <div>
+            <div id="auditnote"></div>
+            <div class="row" style="margin-top:22px"><button class="btn secondary" id="f306" disabled>Export F-306 fields</button></div>
+          </div>
+          <div id="ledger" class="muted">The ledger row and the audit note are written here after a run.</div>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="calls" role="tabpanel" hidden>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>API</th><th>Category</th><th>Target</th><th>Mode</th><th>ms</th><th>Result</th></tr></thead>
+            <tbody id="calls"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <div class="colophon">
+      Network calls run against Nokia's sandbox when a key is configured. Sandbox simulator numbers have scripted
+      outcomes and fixed positions, so the trip timeline is ours; the tank trace is a pump model with its parameters on
+      screen. Hardware is Phase 3. <b>No household is located, messaged or asked to consent — every SIM here belongs to
+      an organisation.</b>
+    </div>
+  </article>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
