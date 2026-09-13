@@ -60,6 +60,8 @@
   }
   .mark{display:flex;align-items:baseline;gap:13px;margin:0;font-size:21px}
   .mark b{font:700 21px/1 var(--sans);letter-spacing:-.025em}
+  .mark a{color:inherit;text-decoration:none}
+  .mark a:hover b{color:var(--accent)}
   .mark .arname{font:500 15px/1 var(--arabic);color:var(--muted)}
   .mark .tag{
     font:400 13px/1.35 var(--sans);color:var(--muted);border-left:1px solid var(--rule2);
@@ -125,8 +127,12 @@
   .takes dt{font:600 13px/1.4 var(--sans);color:var(--ink);margin-bottom:4px}
   .takes dd{margin:0;font:400 14px/1.5 var(--sans);color:var(--muted);text-wrap:pretty}
 
-  .hero section.takes:first-of-type{border-top:1px solid var(--rule);margin:40px auto 0;padding-top:26px;max-width:1240px;text-align:left}
-  .hero .takes h2{font:600 13px/1.3 var(--sans);color:var(--muted);margin-bottom:14px}
+  .hero section.takes:first-of-type{
+    margin:44px auto 0;max-width:1240px;text-align:left;border-top:0;padding:28px 32px 30px;
+    background:#fff;border:1px solid var(--rule);border-radius:16px;
+    box-shadow:0 1px 2px rgba(26,26,23,.04),0 14px 36px rgba(26,26,23,.06);
+  }
+  .hero .takes h2{font:600 13px/1.3 var(--sans);color:var(--muted);margin-bottom:16px;text-align:left}
   .hero .takes dl{grid-template-columns:repeat(5,1fr);gap:14px 26px}
   .hero .takes dt{font-size:13px}
   .hero .takes dd{font-size:13.5px;line-height:1.45}
@@ -471,7 +477,7 @@
 
 <header class="masthead">
   <h1 class="mark">
-    <b>Saqqa</b><span class="arname">السقّا</span>
+    <a href="#" id="home" title="Back to the landing"><b>Saqqa</b></a><span class="arname">السقّا</span>
     <span class="tag">network-attested delivery and payment for trucked water</span>
   </h1>
 </header>

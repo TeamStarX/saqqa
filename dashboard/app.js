@@ -31,6 +31,10 @@ async function boot() {
   };
   $("#cta_run")?.addEventListener("click", () => go("honest"));
   $("#cta_hero")?.addEventListener("click", () => go("sensor_contradicts_network"));
+  // the wordmark is the way back to the landing; a run in progress keeps going underneath
+  $("#home")?.addEventListener("click", (e) => {
+    e.preventDefault(); document.body.classList.add("landing"); $("#hero")?.classList.remove("done"); window.scrollTo({ top: 0 });
+  });
   $("#cta_open")?.addEventListener("click", () => {
     document.body.classList.remove("landing"); $("#hero")?.classList.add("done");
     window.scrollTo({ top: 0 }); if (map) setTimeout(() => map.invalidateSize(), 60);

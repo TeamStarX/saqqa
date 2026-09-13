@@ -124,7 +124,7 @@ Title: `Saqqa: network-attested delivery and payment for trucked water (GSMA MEN
    `GOOGLE_API_KEY` for the real planner/investigator/explainer (Gemini), `PUBLIC_BASE_URL` (a public HTTPS address of
    this server) to receive operator webhooks. Without keys the prototype runs on sandbox-mirroring fixtures and says so.
 3. `python scripts/run_scenarios.py` runs all twelve trips in the terminal (exit code 0 when all decide as expected).
-4. `uvicorn saqqa.server:app --port 8000` and open http://localhost:8000. Pick a trip, click Run verification.
+4. `uvicorn saqqa.server:app --port 8000` and open http://localhost:8000. Pick a trip (it runs on click; Run verification re-runs it), switch core / full next to the button.
 5. On the dashboard, switch **core · 3 APIs** / **full · 7 APIs** next to Run verification to see the same trip decided on the widely deployed API set. `python scripts/compare_profiles.py` prints the twelve-trip comparison.
 6. `python scripts/probe_live.py` prints what the sandbox returns for every persona on your account.
 ```
