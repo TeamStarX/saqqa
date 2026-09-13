@@ -268,7 +268,7 @@ function drawChart(samples, network, signals, cursor) {
   }
 
   // ---- lane 1: what the operator's network says
-  s += tx(PAD, NET_Y - 20, "the operator's network", { size: 12, weight: 500, fill: C.net });
+  s += tx(PAD, NET_Y - 20, "Where the truck was, according to the operator's network", { size: 13, weight: 600, fill: C.net });
   s += `<line x1="${PAD}" y1="${NET_Y + NET_H}" x2="${W - PAD}" y2="${NET_Y + NET_H}" stroke="#C6C2B7"/>`;
   if (s1) {
     s += band(minutes(s1.entered), minutes(s1.left), NET_Y, NET_H, C.net, 0.16);
@@ -282,32 +282,32 @@ function drawChart(samples, network, signals, cursor) {
     s += band(k1.lo, a, NET_Y, NET_H, "url(#hatch)", 1);
     s += band(a, b, NET_Y, NET_H, C.net, 0.34);
     s += band(b, k1.hi, NET_Y, NET_H, "url(#hatch)", 1);
-    s += tx(x(k1.lo) + 7, NET_Y + 19, `in the tank zone, polled  ${k1.entered}–${k1.left}  ±${POLL_MIN} min`, { size: 11.5, fill: C.net, weight: 600 });
+    s += tx(x(k1.lo) + 7, NET_Y + 18, `at the tank  ${k1.entered}–${k1.left}  (polled, ±${POLL_MIN} min)`, { size: 12.5, fill: C.net, weight: 700 });
   } else if (k1) {
     s += band(minutes(k1.entered), minutes(k1.left), NET_Y, NET_H, C.net, 0.34);
-    s += tx(x(minutes(k1.entered)) + 7, NET_Y + 19, `in the tank zone  ${k1.entered}–${k1.left}`, { size: 11.5, fill: C.net, weight: 600 });
+    s += tx(x(minutes(k1.entered)) + 7, NET_Y + 18, `at the tank  ${k1.entered}–${k1.left}`, { size: 12.5, fill: C.net, weight: 700 });
   } else {
     s += `<rect x="${x(70)}" y="${NET_Y}" width="${x(105) - x(70)}" height="${NET_H}" fill="none" stroke="${C.accent}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
-    s += tx(x(70) + 8, NET_Y + 19, "the fleet SIM never entered the tank zone", { size: 11.5, fill: C.accent, weight: 600 });
+    s += tx(x(70) + 8, NET_Y + 18, "never at the tank", { size: 12.5, fill: C.accent, weight: 700 });
   }
 
   // ---- lane 2: what the buyer's tank says
-  s += tx(PAD, TANK_TOP - 16, "the buyer's tank", { size: 12, weight: 500, fill: C.tank });
+  s += tx(PAD, TANK_TOP - 16, "When the tank filled, according to its own level sensor", { size: 13, weight: 600, fill: C.tank });
   s += `<line x1="${PAD}" y1="${TANK_BOT}" x2="${W - PAD}" y2="${TANK_BOT}" stroke="#C6C2B7"/>`;
-  for (const cm of [100, 200]) {
-    s += `<line x1="${PAD}" y1="${yL(cm)}" x2="${W - PAD}" y2="${yL(cm)}" stroke="${C.muted}" stroke-width="1" stroke-dasharray="4 4" opacity=".85"/>`;
-    s += tx(W - PAD, yL(cm) - 6, `${cm} cm`, { anchor: "end", size: 11, fill: C.muted, weight: 500 });
-  }
   const rw = signals && signals.rise_window;
-  if (rw) s += band(minutes(rw[0]), minutes(rw[1]), TANK_TOP - 4, TANK_BOT - TANK_TOP + 4, C.tank, 0.14);
 
   if (samples && samples.length) {
-    s += `<polyline class="draw" fill="none" stroke="${C.tank}" stroke-width="2.5" stroke-linejoin="round"
-            points="${samples.map((p) => `${x(p.t)},${yL(p.level_cm)}`).join(" ")}"/>`;
-    s += `<polyline fill="none" stroke="${C.tank}" stroke-width="1" opacity=".4" stroke-dasharray="3 3"
-            points="${samples.map((p) => `${x(p.t)},${TANK_BOT - Math.min(p.turb_ntu, 50) / 50 * 26}`).join(" ")}"/>`;
+    const pts = samples.map((p) => `${x(p.t)},${yL(p.level_cm)}`).join(" ");
+    s += `<polygon fill="${C.tank}" opacity=".10" points="${x(samples[0].t)},${TANK_BOT} ${pts} ${x(samples[samples.length - 1].t)},${TANK_BOT}"/>`;
+    s += `<polyline class="draw" fill="none" stroke="${C.tank}" stroke-width="2.5" stroke-linejoin="round" points="${pts}"/>`;
     if (rw) {
-      s += tx(x(minutes(rw[0])) + 7, TANK_TOP + 12, `rose ${signals.delta_m3} m³  ${rw[0]}–${rw[1]}`, { size: 11.5, fill: C.tank, weight: 600 });
+      const mid = (TANK_TOP + TANK_BOT) / 2;
+      s += band(minutes(rw[0]), minutes(rw[1]), mid - 14, 28, C.tank, 0.92);
+      const wide = x(minutes(rw[1])) - x(minutes(rw[0])) > 250;   // label inside a wide bar, beside a narrow one
+      s += tx(x(minutes(wide ? rw[0] : rw[1])) + 8, mid + 5, `tank filled  ${rw[0]}–${rw[1]}  +${signals.delta_m3} m³`,
+              { size: 12.5, fill: wide ? "#FBFAF7" : C.tank, weight: 700 });
+    } else if (signals) {
+      s += tx(PAD + 4, (TANK_TOP + TANK_BOT) / 2 + 4, "the level never moved", { size: 12.5, fill: C.accent, weight: 700 });
     }
   } else if (cursor != null) {
     // the clock has not reached the first sample yet
@@ -330,22 +330,22 @@ function drawChart(samples, network, signals, cursor) {
       s += band(a, b, NET_Y, TANK_BOT - NET_Y, C.tank, 0.07);
       s += `<line x1="${x(a)}" y1="${NET_Y}" x2="${x(a)}" y2="${TANK_BOT}" stroke="${C.tank}" stroke-width="1.5"/>`;
       s += `<line x1="${x(b)}" y1="${NET_Y}" x2="${x(b)}" y2="${TANK_BOT}" stroke="${C.tank}" stroke-width="1.5"/>`;
-      s += tx(PAD, VERDICT, `The tank rose while the truck was there — the two windows overlap for ${ov} minutes.`,
-              { size: 14.5, fill: C.ink, weight: 500, mono: false });
+      s += tx(PAD, VERDICT, `The tank filled while the truck was there: the two bars overlap for ${ov} minutes.`,
+              { size: 15.5, fill: C.ink, weight: 700, mono: false });
     } else {
       const gapA = Math.min(minutes(rw[1]), kIn), gapB = Math.max(minutes(rw[1]), kIn);
       s += band(gapA, gapB, NET_Y, TANK_BOT - NET_Y, C.accent, 0.1);
       s += `<line x1="${x(gapA)}" y1="${NET_Y}" x2="${x(gapA)}" y2="${TANK_BOT}" stroke="${C.accent}" stroke-width="1.5" stroke-dasharray="3 3"/>`;
       s += `<line x1="${x(gapB)}" y1="${NET_Y}" x2="${x(gapB)}" y2="${TANK_BOT}" stroke="${C.accent}" stroke-width="1.5" stroke-dasharray="3 3"/>`;
-      s += tx(PAD, VERDICT, "The tank rose before the truck arrived — the two windows do not overlap at all.",
-              { size: 14.5, fill: C.accent, weight: 600, mono: false });
+      s += tx(PAD, VERDICT, "The tank filled before the truck arrived: the two bars do not overlap at all.",
+              { size: 15.5, fill: C.accent, weight: 700, mono: false });
     }
   } else if (signals && !rw && k1) {
     s += tx(PAD, VERDICT, "The truck was in the zone and the level never moved.", { size: 14.5, fill: C.accent, weight: 600, mono: false });
   } else if (signals && rw && !k1) {
     s += tx(PAD, VERDICT, "The tank rose with no contracted truck in the zone.", { size: 14.5, fill: C.accent, weight: 600, mono: false });
   } else {
-    s += tx(PAD, VERDICT, "These two windows have to overlap. That is the whole test.", { size: 14.5, fill: C.faint, weight: 400, mono: false });
+    s += tx(PAD, VERDICT, "The two bars have to overlap. That is the whole test.", { size: 15, fill: C.faint, weight: 500, mono: false });
   }
 
   svg.innerHTML = s;
