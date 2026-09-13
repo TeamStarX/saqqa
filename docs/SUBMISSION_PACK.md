@@ -1,6 +1,6 @@
 # Submission pack · HackerEarth Prototype Phase · 13 September 2026, 22:29 Dubai
 
-Every field in the form's order. Paste the blocks as they are. Files are paths on James's machine (forward slashes work in the Windows upload dialog). Three items only James can supply are marked **[YOU]**. Nothing here is uploaded by anyone but James.
+Every field in the form's order. Paste the blocks as they are. Files are paths on James's machine (forward slashes work in the Windows upload dialog). One item only James can supply is marked **[YOU]**; the Demo Link comes from Evan **[EVAN]**. Nothing here is uploaded by anyone but James.
 
 ---
 
@@ -106,16 +106,16 @@ Upload it as an **unlisted YouTube video** (or a Google Drive link set to anyone
 Title: `Saqqa: network-attested delivery and payment for trucked water (GSMA MENA Ignite, Team StarX)`.
 
 ## Presentation (PDF)
-`C:/Users/james/Documents/vscode/MENA/starx/prototype/saqqa/deck/out/Saqqa_Prototype_Deck.pdf`  (4.6 MB, 25 slides; EvansBot's build on starx master, the one to upload)
+`C:/Users/james/Documents/vscode/MENA/starx/prototype/saqqa/deck/out/Saqqa_Prototype_Deck.pdf`  (4.5 MB, 25 slides; EvansBot's build on starx master, the one to upload)
 
-## Demo Link  **[EVAN]**
-Evan's always-on host: copy the https URL EvansBot posted in the team chat (message 430; not written here so this file can be mirrored). It runs fixture mode (the status line under the API strip says so). Do not submit a trycloudflare URL: it dies with the laptop.
+## Demo Link
+`https://saqqa-mu.vercel.app` (Vercel proxy in front of Evan's always-on host; carries no origin address). The hosted copy replays recorded sandbox answers with the stub model (the status line under the API strip says so); the 125-call live run is in the committed run logs and the film. Do not submit a trycloudflare URL: it dies with the laptop.
 
 ## Repository URL
 `https://github.com/TeamStarX/saqqa` (public, root = this tree, synced by Evan to the latest master commit)
 
 ## Source Code (zip, 50 MB max)
-`C:/Users/james/Documents/vscode/MENA/saqqa/dist/Saqqa_source.zip`  (built from the committed tree: no .env, no database, no video; checked for key material)
+`C:/Users/james/Documents/vscode/MENA/saqqa/dist/Saqqa_source.zip`  (saqqa master with deck/ from starx master, 13 Sep, the team deck; no .env, no database, no video; scanned for key material and the host address)
 
 ## Instructions to Run
 ```
@@ -135,6 +135,6 @@ Evan's always-on host: copy the https URL EvansBot posted in the team chat (mess
 - [ ] Parent = Saqqa (85013), Theme = 6
 - [ ] Seven snapshots uploaded, landing first, then the hero trip
 - [ ] Video URL opens in a private window
-- [ ] Demo Link opens in a private window and the status line under the API strip reads **Live on Nokia Network as Code**
+- [ ] Demo Link opens in a private window; the status line under the API strip reads **Fixtures mirroring the Nokia sandbox** (or **Live on Nokia Network as Code** if Evan has the keys). Either is correct.
 - [ ] https://github.com/TeamStarX/saqqa opens in a private window and shows the latest commit
 - [ ] Resubmission is unlimited and the last save counts: save early, then improve.

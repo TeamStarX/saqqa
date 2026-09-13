@@ -19,6 +19,7 @@ window.setCaption = setCaption;
 async function boot() {
   STATUS = await (await fetch("/api/status")).json();
   if (RECORD) { document.body.classList.add("record"); }
+  if (!new URLSearchParams(location.search).has("app")) document.body.classList.add("landing");
   SCEN = await (await fetch("/api/scenarios")).json();
   renderProfiles(); renderScenarios(); initTabs(); initMap(); refreshRuns();
   $("#run").onclick = () => current && runScenario(current.id);
@@ -30,6 +31,10 @@ async function boot() {
   };
   $("#cta_run")?.addEventListener("click", () => go("honest"));
   $("#cta_hero")?.addEventListener("click", () => go("sensor_contradicts_network"));
+  $("#cta_open")?.addEventListener("click", () => {
+    document.body.classList.remove("landing"); $("#hero")?.classList.add("done");
+    window.scrollTo({ top: 0 }); if (map) setTimeout(() => map.invalidateSize(), 60);
+  });
   $("#f306").onclick = () => lastRun && window.open(`/api/export/f306/${lastRun}`, "_blank");
   select(SCEN[0].id, false);
 }
@@ -394,6 +399,7 @@ async function runScenario(id) {
   if (active) abortRun();
   resetPanels();
   $("#hero")?.classList.add("done");   // the landing gives way to the tool the moment a run starts
+  document.body.classList.remove("landing");
   const seq = ++runSeq;
   const b = $("#run"); b.disabled = true; b.classList.add("running"); b.textContent = "Verifying";
   $("#mode").textContent = STATUS.mode === "live" ? "calling Nokia NaC" : "fixtures";

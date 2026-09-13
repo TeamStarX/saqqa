@@ -75,6 +75,10 @@
     transition:opacity .35s var(--ease);
   }
   .hero.done{display:none}
+  body.landing .shell,body.landing .colophon{display:none}
+  body.landing .hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;justify-content:center}
+  .hero .open{margin-top:22px;font:500 14px/1 var(--sans);color:var(--muted);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+  .hero .open:hover{color:var(--ink)}
   .hero .eyebrow{margin:0 0 18px;font:500 13px/1 var(--sans);color:var(--muted)}
   .hero h2{
     margin:0 auto;max-width:17ch;font:600 clamp(34px,4.6vw,60px)/1.05 var(--sans);
@@ -480,6 +484,7 @@
     <button type="button" class="btn primary" id="cta_run">Run an honest delivery</button>
     <button type="button" class="btn ghost" id="cta_hero">Watch the agent doubt its own sensor</button>
   </div>
+  <button type="button" class="open" id="cta_open">or open the dashboard and pick a trip yourself →</button>
   <ul class="proof">
     <li><b>12 of 12</b> seeded trips decide correctly</li>
     <li><b>125</b> live CAMARA calls, <b>0</b> errors</li>
