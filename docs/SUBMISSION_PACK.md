@@ -101,7 +101,7 @@ Select **Saqqa** (the Round 1 submission, id 85013).
 7. `C:/Users/james/Documents/vscode/MENA/saqqa/deck/assets/profile_core.png`  (0.38 MB)
 
 ## Video URL  **[YOU]**
-The file is `C:/Users/james/Documents/vscode/MENA/saqqa/docs/video/saqqa_demo.mp4` (2:30, 1920x1080, 57.0 MB).
+The file is `C:/Users/james/Documents/vscode/MENA/saqqa/docs/video/saqqa_demo.mp4` (2:30, 1920x1080, 59.1 MB).
 Upload it as an **unlisted YouTube video** (or a Google Drive link set to anyone-with-the-link) and paste the URL.
 Title: `Saqqa: network-attested delivery and payment for trucked water (GSMA MENA Ignite, Team StarX)`.
 
