@@ -269,6 +269,7 @@ function drawChart(samples, network, signals, cursor) {
 
   // ---- lane 1: what the operator's network says
   s += tx(PAD, NET_Y - 20, "Truck at the tank — from the operator's network", { size: 13, weight: 600, fill: C.net });
+  s += tx(W - PAD, NET_Y - 20, "clock time on the delivery day, 08:30 to 10:30 — both witnesses on one axis", { anchor: "end", size: 11.5, weight: 500, fill: C.faint });
   s += `<line x1="${PAD}" y1="${NET_Y + NET_H}" x2="${W - PAD}" y2="${NET_Y + NET_H}" stroke="#C6C2B7"/>`;
   if (s1) {
     s += band(minutes(s1.entered), minutes(s1.left), NET_Y, NET_H, C.net, 0.16);
