@@ -24,14 +24,15 @@
       "kind": "card",
       "narration": "Saqqa puts a level sensor on the buyer's tank and uses the SIM already in the tanker's cab. Then it asks the mobile operator to be the witness, and pays only for the litres it can account for.",
       "on_screen": "The operator is the witness.",
-      "target_seconds": 12
+      "target_seconds": 12,
+      "sub": "Two clocks have to agree: the operator's network says when the truck was at the tank; the buyer's tank says when it filled."
     },
     {
       "id": "04_honest",
       "kind": "footage",
       "clip": "honest",
       "narration": "Here is an honest delivery, on the core profile: the three APIs Saqqa needs at minimum. One click, and the agent makes about eight live calls to the network: where the truck was, when it reached the tank, whether the SIM is the one we expect. The tank rose while the truck was there. Two clocks agree. Payment released.",
-      "on_screen": "Two clocks have to agree",
+      "on_screen": "Two clocks agree: the network's (truck at the tank) and the tank's (level rose)",
       "target_seconds": 17
     },
     {

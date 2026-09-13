@@ -11,7 +11,7 @@
    "on_screen": "A water delivery is paid for on the word of the person being paid.",
    "vo": "vo/01_open.wav",
    "start": 0,
-   "frames": 355
+   "frames": 313
   },
   {
    "id": "02_problem",
@@ -34,14 +34,15 @@
      "cap": "meters on the water"
     }
    ],
-   "start": 355,
-   "frames": 469
+   "start": 313,
+   "frames": 399
   },
   {
    "id": "03_what",
    "kind": "card",
    "narration": "Saqqa puts a level sensor on the buyer's tank and uses the SIM already in the tanker's cab. Then it asks the mobile operator to be the witness, and pays only for the litres it can account for.",
    "on_screen": "The operator is the witness.",
+   "sub": "Two clocks have to agree: the operator's network says when the truck was at the tank; the buyer's tank says when it filled.",
    "vo": "vo/03_what.wav",
    "layout": "steps",
    "steps": [
@@ -49,48 +50,88 @@
     "The SIM already in the tanker's cab",
     "The mobile operator is the witness"
    ],
-   "start": 824,
-   "frames": 413
+   "start": 712,
+   "frames": 396
   },
   {
    "id": "04_honest",
    "kind": "footage",
-   "narration": "Here is an honest delivery. One click, and the agent makes about ten live calls to the network: where the truck was, when it reached the tank, whether the SIM is the one we expect. The tank rose while the truck was there. Two clocks agree. Payment released.",
-   "on_screen": "Two clocks have to agree",
+   "narration": "Here is an honest delivery, on the core profile: the three APIs Saqqa needs at minimum. One click, and the agent makes about eight live calls to the network: where the truck was, when it reached the tank, whether the SIM is the one we expect. The tank rose while the truck was there. Two clocks agree. Payment released.",
+   "on_screen": "Two clocks agree: the network's (truck at the tank) and the tank's (level rose)",
    "clip": "honest",
    "vo": "vo/04_honest.wav",
-   "start": 1237,
-   "frames": 623
+   "segments": [
+    [
+     0.89,
+     36.2
+    ]
+   ],
+   "start": 1108,
+   "frames": 714
   },
   {
    "id": "05_doubt",
    "kind": "footage",
-   "narration": "Now the one that matters. The tank rises at five past nine. The operator's timestamps put the truck at the tank at twenty-five to ten. The network contradicts our own sensor, and the agent refuses to believe its own sensor. Nothing is paid until a person looks.",
+   "narration": "Now the one that matters, on the full build, where the operator's geofence stamps the exact minute. The tank rises at five past nine. The network puts the truck at the tank at twenty-five to ten. The agent refuses to believe its own sensor. Nothing is paid until a person looks.",
    "on_screen": "The agent doubts its own sensor",
    "clip": "doubt",
    "vo": "vo/05_doubt.wav",
-   "start": 1860,
-   "frames": 674
+   "segments": [
+    [
+     3.17,
+     6.07
+    ],
+    [
+     4.99,
+     8.49
+    ],
+    [
+     20.01,
+     48.27
+    ]
+   ],
+   "start": 1822,
+   "frames": 618
   },
   {
    "id": "06_block",
    "kind": "footage",
-   "narration": "Switch to the core profile, the three APIs Saqqa needs at minimum. A perfect delivery, but the number the money would go to changed SIM nineteen hours ago. Blocked, before a dinar moves. And the agent names every check it could not run.",
-   "on_screen": "Blocked on three APIs, before a dinar moves",
+   "narration": "A perfect delivery, except that the number the money would go to changed SIM nineteen hours ago. Blocked, before a dinar moves. SIM Swap is the most deployed of these APIs in the region, and this verdict is the same on three APIs or seven.",
+   "on_screen": "Blocked before a dinar moves",
    "clip": "block",
    "vo": "vo/06_block.wav",
-   "start": 2534,
-   "frames": 571
+   "segments": [
+    [
+     5.25,
+     8.14
+    ],
+    [
+     7.05,
+     10.55
+    ],
+    [
+     26.66,
+     49.87
+    ]
+   ],
+   "start": 2440,
+   "frames": 555
   },
   {
    "id": "07_apis",
    "kind": "footage",
-   "narration": "Seven CAMARA APIs across two categories, orchestrated by one LangGraph agent, live on Nokia Network as Code. A hundred and twenty-five live calls in testing. Zero errors.",
-   "on_screen": "7 CAMARA APIs \u00b7 1 agent \u00b7 125 live calls \u00b7 0 errors",
+   "narration": "Three APIs are enough to reach every verdict; four more make each answer sharper. Seven CAMARA APIs across two categories, one LangGraph agent, live on Nokia Network as Code. A hundred and twenty-five live calls in testing. Zero errors.",
+   "on_screen": "3 APIs to decide \u00b7 7 to sharpen \u00b7 125 live calls, 0 errors",
    "clip": "apis",
    "vo": "vo/07_apis.wav",
-   "start": 3105,
-   "frames": 485
+   "segments": [
+    [
+     17.84,
+     42.47
+    ]
+   ],
+   "start": 2995,
+   "frames": 642
   },
   {
    "id": "08_money",
@@ -113,8 +154,8 @@
      "cap": "things to install on the truck"
     }
    ],
-   "start": 3590,
-   "frames": 533
+   "start": 3637,
+   "frames": 477
   },
   {
    "id": "09_close",
@@ -123,8 +164,8 @@
    "on_screen": "Saqqa \u00b7 Team StarX \u00b7 GSMA MENA Ignite 2026",
    "vo": "vo/09_close.wav",
    "layout": "close",
-   "start": 4123,
-   "frames": 383
+   "start": 4114,
+   "frames": 364
   }
  ]
 }

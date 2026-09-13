@@ -49,6 +49,8 @@ def main(argv):
     scenes, start = [], 0
     for sc in script["scenes"]:
         s = {k: sc[k] for k in ("id", "kind", "narration", "on_screen")}
+        if sc.get("sub"):
+            s["sub"] = sc["sub"]
         if sc.get("clip"):
             src = os.path.join(FOOT, sc["clip"] + ".mp4")
             if not os.path.exists(src):
@@ -75,26 +77,26 @@ def main(argv):
             marks_path = os.path.join(FOOT, sc["clip"] + ".json")
             m = json.load(open(marks_path)) if os.path.exists(marks_path) else {}
             # marks were taken from page creation; the recording ends at context close, so shift them onto video time
-            off = (m.get("end", clip_len) - clip_len) if m else 0.0
+            off = (m.get("end", clip_len) - m.get("duration", clip_len)) if m else 0.0   # marks vs the recording as captured
             v = {k: max(0.0, m[k] - off) for k in ("paint", "click", "step", "verdict") if k in m}
-            start = v.get("paint", 2.6) + 0.3            # skip the white before first paint
+            cs = v.get("paint", 2.6) + 0.3            # skip the white before first paint
             if sc["clip"] == "apis" and "verdict" in v:
-                start = v["verdict"] + 0.4                # the calls scene opens on the finished run
-            segs = [[start, clip_len]]
+                cs = v["verdict"] + 0.4                # the calls scene opens on the finished run
+            segs = [[cs, clip_len]]
             need = seconds
             if "verdict" in v and sc["clip"] != "apis":
                 # the verdict must be on screen for 4.5 s; a run longer than the narration allows is cut in the middle
                 run_len = v["verdict"] - v["click"]
-                budget = seconds - (v["click"] - start) - 4.5
+                budget = seconds - (v["click"] - cs) - 4.5
                 if run_len > budget + 1.5 and "step" in v:
-                    seg1 = [start, v["click"] + 1.5]
+                    seg1 = [cs, v["click"] + 1.5]
                     seg3 = [v["verdict"] - 1.2, clip_len]
                     fill = max(3.5, seconds - (seg1[1] - seg1[0]) - (seg3[1] - seg3[0]))
                     seg2 = [v["step"] - 0.2, min(v["step"] - 0.2 + fill, seg3[0])]
                     segs = [seg1, seg2, seg3]
                     print(f"  {sc['id']}: run {run_len:.0f}s, cut to click -> first steps -> verdict")
                 else:
-                    need = max(seconds, v["verdict"] - start + 4.5)
+                    need = max(seconds, v["verdict"] - cs + 4.5)
             avail = sum(b - a for a, b in segs)
             seconds = max(need, 0)
             if avail < seconds:

@@ -104,4 +104,4 @@ docs/screenshots/landing.png · sensor_contradicts_network.png · honest.png · 
 
 ## Links
 
-Video URL: (≤3 min, script in docs/DEMO_SCRIPT.md) · Demo Link: (deployment URL) · Repository URL: (public repo)
+Video URL: unlisted YouTube upload of docs/video/saqqa_demo.mp4 (see docs/VIDEO_UPLOAD.md) · Demo Link: Evan's always-on host, posted in the team chat · Repository URL: https://github.com/TeamStarX/saqqa

@@ -12,13 +12,13 @@ Saqqa: network-attested delivery and payment for trucked water
 ## Description
 Paste as plain text; the editor does not render markdown, so the lead-in sentences are plain here.
 ```
-# Saqqa — the network is the witness
+Saqqa — the network is the witness
 
 A water delivery is paid for on the word of the person being paid. A tanker arrives, someone signs UNHCR form F-306, and the signature releases the money. Nobody measured the water. Jordan's tanker market alone moves US$176 million a year this way (Klassert et al., Nature Sustainability, 2023). Across Iraq, Jordan, Yemen and the Gulf, trucked water is the utility for millions of people, and it is the only utility with no meter.
 
 Saqqa pays for the litres it can account for, and makes the mobile operator the witness nobody can bribe.
 
-## What we built
+What we built
 
 A working, live prototype. Two organisation SIMs: one in the tanker's cab, one inside a level-and-turbidity sensor on the buyer's own tank. No household is located, messaged or asked to consent.
 
@@ -34,35 +34,33 @@ An AI agent runs every delivery through the operator's network:
 
 Twelve delivery scenarios, from the honest trip to the ghost trip to the hijacked payee. Twelve correct verdicts.
 
-## The run that wins the argument
+The run that wins the argument
 
 Tank 7 rises 9.7 m³ between 09:05 and 09:27. The operator's timestamps put the truck in the zone from 09:35. The agent does not trust its own sensor. It re-asks whether the sensor can be believed, asks the network where the truck actually was, and refuses to credit the delivery. Our sensor loses to the operator's timestamps, because the sensor is ours and the timestamps are nobody's.
 
-## Why the network, not a GPS tracker
+Why the network, not a GPS tracker
 
 A tracker reports its own position. The operator observes yours. Disable a tracker and the trip is simply unlogged, and invoiced anyway. Disable Saqqa's cab SIM and the gate cannot release payment. Saqqa is fail-secure. Tampering costs the contractor money instead of hiding fraud.
 
-## Seven APIs, one agent, two categories
+Seven APIs, one agent, two categories
 
-| API | Whose SIM | What it proves |
-|---|---|---|
-| Geofencing Subscriptions | cab | operator-stamped entry, exit and dwell at the well and the tank, delivered as CloudEvents to our webhook |
-| Location Verification | cab + sensor | presence at the tank; the sensor is still where we installed it |
-| Device Reachability Status | sensor | whether the sensor can be believed at all |
-| Device Swap | sensor | the SIM is still inside the sensor, not in a handset |
-| SIM Swap | payee | no payment to a number hijacked since the contract was signed |
-| Location Retrieval | cab | where the truck went when the tank rose without it |
-| Device Roaming Status | cab | a fleet SIM that left the country |
+Geofencing Subscriptions (cab): operator-stamped entry, exit and dwell at the well and the tank, delivered as CloudEvents to our webhook
+Location Verification (cab + sensor): presence at the tank; the sensor is still where we installed it
+Device Reachability Status (sensor): whether the sensor can be believed at all
+Device Swap (sensor): the SIM is still inside the sensor, not in a handset
+SIM Swap (payee): no payment to a number hijacked since the contract was signed
+Location Retrieval (cab): where the truck went when the tank rose without it
+Device Roaming Status (cab): a fleet SIM that left the country
 
 Device intelligence and Digital identity & anti-fraud, orchestrated by one LangGraph graph whose tools are the CAMARA calls.
 
-## Deployable today, sharper tomorrow
+Deployable today, sharper tomorrow
 
 The agent declares a deployment profile and must reach a defensible verdict inside it. On the core profile, three APIs (Location Verification, Device Reachability, SIM Swap), it reproduces the full verdict on all twelve trips and names what it could not check. SIM Swap, the API that stops money, is the most deployed CAMARA API in MENA today (GSMA Open Gateway map, 12 Sep 2026). Switch profiles live on the dashboard. The other four make every answer sharper.
 
 Every SIM belongs to an organisation, so consent is a fleet-telematics contract signed once at onboarding, not a consumer location lookup.
 
-## Business model
+Business model
 
 Somebody already pays for every trucked delivery against a piece of paper. Saqqa attaches verification to a payment that already exists.
 
@@ -74,15 +72,15 @@ Route to market: Iraq (Asiacell, CAMARA-certified), Jordan, the Gulf. Every figu
 
 Roadmap in one line: any trucked commodity paid on a delivery note. Water is the wedge because the paper form is public.
 
-## Stack
+Stack
 
 LangGraph · Gemini 3.5 Flash-Lite (Groq Llama 3.3 70B fallback) · Nokia NaC Python SDK 10.0.0 · FastAPI · SQLite, flat schema ready for Supabase. Agent layer built only from the Resource & Tooling Guide. Network calls run against Nokia's sandbox; the tank sensor is a pump-discharge model with its parameters on screen in this phase, hardware in the next.
 
-## What it takes to deploy
+What it takes to deploy
 
 Nothing on the truck: the SIM already in the cab is the tracker, so there is no hardware to buy, fit or maintain at procurement. One fixed level sensor with its own SIM on the buyer's tank, bought once, covers every contractor who delivers there. One agent and three CAMARA APIs, running on Nokia Network as Code today, reach every verdict; a pilot needs one buyer, one hauler and one operator API key. The F-306 delivery form stays the legal record; Saqqa fills it from the evidence. Verification costs 13.6 cents of network calls against a $30 trip. Four students built the working version in three weeks on the public sandbox: a pilot is a procurement decision, not an engineering programme.
 
-## Team StarX
+Team StarX
 
 James Joshua Koshy (network integration, agent) · Evan Johan Tobias (agent, backend) · Divyam Thakur (research, sourcing) · Kirti Roshankumar Thakar (design, pitch). Indian Institute of Technology Delhi, Abu Dhabi.
 ```
@@ -94,24 +92,24 @@ Select **Saqqa** (the Round 1 submission, id 85013).
 **Theme 6**, the same as the Round 1 submission.
 
 ## Snapshots (PNG, 3 MB each max) — upload in this order
-1. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/landing.png`  (0.32 MB)
-2. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/sensor_contradicts_network.png`  (0.46 MB)
-3. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/honest.png`  (0.45 MB)
-4. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/payee_swapped.png`  (0.46 MB)
-5. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/ghost_trip.png`  (0.45 MB)
-6. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/sensor_offline.png`  (0.43 MB)
-7. `C:/Users/james/Documents/vscode/MENA/saqqa/deck/assets/profile_core.png`  (0.22 MB)
+1. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/landing.png`  (0.36 MB)
+2. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/sensor_contradicts_network.png`  (0.70 MB)
+3. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/honest.png`  (0.68 MB)
+4. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/payee_swapped.png`  (0.67 MB)
+5. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/ghost_trip.png`  (0.64 MB)
+6. `C:/Users/james/Documents/vscode/MENA/saqqa/docs/screenshots/sensor_offline.png`  (0.66 MB)
+7. `C:/Users/james/Documents/vscode/MENA/saqqa/deck/assets/profile_core.png`  (0.38 MB)
 
 ## Video URL  **[YOU]**
-The file is `C:/Users/james/Documents/vscode/MENA/saqqa/docs/video/saqqa_demo.mp4` (2:00, 1600x900, 10.5 MB).
+The file is `C:/Users/james/Documents/vscode/MENA/saqqa/docs/video/saqqa_demo.mp4` (2:30, 1920x1080, 57.0 MB).
 Upload it as an **unlisted YouTube video** (or a Google Drive link set to anyone-with-the-link) and paste the URL.
 Title: `Saqqa: network-attested delivery and payment for trucked water (GSMA MENA Ignite, Team StarX)`.
 
 ## Presentation (PDF)
-`C:/Users/james/Documents/vscode/MENA/saqqa/deck/out/Saqqa_Prototype_Deck.pdf`  (4.8 MB, 25 slides)
+`C:/Users/james/Documents/vscode/MENA/starx/prototype/saqqa/deck/out/Saqqa_Prototype_Deck.pdf`  (4.6 MB, 25 slides; EvansBot's build on starx master, the one to upload)
 
 ## Demo Link  **[EVAN]**
-Evan hosts the demo on his always-on server; the final hostname is posted in the team chat when settled. It runs fixture mode (the status line under the API strip says so) unless James sends Evan the keys privately. Do not submit a trycloudflare URL: it dies with the laptop.
+Evan's always-on host: copy the https URL EvansBot posted in the team chat (message 430; not written here so this file can be mirrored). It runs fixture mode (the status line under the API strip says so). Do not submit a trycloudflare URL: it dies with the laptop.
 
 ## Repository URL
 `https://github.com/TeamStarX/saqqa` (public, root = this tree, synced by Evan to the latest master commit)

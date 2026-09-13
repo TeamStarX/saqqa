@@ -38,6 +38,7 @@ type Scene = {
   layout?: string;
   stats?: { big: string; cap: string }[];
   steps?: string[];
+  sub?: string;
 };
 type Timeline = { fps: number; width: number; height: number; tail: number; scenes: Scene[] };
 
@@ -78,6 +79,15 @@ const Eyebrow: React.FC<{ text: string; delay?: number }> = ({ text, delay = 0 }
   const s = useIn(delay);
   return (
     <div style={{ fontFamily: SANS, fontSize: 24, fontWeight: 500, color: MUTED, letterSpacing: "-0.005em", opacity: s, transform: `translateY(${(1 - s) * 10}px)`, marginBottom: 34 }}>
+      {text}
+    </div>
+  );
+};
+
+const SubLine: React.FC<{ text: string }> = ({ text }) => {
+  const s = useIn(16);
+  return (
+    <div style={{ fontFamily: SANS, fontSize: 30, fontWeight: 400, color: MUTED, letterSpacing: "-0.01em", lineHeight: 1.4, maxWidth: 1240, marginTop: 22, opacity: s, transform: `translateY(${(1 - s) * 12}px)` }}>
       {text}
     </div>
   );
@@ -146,8 +156,9 @@ const StepsCard: React.FC<{ scene: Scene }> = ({ scene }) => {
     <Ground>
       <Mark />
       <AbsoluteFill style={{ justifyContent: "center", padding: "0 160px" }}>
-        <div style={{ marginBottom: 74 }}>
+        <div style={{ marginBottom: 58 }}>
           <Words text={scene.on_screen} size={76} weight={600} delay={6} maxWidth={1500} align="left" />
+          {scene.sub ? <SubLine text={scene.sub} /> : null}
         </div>
         <div style={{ display: "flex", gap: 40 }}>
           {steps.map((t, i) => {
