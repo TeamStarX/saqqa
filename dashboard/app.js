@@ -406,6 +406,10 @@ async function runScenario(id) {
   document.body.classList.remove("landing");
   const seq = ++runSeq;
   const b = $("#run"); b.disabled = true; b.classList.add("running"); b.textContent = "Verifying";
+  // the verdict block shows that something is happening, and what
+  $("#decision").innerHTML = `<h2>Verdict</h2><div class="waiting running">Verifying</div><div class="amount" id="progress">asking the operator's network…</div>`;
+  let progCalls = 0, progNode = "intake";
+  const progress = () => { const el = $("#progress"); if (el) el.textContent = `${progCalls} network call${progCalls === 1 ? "" : "s"} so far · agent at ${progNode}`; };
   $("#mode").textContent = STATUS.mode === "live" ? "calling Nokia NaC" : "fixtures";
 
   let run_id;
@@ -440,8 +444,8 @@ async function runScenario(id) {
     if (!active || active.seq !== seq) return;      // superseded by another run
     while (queue.length) {
       const it = queue.shift();
-      if (it.kind === "step") addStep(it);
-      else if (it.kind === "call") { addCall(it); calls++; $("#callcount").textContent = `${calls} calls`; }
+      if (it.kind === "step") { addStep(it); progNode = it.node; progress(); }
+      else if (it.kind === "call") { addCall(it); calls++; $("#callcount").textContent = `${calls} calls`; progCalls = calls; progress(); }
       else if (it.kind === "done") { await finish(run_id, seq); active = null; runDone(); return; }
       else if (it.kind === "error") { showFailure("The agent stopped before deciding.", it.error); active = null; runDone(); return; }
       await sleep(it.kind === "call" ? (RECORD ? 60 : 120) : (RECORD ? 190 : 380));
